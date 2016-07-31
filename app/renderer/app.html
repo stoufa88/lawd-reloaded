@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Lawd</title>
+    <script>
+      (function() {
+        if (!process.env.HOT) {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = '../out/style.css';
+          document.write(link.outerHTML);
+        }
+      }());
+    </script>
+  </head>
+  <body>
+
+    <div id="root" />
+
+    <script>
+      (function() {
+        const script = document.createElement('script');
+        script.src = (process.env.HOT) ? 'http://localhost:3000/dist/bundle.js' : '../out/bundle.js';
+        document.write(script.outerHTML);
+      }());
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "name": "lawd-reloaded",
+  "version": "0.1.0",
+  "description": "The movie torrent hunter",
+  "private": true,
+  "author": "Mustapha Turki <stoufa.turki@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "main": "./browser/index.js",
+  "dependencies": {
+    "bluebird": "^3.3.4",
+    "bootstrap": "^4.0.0-alpha.2",
+    "classnames": "^2.2.3",
+    "cls-bluebird": "^1.0.1",
+    "continuation-local-storage": "^3.1.6",
+    "filesize": "^3.2.1",
+    "font-awesome": "^4.5.0",
+    "jquery": "^2.2.2",
+    "jquery-ui": "^1.10.5",
+    "moment": "^2.13.0",
+    "nedb": "^1.8.0",
+    "react": "^15.3.0",
+    "react-addons-update": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "react-intl": "^2.0.1",
+    "react-router": "^2.0.1",
+    "request": "^2.65.0",
+    "request-promise": "^3.0.0",
+    "tether": "^1.2.0",
+    "themoviedb-javascript-library": "^1.0.0",
+    "underscore": "^1.8.3"
+  },
+  "peerDependencies": {
+    "request": "2.65.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "en": {
+		"login.signin": "Signin",
+    "login.email": "Email address",
+    "login.password": "Password",
+    "login.error": "Wrong login informations",
+
+		"navigation.movies": "Movies",
+		"navigation.tvs": "TV Series",
+		"navigation.search_placholder": "Search a movie, a TV Serie",
+		"navigation.search": "Search"
+  }
+}

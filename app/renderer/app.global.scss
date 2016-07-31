@@ -1,0 +1,50 @@
+@import './assets/stylesheets/variables';
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~font-awesome/css/font-awesome.css';
+
+body {
+	-webkit-user-select: none;
+	cursor: default;;
+	padding-top: 75px;
+}
+
+.navbar-brand {
+	border-right: 2px solid #484848;
+	padding-right: 15px;
+	color: rgba(171, 171, 171, 0.56);
+}
+
+.search-form {
+	input {
+		width: 300px !important;
+	}
+
+	button {
+		border-radius: 0px;
+	}
+}
+
+// ----------------------------------- Movie list ------------------------------
+.movie-item {
+	display: inline-flex;
+	border: none;
+	flex-basis: 33.3% !important;
+}
+
+.movie-item-details {
+	padding: 15px 15px 0 20px;
+	p.genres {
+		font-size: 12px;
+	}
+	p.overview {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 4;
+		font-size: 14px;
+	}
+}
+
+.movie-item-image, .movie-item-details {
+}
