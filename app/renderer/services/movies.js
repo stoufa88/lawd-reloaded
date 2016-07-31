@@ -2,7 +2,7 @@ import rp from 'request-promise'
 let config = require('../../config.json')
 
 let instance = null
-const API_KEY = config.config.api_key
+const API_KEY = config.api_key
 const LANG = 'fr'
 
 console.log(config)
