@@ -31,7 +31,8 @@
     "request-promise": "^3.0.0",
     "tether": "^1.2.0",
     "underscore": "^1.8.3",
-    "video.js": "^5.11.6"
+    "video.js": "^5.11.6",
+    "webtorrent": "^0.96.4"
   },
   "peerDependencies": {
     "request": "2.65.0"

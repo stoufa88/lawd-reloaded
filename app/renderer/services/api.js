@@ -79,6 +79,15 @@ export default class ApiService {
 		return genres
 	}
 
+	getTorrentById(torrentId) {
+		let Torrent = Parse.Object.extend('Torrent')
+		let query = new Parse.Query(Torrent)
+
+		return query.get(torrentId).then((result) => {
+			return result
+		})
+	}
+
 	fetchTorrentsForMovie(movieId) {
 		let Torrent = Parse.Object.extend('Torrent')
 		let query = new Parse.Query(Torrent)

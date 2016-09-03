@@ -2,7 +2,7 @@
 import React, {PropTypes} from 'react'
 import { Link } from 'react-router'
 
-class Torrent extends React.Component {
+class Magnet extends React.Component {
 
   constructor(props) {
     super(props)
@@ -17,10 +17,10 @@ class Torrent extends React.Component {
   }
 }
 
-Torrent.propTypes = {
+Magnet.propTypes = {
 	index: PropTypes.number.isRequired,
-	torrentId: PropTypes.string.torrentId,
+	torrentId: PropTypes.string.isRequired,
 	magnetURL: PropTypes.string.isRequired
 };
 
-export default Torrent
+export default Magnet

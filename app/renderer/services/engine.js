@@ -18,9 +18,7 @@ export default class Engine {
 
   // Add torrent to engine, return movie file in callback
   addMagnet (magnetUri, cb) {
-		let opts = {
-			path: app.getPath('downloads')
-		}
+
 
     client.add(magnetUri, function (torrent) {
 			console.log('new torrent added to engine', torrent.infoHash)

@@ -1,6 +1,6 @@
 import React from 'react'
 import ApiService from '../../services/api'
-import Torrent from './Torrent'
+import Magnet from './Magnet'
 
 let apiService
 
@@ -42,11 +42,11 @@ export default class ShowCard extends React.Component {
   render() {
 		let posterPath = 'http://image.tmdb.org/t/p/w154/' + this.props.poster_path
 
-		let torrents = []
+		let magnets = []
 
 		this.state.torrents.forEach((torrent, index) => {
-			torrents.push(
-				<Torrent key={torrent.id}
+			magnets.push(
+				<Magnet key={torrent.id}
 									magnetURL={torrent.get('magnetURL')}
 									index={index}
 									torrentId={torrent.id} />
@@ -72,7 +72,7 @@ export default class ShowCard extends React.Component {
 							 />
 					</div>
 
-					{torrents}
+					{magnets}
 				</div>
 			</div>
     );
