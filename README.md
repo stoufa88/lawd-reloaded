@@ -1,7 +1,7 @@
 # Lawd 2
 
-In Lawd 2, a desktop streaming powered app where users hunt down torrents.
-We use TheMovieDB for browsing show (movies and tvs) and a parse server for torrents association.
+Lawd 2 is desktop streaming powered app where people hunt down torrents.
+We use TheMovieDB for browsing shows (movies and tvs) and a parse server for torrents association.
 
 Good hunting :)
 
