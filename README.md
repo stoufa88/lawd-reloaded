@@ -5,6 +5,13 @@ We use TheMovieDB for browsing show (movies and tvs) and a parse server for torr
 
 Good hunting :)
 
+## Config
+Replace parameters in config.example.com with you own tmdb api key.
+For parse server api key, ask for it.
+
+## Downloads
+The app will be soon available for download in multi platforms, thanks to Electron.js.
+
 ## Run
 
 ```bash
