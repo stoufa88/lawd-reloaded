@@ -12,6 +12,7 @@ import Login from './components/users/Login'
 import Logout from './components/users/Logout'
 import Nav from './components/shared/Nav'
 import ShowBox from './components/shows/ShowBox'
+import Player from './components/player/Player'
 
 const App = React.createClass({
   getInitialState() {
@@ -53,7 +54,9 @@ render((
     <Router history={hashHistory}>
       <Route path="/" component={App}>
 				<IndexRoute component={ShowBox} />
-				<Route path="/:type" component={ShowBox} />
+				<Route path="/movie/:sort" component={ShowBox} />
+				<Route path="/tv/:sort" component={ShowBox} />
+				<Route path="/player/:torrentId" component={Player} />
 				<Route path="login" component={Login} />
       </Route>
     </Router>

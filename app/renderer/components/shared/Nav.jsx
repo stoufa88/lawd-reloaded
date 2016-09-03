@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-export default class Nav extends React.Component {
+class Nav extends React.Component {
   componentDidMount() {
   }
 
@@ -11,13 +11,33 @@ export default class Nav extends React.Component {
 
     return(
 			<nav className="navbar navbar-fixed-top navbar-dark bg-inverse">
-			  <a className="navbar-brand" href="#">Lawd reloaded</a>
+			  <a className="navbar-brand" href="#">Lawd</a>
 			  <ul className="nav navbar-nav">
-			    <li className="nav-item active">
-			      <Link className="nav-link" to="/movies"><FormattedMessage id="navigation.movies" /></Link>
-			    </li>
 			    <li className="nav-item">
-			      <Link className="nav-link" to="/tv"><FormattedMessage id="navigation.tvs" /></Link>
+						<div className="btn-group">
+						  <button type="button" className="btn btn-secondary"><FormattedMessage id="navigation.movies" /></button>
+						  <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <span className="sr-only">Toggle Dropdown</span>
+						  </button>
+						  <div className="dropdown-menu">
+								<Link className="dropdown-item" to="/movie/popular"><FormattedMessage id="navigation.movies.popular" /></Link>
+								<Link className="dropdown-item" to="/movie/now_playing"><FormattedMessage id="navigation.movies.now_playing" /></Link>
+								<Link className="dropdown-item" to="/movie/top_rated"><FormattedMessage id="navigation.movies.top_rated" /></Link>
+								<Link className="dropdown-item" to="/movie/upcoming"><FormattedMessage id="navigation.movies.upcoming" /></Link>
+						  </div>
+						</div>
+			    </li>
+
+			    <li className="nav-item">
+						<div className="btn-group">
+							<button type="button" className="btn btn-secondary"><FormattedMessage id="navigation.tvs" /></button>
+							<button type="button" className="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span className="sr-only">Toggle Dropdown</span>
+							</button>
+							<div className="dropdown-menu">
+								<Link className="dropdown-item" to="/tv/popular"><FormattedMessage id="navigation.tvs" /></Link>
+							</div>
+						</div>
 			    </li>
 			  </ul>
 			  <form className="search-form form-inline pull-xs-right">

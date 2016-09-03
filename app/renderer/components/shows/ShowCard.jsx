@@ -1,21 +1,57 @@
 import React from 'react'
-import MovieService from '../../services/movies'
+import ApiService from '../../services/api'
+import Torrent from './Torrent'
 
-let movieService
+let apiService
 
 export default class ShowCard extends React.Component {
   constructor(props) {
     super(props)
 
-		movieService = new MovieService()
-
 		this.state = {
-			movie: null
+			torrents: []
 		}
+
+		apiService = new ApiService()
+
+		this.showInput = this.showInput.bind(this)
+		this.submitMagnet = this.submitMagnet.bind(this)
   }
+
+	componentDidMount() {
+		this.fetchTorrents(this.props.id)
+	}
+
+	showInput() {
+		$(this._input).toggleClass('invisible')
+	}
+
+	submitMagnet(e) {
+		if(e.keyCode == 13) {
+			apiService.addTorrent($(this._input).val(), this.props.id)
+			$(this._input).toggleClass('invisible')
+		}
+	}
+
+	fetchTorrents(movieId) {
+		apiService.fetchTorrentsForMovie(movieId).then((res) => {
+			this.setState({ torrents: res })
+		})
+	}
 
   render() {
 		let posterPath = 'http://image.tmdb.org/t/p/w154/' + this.props.poster_path
+
+		let torrents = []
+
+		this.state.torrents.forEach((torrent, index) => {
+			torrents.push(
+				<Torrent key={torrent.id}
+									magnetURL={torrent.get('magnetURL')}
+									index={index}
+									torrentId={torrent.id} />
+			)
+		})
 
     return (
 			<div className="card movie-item">
@@ -25,6 +61,18 @@ export default class ShowCard extends React.Component {
 					<p className="genres text-muted">{this.props.genres.join(', ')}</p>
 
 					<p className="overview">{this.props.overview}</p>
+
+					<div>
+						<i className="fa fa-plus" aria-hidden="true" onClick={this.showInput}></i>
+						<input className="form-control" ref={(c) => this._input = c}
+							onKeyUp={this.submitMagnet}
+							type="url"
+							className="invisible"
+							placeholder="paste magnet url here"
+							 />
+					</div>
+
+					{torrents}
 				</div>
 			</div>
     );
