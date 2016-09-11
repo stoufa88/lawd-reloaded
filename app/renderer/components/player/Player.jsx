@@ -40,6 +40,7 @@ class Player extends React.Component {
 	}
 
 	serveTorrent(torrentId) {
+		console.log('serve torrent called')
 		apiService.getTorrentById(torrentId).then((torrent) => {
 			engine.addMagnet(torrent.get('magnetURL'), ((torrent) => {
 				engine.serve(torrent.infoHash)
@@ -54,20 +55,14 @@ class Player extends React.Component {
 
 		if(media.mediaEncoding == 'mp4') {
 			torrent.files[media.mediaIndex].renderTo('video')
-		}else if(media.mediaEncoding == 'mkv') {
-			$('#video-player_html5_api').attr(
-				'src',
-				'http://localhost:25111/' + media.mediaIndex
-			)
 		}
 	}
 
   render() {
-		console.log('hello')
     return (
-      <div>
+      <div className="m-t-1 container-fluid">
 				<div id="player">
-					<video id="video-player" className="video-js vjs-default-skin vjs-big-play-centered">
+					<video id="video-player" className="video-js vjs-default-skin vjs-big-play-centered m-x-auto">
 					</video>
 				</div>
 

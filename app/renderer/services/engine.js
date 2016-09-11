@@ -43,6 +43,8 @@ export default class Engine {
 			}
 		})
 
+		torrent.downloading = true
+
 		let mediaEncoding = movieFile.name.indexOf('mkv') > -1 ? 'mkv' : 'mp4'
 
 		return {
@@ -67,18 +69,33 @@ export default class Engine {
     return client.torrents
   }
 
-	toggleTorrent (torrentId, pause) {
+	resumeTorrent (torrentId) {
 		let torrent = this.getTorrent(torrentId)
-
-		if(pause) {
-			torrent.pause()
-		} else {
-			torrent.resume()
+		if(!torrent) {
+			return
 		}
+
+		console.info('Resuming torrent with id', torrentId)
+
+		torrent.resume()
+	}
+
+	pauseTorrent(torrentId) {
+		let torrent = this.getTorrent(torrentId)
+		if(!torrent) {
+			return
+		}
+
+		console.info('Pausing torrent with id', torrentId)
+
+		torrent.pause()
 	}
 
 	destroyTorrent (torrentId) {
 		let torrent = this.getTorrent(torrentId)
+		if(!torrent) {
+			return;
+		}
 
 		torrent.destroy()
 	}

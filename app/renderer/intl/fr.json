@@ -13,6 +13,9 @@
 
 		"navigation.tvs": "Télévision",
 		"navigation.search_placholder": "Rechercher un film, une série",
-		"navigation.search": "Rechercher"
+		"navigation.search": "Rechercher",
+
+		"movie.synopsys": "Synopsys:",
+		"movie.watch_trailer": "Regarder la bande annonce"
   }
 }

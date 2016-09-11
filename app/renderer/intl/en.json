@@ -13,6 +13,9 @@
 
 		"navigation.tvs": "TV Series",
 		"navigation.search_placholder": "Search a movie, a TV Serie",
-		"navigation.search": "Search"
+		"navigation.search": "Search",
+
+		"movie.synopsys": "Synopsys:",
+		"movie.watch_trailer": "Watch trailer"
   }
 }

@@ -10,8 +10,15 @@ class Magnet extends React.Component {
 
   render() {
     return (
-      <ul>
-				<li><Link to={`/player/${this.props.torrentId}/`}> Magnet {this.props.index + 1}</Link></li>
+      <ul className="movie-details-magnet">
+				<li>
+					<Link to={`/player/${this.props.torrentId}/`}>
+						<div className="d-inline-block">
+							{this.props.lang} - {this.props.quality}
+						</div>
+						<p>{this.props.name}</p>
+					</Link>
+				</li>
       </ul>
     );
   }
@@ -20,7 +27,10 @@ class Magnet extends React.Component {
 Magnet.propTypes = {
 	index: PropTypes.number.isRequired,
 	torrentId: PropTypes.string.isRequired,
-	magnetURL: PropTypes.string.isRequired
+	magnetURL: PropTypes.string.isRequired,
+	lang: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
+	quality: PropTypes.string.isRequired
 };
 
 export default Magnet

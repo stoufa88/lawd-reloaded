@@ -12,6 +12,7 @@ import Login from './components/users/Login'
 import Logout from './components/users/Logout'
 import Nav from './components/shared/Nav'
 import ShowBox from './components/shows/ShowBox'
+import ShowDetails from './components/shows/ShowDetails'
 import Player from './components/player/Player'
 
 const App = React.createClass({
@@ -23,10 +24,8 @@ const App = React.createClass({
     return (
 			<div>
 				<Nav />
-	      <div className="container">
-	        <div id="main-content">
-	          {this.props.children || <p>You are {!this.state.loggedIn && 'not'} logged in.</p>}
-	        </div>
+        <div id="main-content">
+          {this.props.children || <p>You are {!this.state.loggedIn && 'not'} logged in.</p>}
 	      </div>
 			</div>
     )
@@ -54,8 +53,9 @@ render((
     <Router history={hashHistory}>
       <Route path="/" component={App}>
 				<IndexRoute component={ShowBox} />
-				<Route path="/movie/:sort" component={ShowBox} />
-				<Route path="/tv/:sort" component={ShowBox} />
+				<Route path="/movies/:sort" component={ShowBox} />
+				<Route path="/tvs/:sort" component={ShowBox} />
+				<Route path="/movie/:id" component={ShowDetails} />
 				<Route path="/player/:torrentId" component={Player} />
 				<Route path="login" component={Login} />
       </Route>

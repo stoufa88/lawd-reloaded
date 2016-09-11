@@ -20,10 +20,10 @@ class Nav extends React.Component {
 						    <span className="sr-only">Toggle Dropdown</span>
 						  </button>
 						  <div className="dropdown-menu">
-								<Link className="dropdown-item" to="/movie/popular"><FormattedMessage id="navigation.movies.popular" /></Link>
-								<Link className="dropdown-item" to="/movie/now_playing"><FormattedMessage id="navigation.movies.now_playing" /></Link>
-								<Link className="dropdown-item" to="/movie/top_rated"><FormattedMessage id="navigation.movies.top_rated" /></Link>
-								<Link className="dropdown-item" to="/movie/upcoming"><FormattedMessage id="navigation.movies.upcoming" /></Link>
+								<Link className="dropdown-item" to="/movies/popular"><FormattedMessage id="navigation.movies.popular" /></Link>
+								<Link className="dropdown-item" to="/movies/now_playing"><FormattedMessage id="navigation.movies.now_playing" /></Link>
+								<Link className="dropdown-item" to="/movies/top_rated"><FormattedMessage id="navigation.movies.top_rated" /></Link>
+								<Link className="dropdown-item" to="/movies/upcoming"><FormattedMessage id="navigation.movies.upcoming" /></Link>
 						  </div>
 						</div>
 			    </li>

@@ -14,7 +14,10 @@ export default class ShowBox extends React.Component {
 
 		this.state = {
 			shows: [],
-			genres: []
+			genres: [],
+			scrollListener: null,
+			page: 1,
+			sort: 'popular'
 		}
   }
 
@@ -23,23 +26,37 @@ export default class ShowBox extends React.Component {
 		this.fetchMovies()
 		this.fetchGenres()
 
-
-		$(window).scroll(function() {
+		let scrollListener = function() {
 			if($(window).scrollTop() + $(window).height() == $(document).height()) {
 				self.handlePageChange()
 			}
-		})
+		}
+
+		$(window).scroll(scrollListener)
+		this.setState({scrollListener})
+	}
+
+	componentWillUnmount() {
+		$(window).off("scroll", this.state.scrollListener)
 	}
 
 	componentWillReceiveProps(nextProps) {
+		this.setState({page: nextProps.location.query.page})
+		this.setState({sort: nextProps.params.sort})
 		this.fetchMovies(nextProps.params.sort, nextProps.location.query.page)
 	}
 
-	fetchMovies(sort, page) {
-		apiService.getMovies(sort, page).then((res) => {
-			let newShows = update(this.state.shows, {$push: res.results})
+	fetchMovies(nextSort, nextPage) {
+		let { shows, page, sort } = this.state
+		if(nextSort !== sort) {
+			shows = []
+		}
+
+		apiService.getMovies(nextSort, nextPage).then((res) => {
+			let newShows = update(shows, {$push: res.results})
 			this.setState({ shows: newShows })
 		})
+
 	}
 
 	handlePageChange() {
@@ -77,7 +94,7 @@ export default class ShowBox extends React.Component {
 		})
 
     return (
-      <div className="movie-list">
+      <div className="container movie-list m-t-2">
 			  <div className="card-deck">
 					{cards}
 				</div>
