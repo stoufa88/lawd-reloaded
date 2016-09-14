@@ -1,7 +1,8 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import ApiService from '../../services/api'
-import Magnet from './Magnet'
+import Magnet from '../magnets/Magnet'
+import NewMagnetForm from '../magnets/NewMagnetForm'
 
 let apiService
 
@@ -12,10 +13,12 @@ export default class ShowDetails extends React.Component {
 		this.state = {
 			movie: null,
 			trailer_url: null,
-			torrents: []
+			torrents: [],
+			showMagnetForm: false
 		}
 
 		apiService = new ApiService()
+		this.toggleMagnetForm = this.toggleMagnetForm.bind(this)
   }
 
 	componentDidMount() {
@@ -38,6 +41,12 @@ export default class ShowDetails extends React.Component {
 		})
 	}
 
+	toggleMagnetForm() {
+		let { showMagnetForm } = this.state
+		this.setState({showMagnetForm: !showMagnetForm})
+
+	}
+
   render() {
 		let { movie } = this.state
 
@@ -49,7 +58,8 @@ export default class ShowDetails extends React.Component {
 		let backdropPath = 'http://image.tmdb.org/t/p/w1920/' + movie.backdrop_path
 
 		var movieStyle = {
-		  background: 'linear-gradient(rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.45)), url(' + backdropPath + ')'
+		  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.45)), url(' + backdropPath + ')',
+			backgroundAttachment: 'fixed'
 		};
 
 		let magnets = []
@@ -89,10 +99,27 @@ export default class ShowDetails extends React.Component {
 					</div>
 					<div className="col-sm-4">
 						<h3 className="text-sm-center">Liens</h3>
-						{magnets}
+						<ul className="movie-details-magnet">
+							{magnets}
+						</ul>
+
+						{(() => {
+			        if (this.state.showMagnetForm) {
+			          return (
+									<div>
+										<i className="fa fa-minus" aria-hidden="true" onClick={this.toggleMagnetForm}></i>
+										<NewMagnetForm movieId={movie.id} />
+									</div>
+								)
+			        }else {
+								return <i className="fa fa-plus" aria-hidden="true" onClick={this.toggleMagnetForm}></i>
+							}
+			      })()}
 					</div>
 				</div>
 			</div>
     );
   }
 }
+
+// <i className="fa fa-plus" aria-hidden="true" onClick={this.showForm}></i>

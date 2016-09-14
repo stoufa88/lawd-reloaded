@@ -1,5 +1,6 @@
 const WebTorrent = require('webtorrent')
 const remote = require('electron').remote
+import srt2vtt from 'srt2vtt'
 
 let _initCalled = false
 let client
@@ -18,10 +19,8 @@ export default class Engine {
 
   // Add torrent to engine, return movie file in callback
   addMagnet (magnetUri, cb) {
-
-
     client.add(magnetUri, function (torrent) {
-			console.log('new torrent added to engine', torrent.infoHash)
+			console.info('new torrent added to engine', torrent.infoHash)
 
       cb(torrent)
     })
@@ -32,6 +31,7 @@ export default class Engine {
 
 		let movieFile
 		let mediaIndex = 0
+		let subtitleIndexes = []
 		torrent.files.forEach(function (f, index) {
 			f.select()
 
@@ -40,6 +40,10 @@ export default class Engine {
 					movieFile = f
 					mediaIndex = index
 				}
+			}
+
+			if (/\.(srt|sub)$/i.test(f.name)) {
+				subtitleIndexes.push(index)
 			}
 		})
 
@@ -50,7 +54,8 @@ export default class Engine {
 		return {
 			mediaIndex: mediaIndex,
 			mediaType: 'Video',
-			mediaEncoding: mediaEncoding
+			mediaEncoding: mediaEncoding,
+			subtitleIndexes: subtitleIndexes
 		}
 	}
 
@@ -59,6 +64,8 @@ export default class Engine {
 
 		server = torrent.createServer()
 		server.listen('25111')
+
+		console.info('server listening at 25111')
 	}
 
 	getTorrent(torrentId) {

@@ -10,16 +10,14 @@ class Magnet extends React.Component {
 
   render() {
     return (
-      <ul className="movie-details-magnet">
-				<li>
-					<Link to={`/player/${this.props.torrentId}/`}>
-						<div className="d-inline-block">
-							{this.props.lang} - {this.props.quality}
-						</div>
-						<p>{this.props.name}</p>
-					</Link>
-				</li>
-      </ul>
+			<li>
+				<Link to={`/player/${this.props.torrentId}/`}>
+					<div className="d-inline-block">
+						{this.props.lang} - {this.props.quality}
+					</div>
+					<p>{this.props.name}</p>
+				</Link>
+			</li>
     );
   }
 }

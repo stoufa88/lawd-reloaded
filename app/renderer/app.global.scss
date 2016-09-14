@@ -34,6 +34,7 @@ body {
 
 .movie-item-details {
 	padding: 15px 15px 0 20px;
+	position: relative;
 	p.genres {
 		font-size: 12px;
 	}
@@ -44,6 +45,25 @@ body {
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 4;
 		font-size: 14px;
+	}
+}
+
+.movie-item-link {
+	border-top: 1px solid #ececec;
+	position: absolute;
+	padding: 5px 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	font-size: 1.2rem;
+	letter-spacing: 1.5px;
+	a {
+		color: $gray;
+		text-decoration: none;
+		&:hover {
+			color: $gray-dark;
+		}
 	}
 }
 
@@ -71,10 +91,11 @@ body {
 
 ul.movie-details-magnet {
 	background: rgba(51, 51, 51, 0.37);
-	padding: 1rem 2rem;
 	border-radius: 5px;
+	padding-left: 0;
 	li {
 		list-style-type: none;
+		padding: 0.5rem 1rem;
 		color: #fff;
 		border-bottom: 1px solid #333;
 	}

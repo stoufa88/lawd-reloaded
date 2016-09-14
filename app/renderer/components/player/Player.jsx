@@ -5,7 +5,7 @@ import ApiService from '../../services/api'
 import Engine from '../../services/engine'
 import Torrent from './Torrent'
 
-let apiService, engine
+let apiService, engine, player
 
 class Player extends React.Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class Player extends React.Component {
 	}
 
 	componentDidMount() {
-		let player = videojs('video-player', { 'controls': true, 'autoplay': false, 'preload': 'auto' })
+		player = videojs('video-player', { 'controls': true, 'autoplay': false, 'preload': 'auto' })
 		console.log("Getting torrent id from props...", this.props.params.torrentId)
 
 		this.serveTorrent(this.props.params.torrentId);
@@ -40,8 +40,13 @@ class Player extends React.Component {
 	}
 
 	serveTorrent(torrentId) {
-		console.log('serve torrent called')
 		apiService.getTorrentById(torrentId).then((torrent) => {
+			torrent.get('subtitles').forEach((subtitle) => {
+				subtitle.fetch().then((subtitle) => {
+					this.addRemoteTextTrack(subtitle)
+				})
+			})
+
 			engine.addMagnet(torrent.get('magnetURL'), ((torrent) => {
 				engine.serve(torrent.infoHash)
 				this.setState({ torrentId: torrent.infoHash })
@@ -53,9 +58,26 @@ class Player extends React.Component {
 		let media = engine.getMedia(torrentId)
 		let torrent = engine.getTorrent(torrentId)
 
+		// renderTo only works with mp4
 		if(media.mediaEncoding == 'mp4') {
-			torrent.files[media.mediaIndex].renderTo('video')
+			torrent.files[media.mediaIndex].renderTo('video',function(err, elem){
+        console.log(err)
+      })
+		}else {
+			$('#video-player_html5_api').attr(
+				'src',
+				'http://localhost:25111/' + media.mediaIndex
+			)
 		}
+	}
+
+	addRemoteTextTrack(subtitle) {
+		console.info('adding sub', subtitle)
+		player.addRemoteTextTrack({
+			kind: 'subtitles',
+			language: subtitle.get('lang'),
+			src: subtitle.get('vttFile').url()
+		})
 	}
 
   render() {

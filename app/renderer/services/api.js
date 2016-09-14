@@ -1,5 +1,6 @@
 import rp from 'request-promise'
 import Parse from 'parse/node'
+import fs from 'fs'
 let config = require('../../config.json')
 
 let instance = null
@@ -7,15 +8,15 @@ const API_KEY = config.api_key
 const LANG = 'fr'
 
 export default class ApiService {
-  constructor(token) {
-    if(!instance){
-      instance = this
-    }
+  constructor() {
+    if(instance){
+			return
+		}
+
+		instance = this
 
 		Parse.initialize(config.app_id)
 		Parse.serverURL = config.server_url
-
-    this.token = token;
   }
 
 	getMovies(sort="popular", page=1) {
@@ -98,11 +99,61 @@ export default class ApiService {
 		})
 	}
 
-	addTorrent(magnetURL, movieId) {
+	addTorrent(movieId, t, subs) {
+		console.info('creating a new torrent...')
+
 		let Torrent = Parse.Object.extend('Torrent')
 		let torrent = new Torrent()
-		torrent.set('magnetURL', magnetURL)
+
 		torrent.set('movieId', movieId)
-		torrent.save();
+		torrent.set('magnetURL', t.magnetUrl)
+		torrent.set('name', t.torrentName)
+		torrent.set('lang', t.language)
+		torrent.set('quality', t.quality)
+
+		if(subs.length > 0) {
+			subs.forEach((subtitle) => {
+				this.addSubtitle(torrent, subtitle)
+			})
+		}
+	}
+
+	addSubtitle(torrent, sub) {
+		console.info('creating a new subtitle...')
+		let Subtitle = Parse.Object.extend('Subtitle')
+		let subtitle = new Subtitle()
+
+		subtitle.set('torrent', torrent)
+		subtitle.set('lang', sub.lang)
+
+		let file = fs.readFile(sub.file.path, (err, data) => {
+			if (err) throw err
+
+			let buffer = new Buffer(data)
+			let parseFile = new Parse.File(sub.file.name, {base64: buffer.toString('base64')})
+			parseFile.save()
+
+			subtitle.set('file', parseFile)
+
+			subtitle.save().then(() => {
+				torrent.add('subtitles', subtitle)
+				torrent.save()
+			})
+		});
 	}
 }
+
+// .then(function() {
+// 	// subtitle.set('file', parseSubFile)
+// 	// subtitle.set('lang', subtitleLang)
+// 	// subtitle.set('torrent', torrent)
+// 	// subtitle.save({
+// 	// 	success: () => {
+// 	// 		console.info('creating a new subtitle finished.')
+// 	// 		torrent.add('subtitles', subtitle)
+// 	// 		torrent.save()
+// 	// 	}
+// 	// })
+// }, function(error) {
+// 	console.log(error)
+// })

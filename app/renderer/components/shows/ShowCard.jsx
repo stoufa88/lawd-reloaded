@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import ApiService from '../../services/api'
-import Magnet from './Magnet'
+import Magnet from '../magnets//Magnet'
 
 let apiService
 
@@ -43,16 +43,16 @@ export default class ShowCard extends React.Component {
   render() {
 		let posterPath = 'http://image.tmdb.org/t/p/w154/' + this.props.poster_path
 
-		let magnets = []
-
-		this.state.torrents.forEach((torrent, index) => {
-			magnets.push(
-				<Magnet key={torrent.id}
-								magnetURL={torrent.get('magnetURL')}
-								index={index}
-								torrentId={torrent.id} />
-			)
-		})
+		// let magnets = []
+		//
+		// this.state.torrents.forEach((torrent, index) => {
+		// 	magnets.push(
+		// 		<Magnet key={torrent.id}
+		// 						magnetURL={torrent.get('magnetURL')}
+		// 						index={index}
+		// 						torrentId={torrent.id} />
+		// 	)
+		// })
 
     return (
 			<div className="card movie-item m-b-1">
@@ -63,7 +63,9 @@ export default class ShowCard extends React.Component {
 
 					<p className="overview">{this.props.overview}</p>
 
-					<Link to={`movie/${this.props.id}`} className="card-link">Details</Link>
+					<div className="movie-item-link">
+						<Link to={`movie/${this.props.id}`} className="text-uppercase">Details</Link>
+					</div>
 				</div>
 			</div>
     );

@@ -15,8 +15,8 @@ class Nav extends React.Component {
 			  <ul className="nav navbar-nav">
 			    <li className="nav-item">
 						<div className="btn-group">
-						  <button type="button" className="btn btn-secondary"><FormattedMessage id="navigation.movies" /></button>
-						  <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						  <button type="button" className="btn btn-link"><FormattedMessage id="navigation.movies" /></button>
+						  <button type="button" className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    <span className="sr-only">Toggle Dropdown</span>
 						  </button>
 						  <div className="dropdown-menu">
@@ -30,8 +30,8 @@ class Nav extends React.Component {
 
 			    <li className="nav-item">
 						<div className="btn-group">
-							<button type="button" className="btn btn-secondary"><FormattedMessage id="navigation.tvs" /></button>
-							<button type="button" className="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button type="button" className="btn btn-link"><FormattedMessage id="navigation.tvs" /></button>
+							<button type="button" className="btn btn-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<span className="sr-only">Toggle Dropdown</span>
 							</button>
 							<div className="dropdown-menu">
@@ -43,7 +43,7 @@ class Nav extends React.Component {
 			  <form className="search-form form-inline pull-xs-right">
 					<div className="search input-group">
 				    <input className="form-control" type="text" placeholder={formatMessage({id: 'navigation.search_placholder'})} />
-				    <button className="btn btn-primary" type="submit">
+				    <button className="btn btn-secondary" type="submit">
 							<FormattedMessage id="navigation.search" />
 						</button>
 					</div>

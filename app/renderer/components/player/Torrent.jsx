@@ -28,13 +28,13 @@ class Torrent extends React.Component {
   }
 
 	componentWillReceiveProps(nextProps) {
-		console.log("Torrent.jsx:componentWillReceiveProps", nextProps.torrentId)
 		this.listenForTorrent(nextProps.torrentId)
 	}
 
 	componentWillUnmount() {
 		window.clearInterval(this.state.intervalId)
 		engine.destroyTorrent(this.props.torrentId)
+		engine.destroyServer()
 	}
 
 	listenForTorrent(torrentId) {
@@ -48,19 +48,19 @@ class Torrent extends React.Component {
 				this.setState({downloadSpeed: filesize(torrent.downloadSpeed)})
 				this.setState({uploadSpeed: filesize(torrent.uploadSpeed)})
 				this.setState({progress: filesize(torrent.progress)})
-			}, 2000)
+			}, 1000)
 
 		this.setState({intervalId: intervalId})
 	}
 
 	resumeDownload() {
 		engine.resumeTorrent(this.props.torrentId)
-		this.listenForTorrent(this.props.torrentId)
+		// this.listenForTorrent(this.props.torrentId)
 	}
 
 	pauseDownload() {
 		engine.pauseTorrent(this.props.torrentId)
-		window.clearInterval(this.state.intervalId)
+		// window.clearInterval(this.state.intervalId)
 	}
 
 	destroyTorrent() {
@@ -73,7 +73,7 @@ class Torrent extends React.Component {
 				<h5 className="text-xs-center">{ this.state.torrentName }</h5>
 
 				<div className="row">
-					<div className="col-xs-4">
+					<div className="col-xs-4 offset-xs-2">
 						<i className="fa fa-arrow-down" aria-hidden="true"></i>
 						<span className="m-l-1">Download: { this.state.downloaded } @ { this.state.downloadSpeed }</span>
 					</div>
@@ -81,11 +81,6 @@ class Torrent extends React.Component {
 					<div className="col-xs-4">
 						<i className="fa fa-arrow-up" aria-hidden="true"></i>
 						<span className="m-l-1">Upload: { this.state.uploaded } @ { this.state.uploadSpeed }</span>
-					</div>
-
-					<div className="col-xs-4">
-						<i className="fa fa-play" aria-hidden="true" onClick={this.resumeDownload} ></i>
-						<i className="fa fa-pause m-l-1" aria-hidden="true" onClick={this.pauseDownload} ></i>
 					</div>
 				</div>
 
@@ -101,3 +96,8 @@ Torrent.propTypes = {
 // <i className="fa fa-stop m-l-1" aria-hidden="true" onClick={this.destroyTorrent} ></i>
 
 export default Torrent
+
+// <div className="col-xs-2 offset-xs-2">
+// 	<i className="fa fa-play" aria-hidden="true" onClick={this.resumeDownload} ></i>
+// 	<i className="fa fa-pause m-l-1" aria-hidden="true" onClick={this.pauseDownload} ></i>
+// </div>
