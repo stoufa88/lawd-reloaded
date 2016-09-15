@@ -93,6 +93,7 @@ export default class ApiService {
 		let Torrent = Parse.Object.extend('Torrent')
 		let query = new Parse.Query(Torrent)
 		query.equalTo('movieId', movieId)
+		query.include('subtitles')
 
 		return query.find().then((results) => {
 			return results

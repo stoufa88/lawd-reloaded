@@ -35,6 +35,15 @@ body {
 .movie-item-details {
 	padding: 15px 15px 0 20px;
 	position: relative;
+	a {
+		color: $gray-dark;
+		text-decoration: none;
+		font-weight: 800;
+		&:hover {
+			color: darken($gray-dark, 15%);
+		}
+	}
+
 	p.genres {
 		font-size: 12px;
 	}
@@ -48,23 +57,14 @@ body {
 	}
 }
 
-.movie-item-link {
+.movie-item-footer {
 	border-top: 1px solid #ececec;
 	position: absolute;
 	padding: 5px 0;
 	bottom: 0;
-	left: 0;
+	left: 15px;
 	right: 0;
-	text-align: center;
-	font-size: 1.2rem;
-	letter-spacing: 1.5px;
-	a {
-		color: $gray;
-		text-decoration: none;
-		&:hover {
-			color: $gray-dark;
-		}
-	}
+	font-size: 0.8rem;
 }
 
 .movie-item-image, .movie-item-details {

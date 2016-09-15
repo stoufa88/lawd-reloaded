@@ -10,62 +10,84 @@ export default class ShowCard extends React.Component {
     super(props)
 
 		this.state = {
-			torrents: []
+			torrents: [],
+			torrentLanguages: [],
+			subtitleLanguages: []
 		}
 
 		apiService = new ApiService()
-
-		this.showInput = this.showInput.bind(this)
-		this.submitMagnet = this.submitMagnet.bind(this)
   }
 
 	componentDidMount() {
 		this.fetchTorrents(this.props.id)
 	}
 
-	showInput() {
-		$(this._input).toggleClass('invisible')
-	}
-
-	submitMagnet(e) {
-		if(e.keyCode == 13) {
-			apiService.addTorrent($(this._input).val(), this.props.id)
-			$(this._input).toggleClass('invisible')
-		}
-	}
-
 	fetchTorrents(movieId) {
-		apiService.fetchTorrentsForMovie(movieId).then((res) => {
-			this.setState({ torrents: res })
+		apiService.fetchTorrentsForMovie(movieId).then((torrents) => {
+			this.countLanguages(torrents)
+			this.setState({ torrents })
 		})
+	}
+
+	countLanguages(torrents) {
+		let torrentLanguages = []
+		let subtitleLanguages = []
+		torrents.forEach((torrent) => {
+			torrentLanguages.push(torrent.get('lang'))
+			torrent.get('subtitles').forEach((subtitle) => {
+				subtitleLanguages.push(subtitle.get('lang'))
+			})
+		})
+
+		this.setState({torrentLanguages})
+		this.setState({subtitleLanguages})
 	}
 
   render() {
 		let posterPath = 'http://image.tmdb.org/t/p/w154/' + this.props.poster_path
 
-		// let magnets = []
-		//
-		// this.state.torrents.forEach((torrent, index) => {
-		// 	magnets.push(
-		// 		<Magnet key={torrent.id}
-		// 						magnetURL={torrent.get('magnetURL')}
-		// 						index={index}
-		// 						torrentId={torrent.id} />
-		// 	)
-		// })
+		let languages
+		if(this.state.torrentLanguages.length > 0) {
+			languages = (
+				<div>
+					<i className="fa fa-language p-r-1" aria-hidden="true"></i>
+					<span>{this.state.torrentLanguages.join(', ')}</span>
+				</div>
+			)
+		}
+
+		let subtitles
+		if(this.state.subtitleLanguages.length > 0) {
+			subtitles = (
+				<div>
+					<i className="fa fa-comment p-r-1" aria-hidden="true"></i>
+					<span>{this.state.subtitleLanguages.join(', ')}</span>
+				</div>
+			)
+		}
+
+		let movieFooter
+		if(languages) {
+			movieFooter = (
+				<div className="movie-item-footer">
+					{languages}
+					{subtitles}
+				</div>
+			)
+		}
 
     return (
 			<div className="card movie-item m-b-1">
 				<img className="movie-item-image" src={posterPath} />
 				<div className="movie-item-details">
-					<h6>{this.props.title}</h6>
+					<Link to={`movie/${this.props.id}`} className="text-uppercase">
+						<h6>{this.props.title}</h6>
+					</Link>
 					<p className="genres text-muted">{this.props.genres.join(', ')}</p>
 
 					<p className="overview">{this.props.overview}</p>
 
-					<div className="movie-item-link">
-						<Link to={`movie/${this.props.id}`} className="text-uppercase">Details</Link>
-					</div>
+					{movieFooter}
 				</div>
 			</div>
     );
