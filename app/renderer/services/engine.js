@@ -1,10 +1,11 @@
 const WebTorrent = require('webtorrent')
-const remote = require('electron').remote
+const {ipcRenderer} = require('electron')
 import srt2vtt from 'srt2vtt'
 
 let _initCalled = false
 let client
 let server
+let downloadPath
 
 export default class Engine {
   constructor () {
@@ -13,14 +14,22 @@ export default class Engine {
 
     _initCalled = true
 
-		console.log('creating a new webtorrent engine..')
+		downloadPath = ipcRenderer.sendSync('download-path-request', '')
+
+		console.log('creating a new webtorrent engine')
+
     client = new WebTorrent()
   }
 
   // Add torrent to engine, return movie file in callback
   addMagnet (magnetUri, cb) {
-    client.add(magnetUri, function (torrent) {
+		let opts = {
+			path: downloadPath
+		}
+
+    client.add(magnetUri, opts, function (torrent) {
 			console.info('new torrent added to engine', torrent.infoHash)
+			console.info('default download path', downloadPath)
 
       cb(torrent)
     })

@@ -3,6 +3,7 @@ import React from 'react'
 import update from 'react-addons-update'
 import ApiService from '../../services/api'
 import ShowCard from './ShowCard'
+import Loader from '../shared/Loader'
 
 let apiService
 
@@ -50,6 +51,7 @@ export default class ShowBox extends React.Component {
 		let { shows, page, sort } = this.state
 		if(nextSort !== sort) {
 			shows = []
+			this.setState({ shows })
 		}
 
 		apiService.getMovies(nextSort, nextPage).then((res) => {
@@ -79,6 +81,10 @@ export default class ShowBox extends React.Component {
 	}
 
   render() {
+		if(this.state.shows.length == 0) {
+				return <Loader />
+		}
+
 		let cards = []
 
 		this.state.shows.forEach((movie) => {

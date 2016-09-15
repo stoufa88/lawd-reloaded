@@ -23,7 +23,7 @@ const App = React.createClass({
   render() {
     return (
 			<div>
-				<Nav />
+				<Nav sort={this.props.params.sort}/>
         <div id="main-content">
           {this.props.children || <p>You are {!this.state.loggedIn && 'not'} logged in.</p>}
 	      </div>

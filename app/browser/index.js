@@ -69,3 +69,10 @@ app.on('activate', function () {
     createWindow();
   }
 });
+
+ipcMain.on('download-path-request', (event, arg) => {
+	var p = app.getPath('videos');
+	console.log(p)
+
+  event.returnValue = p;
+});

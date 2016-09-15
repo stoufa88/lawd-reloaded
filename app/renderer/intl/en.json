@@ -6,14 +6,14 @@
     "login.error": "Wrong login informations",
 
 		"navigation.movies": "Movies",
-		"navigation.movies.popular": "Popular",
-		"navigation.movies.top_rated": "Top rated",
-		"navigation.movies.now_playing": "Now Playing",
-		"navigation.movies.upcoming": "Upcoming",
-
 		"navigation.tvs": "TV Series",
 		"navigation.search_placholder": "Search a movie, a TV Serie",
 		"navigation.search": "Search",
+
+		"navigation.sort.popular": "Popular",
+		"navigation.sort.top_rated": "Top rated",
+		"navigation.sort.now_playing": "Now Playing",
+		"navigation.sort.upcoming": "Upcoming",
 
 		"movie.synopsys": "Synopsys:",
 		"movie.watch_trailer": "Watch trailer"
