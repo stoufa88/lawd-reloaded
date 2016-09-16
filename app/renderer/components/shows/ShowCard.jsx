@@ -17,8 +17,6 @@ export default class ShowCard extends React.Component {
 		}
 
 		apiService = new ApiService()
-
-		this.handleRequestClick = this.handleRequestClick.bind(this)
   }
 
 	componentDidMount() {
@@ -46,10 +44,9 @@ export default class ShowCard extends React.Component {
 		this.setState({subtitleLanguages})
 	}
 
-	handleRequestClick(e) {
+	handleRequestClick(lang) {
 		let { id, title} = this.props
-		console.log($(e))
-		apiService.sendRequest(id, title, e.target.value)
+		apiService.sendRequest(id, title, lang)
 	}
 
   render() {
@@ -106,9 +103,15 @@ export default class ShowCard extends React.Component {
 								<FormattedMessage id="request" />
 							</button>
 						  <div className="dropdown-menu">
-								<button className="dropdown-item" onClick={this.handleRequestClick}><FormattedMessage id="request.lang.english" /></button>
-								<button className="dropdown-item" onClick={this.handleRequestClick}><FormattedMessage id="request.lang.french" /></button>
-								<button className="dropdown-item" onClick={this.handleRequestClick}><FormattedMessage id="request.lang.arabic" /></button>
+								<button className="dropdown-item" onClick={this.handleRequestClick.bind(this, "English")}>
+									<FormattedMessage id="request.lang.english" />
+								</button>
+								<button className="dropdown-item" onClick={this.handleRequestClick.bind(this, "French")}>
+									<FormattedMessage id="request.lang.french" />
+								</button>
+								<button className="dropdown-item" onClick={this.handleRequestClick.bind(this, "Arabic")}>
+									<FormattedMessage id="request.lang.arabic" />
+								</button>
 						  </div>
 						</div>
 					</div>
