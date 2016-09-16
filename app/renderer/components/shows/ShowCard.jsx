@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
+import { FormattedMessage } from 'react-intl'
 import ApiService from '../../services/api'
 import Magnet from '../magnets//Magnet'
 
@@ -16,6 +17,8 @@ export default class ShowCard extends React.Component {
 		}
 
 		apiService = new ApiService()
+
+		this.handleRequestClick = this.handleRequestClick.bind(this)
   }
 
 	componentDidMount() {
@@ -43,6 +46,12 @@ export default class ShowCard extends React.Component {
 		this.setState({subtitleLanguages})
 	}
 
+	handleRequestClick(e) {
+		let { id, title} = this.props
+		console.log($(e))
+		apiService.sendRequest(id, title, e.target.value)
+	}
+
   render() {
 		let posterPath = 'http://image.tmdb.org/t/p/w154/' + this.props.poster_path
 
@@ -66,10 +75,10 @@ export default class ShowCard extends React.Component {
 			)
 		}
 
-		let movieFooter
+		let movieLanguages
 		if(languages) {
-			movieFooter = (
-				<div className="movie-item-footer">
+			movieLanguages = (
+				<div>
 					{languages}
 					{subtitles}
 				</div>
@@ -83,36 +92,28 @@ export default class ShowCard extends React.Component {
 					<Link to={`movie/${this.props.id}`} className="text-uppercase">
 						<h6>{this.props.title}</h6>
 					</Link>
+
 					<p className="genres text-muted">{this.props.genres.join(', ')}</p>
 
 					<p className="overview">{this.props.overview}</p>
 
-					{movieFooter}
+					<div className="movie-item-footer">
+						<div className="pull-xs-left">
+							{movieLanguages}
+						</div>
+						<div className="btn-group btn-group-sm pull-xs-right m-r-1">
+						  <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<FormattedMessage id="request" />
+							</button>
+						  <div className="dropdown-menu">
+								<button className="dropdown-item" onClick={this.handleRequestClick}><FormattedMessage id="request.lang.english" /></button>
+								<button className="dropdown-item" onClick={this.handleRequestClick}><FormattedMessage id="request.lang.french" /></button>
+								<button className="dropdown-item" onClick={this.handleRequestClick}><FormattedMessage id="request.lang.arabic" /></button>
+						  </div>
+						</div>
+					</div>
 				</div>
 			</div>
     );
   }
 }
-
-// <div>
-// 	<i className="fa fa-plus" aria-hidden="true" onClick={this.showInput}></i>
-// 	<input className="form-control" ref={(c) => this._input = c}
-// 		onKeyUp={this.submitMagnet}
-// 		type="url"
-// 		className="invisible"
-// 		placeholder="paste magnet url here"
-// 		 />
-// </div>
-
-// <div className="panel panel-default">
-// 	<div className="panel-heading" role="tab" id="headingOne">
-// 		<h4 className="panel-title">
-// 			<a data-toggle="collapse" data-parent="#accordion" href={`#col-${this.props.id}`} aria-expanded="true" aria-controls={this.props.id}>
-// 				Magnets
-// 			</a>
-// 		</h4>
-// 	</div>
-// 	<div id={`col-${this.props.id}`} className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-// 		{magnets}
-// 	</div>
-// </div>

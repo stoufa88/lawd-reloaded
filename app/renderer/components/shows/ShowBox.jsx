@@ -1,5 +1,6 @@
 
 import React from 'react'
+import { withRouter } from 'react-router'
 import update from 'react-addons-update'
 import ApiService from '../../services/api'
 import ShowCard from './ShowCard'
@@ -7,7 +8,7 @@ import Loader from '../shared/Loader'
 
 let apiService
 
-export default class ShowBox extends React.Component {
+class ShowBox extends React.Component {
   constructor(props) {
     super(props)
 
@@ -16,9 +17,7 @@ export default class ShowBox extends React.Component {
 		this.state = {
 			shows: [],
 			genres: [],
-			scrollListener: null,
-			page: 1,
-			sort: 'popular'
+			scrollListener: null
 		}
   }
 
@@ -42,9 +41,14 @@ export default class ShowBox extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({page: nextProps.location.query.page})
-		this.setState({sort: nextProps.params.sort})
-		this.fetchMovies(nextProps.params.sort, nextProps.location.query.page)
+		let {page, searchQuery} = nextProps.location.query
+		let {sort} = nextProps.params
+
+		if(searchQuery && searchQuery != '') {
+			this.searchMovies(searchQuery)
+		}else {
+			this.fetchMovies(sort, page)
+		}
 	}
 
 	fetchMovies(nextSort, nextPage) {
@@ -58,7 +62,18 @@ export default class ShowBox extends React.Component {
 			let newShows = update(shows, {$push: res.results})
 			this.setState({ shows: newShows })
 		})
+	}
 
+	searchMovies(query) {
+		let { shows } = this.state
+
+		shows = []
+		this.setState({ shows })
+
+		apiService.searchMovies(query).then((res) => {
+			let newShows = update(shows, {$push: res.results})
+			this.setState({ shows: newShows })
+		})
 	}
 
 	handlePageChange() {
@@ -67,7 +82,7 @@ export default class ShowBox extends React.Component {
 		let page = parseInt(location.query.page) || 1
 		page++
 
-		this.props.history.push(location.pathname + '?page=' + page)
+		this.props.router.push(location.pathname + '?page=' + page)
 	}
 
 	fetchTvs() {
@@ -100,7 +115,7 @@ export default class ShowBox extends React.Component {
 		})
 
     return (
-      <div className="container movie-list m-t-2">
+      <div className="container movie-list">
 			  <div className="card-deck">
 					{cards}
 				</div>
@@ -108,3 +123,5 @@ export default class ShowBox extends React.Component {
     );
   }
 }
+
+export default withRouter(ShowBox)

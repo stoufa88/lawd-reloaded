@@ -4,13 +4,16 @@ import 'bootstrap/dist/js/bootstrap.js'
 // Need both React and ReactDOM for the JSX transpiler.
 import React from 'react'
 import { render } from 'react-dom'
+import classNames from 'classnames'
 import { IntlProvider, addLocaleData } from 'react-intl'
 import { hashHistory, Router, Route, Link, IndexRoute } from 'react-router'
 import './app.global.scss';
 
 import Login from './components/users/Login'
 import Logout from './components/users/Logout'
-import Nav from './components/shared/Nav'
+import MainNav from './components/shared/MainNav'
+import TopNav from './components/shared/TopNav'
+import BackLink from './components/shared/BackLink'
 import ShowBox from './components/shows/ShowBox'
 import ShowDetails from './components/shows/ShowDetails'
 import Player from './components/player/Player'
@@ -21,12 +24,43 @@ const App = React.createClass({
   },
 
   render() {
+		const { main, mainNav, topNav, backLink } = this.props
+
     return (
 			<div>
-				<Nav sort={this.props.params.sort}/>
-        <div id="main-content">
-          {this.props.children || <p>You are {!this.state.loggedIn && 'not'} logged in.</p>}
-	      </div>
+				{(() => {
+					if (topNav) {
+						return (
+							<div className="top-nav">
+								{topNav}
+							</div>
+						)
+					}
+				})()}
+
+				{(() => {
+					if (mainNav) {
+						return (
+							<div className="main-nav">
+								{mainNav}
+							</div>
+						)
+					}
+				})()}
+
+				{(() => {
+					if (backLink) {
+						return (
+							<div className="back-link">
+								{backLink}
+							</div>
+						)
+					}
+				})()}
+
+				<div id="main-content">
+          {main}
+        </div>
 			</div>
     )
   }
@@ -52,11 +86,12 @@ render((
   <IntlProvider locale={locale} messages={messages}>
     <Router history={hashHistory}>
       <Route path="/" component={App}>
-				<IndexRoute component={ShowBox} />
-				<Route path="/movies/:sort" component={ShowBox} />
-				<Route path="/tvs/:sort" component={ShowBox} />
-				<Route path="/movie/:id" component={ShowDetails} />
-				<Route path="/player/:torrentId" component={Player} />
+				<IndexRoute components={{main: ShowBox, mainNav: MainNav, topNav: TopNav}} />
+				<Route path="/movies/:sort" components={{main: ShowBox, mainNav: MainNav, topNav: TopNav}} />
+				<Route path="/search/movie" components={{main: ShowBox, mainNav: MainNav, topNav: TopNav}} />
+				<Route path="/tvs/:sort" components={{main: ShowBox,  mainNav: MainNav, topNav: TopNav}} />
+				<Route path="/movie/:id" components={{main: ShowDetails, backLink: BackLink}} />
+				<Route path="/player/:torrentId" components={{main: Player}} />
 				<Route path="login" component={Login} />
       </Route>
     </Router>

@@ -136,7 +136,7 @@ class NewMagnetForm extends React.Component {
 
 				<span onClick={this.handleAddSubtitleClick}>add subtitle</span>
 
-				<input type="submit" className="btn btn-primary" value="Submit" />
+				<input type="submit" className="btn btn-inversed" value="Submit" />
 			</form>
     );
   }

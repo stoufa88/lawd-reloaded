@@ -6,7 +6,7 @@
     "login.error": "Email ou mot de passe incorrect",
 
 		"navigation.movies": "Films",
-		"navigation.tvs": "Télévision",
+		"navigation.tvs": "Séries TV",
 
 		"navigation.search_placholder": "Rechercher un film, une série",
 		"navigation.search": "Rechercher",
@@ -18,6 +18,11 @@
 		"navigation.sort.upcoming": "Prochainement",
 
 		"movie.synopsys": "Synopsys:",
-		"movie.watch_trailer": "Regarder la bande annonce"
+		"movie.watch_trailer": "Regarder la bande annonce",
+
+		"request": "Je le veux",
+		"request.lang.arabic": "Arabe",
+		"request.lang.english": "Anglais",
+		"request.lang.french": "Français"
   }
 }

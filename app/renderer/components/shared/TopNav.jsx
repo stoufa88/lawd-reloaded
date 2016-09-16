@@ -2,13 +2,16 @@ import React, {PropTypes} from 'react'
 import { Link } from 'react-router'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-class Nav extends React.Component {
+class TopNav extends React.Component {
 	constructor() {
 		super()
 
 		this.state = {
-			sortTitle: ''
+			sortTitle: '',
+			searchQuery: ''
 		}
+
+		this.handleSearchTextChange = this.handleSearchTextChange.bind(this)
 	}
 
 	componentDidMount() {
@@ -19,38 +22,42 @@ class Nav extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		const {formatMessage} = nextProps.intl
 
-		switch (nextProps.sort) {
+		console.log(nextProps)
+
+		switch (nextProps.params.sort) {
 			case 'popular':
 				this.setState({sortTitle: formatMessage({id: 'navigation.sort.popular'})})
-				break;
+				break
 			case 'now_playing':
 				this.setState({sortTitle: formatMessage({id: 'navigation.sort.now_playing'})})
-
-				break;
+				break
 			case 'top_rated':
 				this.setState({sortTitle: formatMessage({id: 'navigation.sort.top_rated'})})
-				break;
+				break
 			default:
 		}
 	}
 
+	handleSearchTextChange(e) {
+		this.setState({searchQuery: e.target.value})
+	}
+
   render() {
 		const {formatMessage} = this.props.intl
-		// <a className="navbar-brand" href="#">Lawd</a>
+
+		console.log("hellooooooo", this.state.sortTitle)
 
     return(
 			<nav className="navbar navbar-fixed-top navbar-dark bg-inverse">
-			  <ul className="nav navbar-nav">
-			    <li className="nav-item current">
-						<Link className="nav-link" to="/movies/popular"><FormattedMessage id="navigation.movies" /></Link>
-			    </li>
+				<a className="navbar-brand" href="#">Lawd</a>
 
+			  <ul className="nav navbar-nav">
 					<li className="nav-item">
 						<div className="btn-group">
-						  <button type="button" className="btn btn-link">{this.state.sortTitle}</button>
-						  <button type="button" className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    <span className="sr-only">Toggle Dropdown</span>
-						  </button>
+							<button type="button" className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								{this.state.sortTitle}
+							</button>
+
 						  <div className="dropdown-menu">
 								<Link className="dropdown-item" to="/movies/popular"><FormattedMessage id="navigation.sort.popular" /></Link>
 								<Link className="dropdown-item" to="/movies/now_playing"><FormattedMessage id="navigation.sort.now_playing" /></Link>
@@ -60,25 +67,27 @@ class Nav extends React.Component {
 			    </li>
 			  </ul>
 
-			  <form className="search-form form-inline pull-xs-right">
+			  <div className="search-form pull-xs-right">
 					<div className="search input-group">
-				    <input className="form-control" type="text" placeholder={formatMessage({id: 'navigation.search_placholder'})} />
-				    <button className="btn btn-secondary" type="submit">
+				    <input className="form-control" type="text"
+									placeholder={formatMessage({id: 'navigation.search_placholder'})}
+									onChange={this.handleSearchTextChange}/>
+				    <Link className="btn btn-secondary" to={`/search/movie?searchQuery=${this.state.searchQuery}`}>
 							<FormattedMessage id="navigation.search" />
-						</button>
+						</Link>
 					</div>
-			  </form>
+			  </div>
 			</nav>
 		)
   }
 }
 
-Nav.propTypes = {
+TopNav.propTypes = {
   intl: intlShape.isRequired,
 	sort: PropTypes.string
 }
 
-export default injectIntl(Nav)
+export default injectIntl(TopNav)
 
 // <li className="nav-item">
 // 	<div className="btn-group">

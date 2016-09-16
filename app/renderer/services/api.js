@@ -37,9 +37,41 @@ export default class ApiService {
 	    });
 	}
 
+	searchMovies(query) {
+		console.log('Search query = ', query)
+
+		var options = {
+	    uri: `http://api.themoviedb.org/3/search/movie/?query=${query}&language=${LANG}&api_key=${API_KEY}`,
+	    json: true
+		}
+
+		return rp(options)
+	    .then(function (res) {
+				return res
+	    })
+	    .catch(function (err) {
+	      console.error(err)
+	    });
+	}
+
 	getMovieById(id) {
 		var options = {
 			uri: `http://api.themoviedb.org/3/movie/${id}?language=${LANG}&api_key=${API_KEY}`,
+			json: true
+		}
+
+		return rp(options)
+			.then(function (res) {
+				return res
+			})
+			.catch(function (err) {
+				console.error(err)
+			});
+	}
+
+	getMovieCredits(id) {
+		var options = {
+			uri: `http://api.themoviedb.org/3/movie/${id}/credits?language=${LANG}&api_key=${API_KEY}`,
 			json: true
 		}
 
@@ -141,6 +173,17 @@ export default class ApiService {
 				torrent.save()
 			})
 		});
+	}
+
+	sendRequest(movieId, movieName, lang) {
+		let Request = Parse.Object.extend('Request')
+		let request = new Request()
+
+		request.set('movieId', movieId)
+		request.set('movieName', movieName)
+		request.set('lang', lang)
+
+		request.save()
 	}
 }
 

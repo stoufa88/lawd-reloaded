@@ -7,8 +7,10 @@
 body {
 	-webkit-user-select: none;
 	cursor: default;
-	padding-top: 54px;
 }
+
+// Navigation ---------------------------------------------------------
+// -------------------------------------------------------------------
 
 .navbar-brand {
 	border-right: 2px solid #484848;
@@ -16,17 +18,63 @@ body {
 }
 
 .search-form {
+	input, a {
+		border-radius: 0px;
+		border: 0;
+		background: rgba(0, 0, 0, 0.18);
+
+	}
 	input {
 		width: 300px !important;
 	}
+}
 
-	button {
-		border-radius: 0px;
+.top-nav .navbar {
+  box-shadow: 1px 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.main-nav {
+	position: fixed;
+	height: calc(100vh - 54px);
+	width: 4rem;
+	text-align: center;
+	top: 54px;
+	background: darken($brand-inverse, 5%);
+	li {
+		padding-top: 1.5rem;
+		i {
+			display: block;
+		}
+	}
+	.versionNumber {
+		position: absolute;
+		bottom: 0;
+		color: #ddd;
+		left: 15px;
+	}
+}
+
+.back-link {
+	position: fixed;
+	top: 1rem;
+	right: 2rem;
+	a {
+		line-height: 16px;
+	}
+	i {
+		font-size: 2rem;
+		color: #b50000;
 	}
 }
 
 // Movie list ---------------------------------------------------------
 // -------------------------------------------------------------------
+.movie-list {
+	margin-top: 54px;
+	padding-top: 1rem;
+	padding-left: 4rem;
+}
+
 .movie-item {
 	display: inline-flex;
 	border: none;
@@ -66,6 +114,9 @@ body {
 	left: 15px;
 	right: 0;
 	font-size: 0.8rem;
+	i{
+		color: $brand-inverse;
+	}
 }
 
 .movie-item-image, .movie-item-details {
@@ -73,10 +124,18 @@ body {
 
 // Movie Details ---------------------------------------------------------
 // -------------------------------------------------------------------
+.example-appear {
+  opacity: 0.01;
+}
+
+.example-appear.example-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
 
 .movie-details {
 	color: #fff;
-	min-height: calc(100vh - 54px);
+	min-height: 100vh;
 }
 
 .movie-popularity {
@@ -88,6 +147,17 @@ body {
   font-size: 1.7rem;
   background: #00000c;
 	margin: 0 auto;
+}
+
+.movie-note {
+	font-size: 2rem;
+}
+
+.cast-image {
+	width: 75px;
+	height: 75px;
+	border-radius: 50%;
+	object-fit: cover;
 }
 
 ul.movie-details-magnet {
