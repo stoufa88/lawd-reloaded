@@ -22,8 +22,6 @@ class TopNav extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		const {formatMessage} = nextProps.intl
 
-		console.log(nextProps)
-
 		switch (nextProps.params.sort) {
 			case 'popular':
 				this.setState({sortTitle: formatMessage({id: 'navigation.sort.popular'})})
@@ -44,8 +42,6 @@ class TopNav extends React.Component {
 
   render() {
 		const {formatMessage} = this.props.intl
-
-		console.log("hellooooooo", this.state.sortTitle)
 
     return(
 			<nav className="navbar navbar-fixed-top navbar-dark bg-inverse">

@@ -9,6 +9,21 @@ body {
 	cursor: default;
 }
 
+::-webkit-scrollbar {
+  width: 13px;
+  background-color: rgb(40, 40, 40);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 1px solid rgb(40, 40, 40);
+  border-radius: 10px;
+  background: linear-gradient(to right, rgb(90, 90, 90), rgb(80, 80, 80));
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(40, 40, 40);
+}
+
 // Navigation ---------------------------------------------------------
 // -------------------------------------------------------------------
 
@@ -58,12 +73,13 @@ body {
 	position: fixed;
 	top: 1rem;
 	right: 2rem;
+	z-index: 1000;
 	a {
 		line-height: 16px;
 	}
 	i {
 		font-size: 2rem;
-		color: #b50000;
+		color: #777777;
 	}
 }
 
@@ -154,10 +170,16 @@ body {
 }
 
 .cast-image {
-	width: 75px;
-	height: 75px;
+	width: 70px;
+	height: 70px;
 	border-radius: 50%;
 	object-fit: cover;
+	border: 2px solid #fff;
+}
+
+.magnets {
+	max-height: 800px;
+	overflow-y: overlay;
 }
 
 ul.movie-details-magnet {
@@ -177,6 +199,17 @@ ul.movie-details-magnet {
 		word-wrap: break-word;
 		font-size: 12px;
 		color: #fff;
+	}
+}
+
+.movie-details-videos-content{
+	height: 300px;
+	width: auto;
+	overflow: hidden;
+	overflow-x: auto;
+	white-space: nowrap;
+	.video {
+		display: inline-block;
 	}
 }
 

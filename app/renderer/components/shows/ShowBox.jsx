@@ -40,9 +40,25 @@ class ShowBox extends React.Component {
 		$(window).off("scroll", this.state.scrollListener)
 	}
 
+	shouldComponentUpdate(nextProps, nextState) {
+		if(nextState.genres.length > 0) {
+			return true
+		}else {
+			return false
+		}
+	}
+
 	componentWillReceiveProps(nextProps) {
 		let {page, searchQuery} = nextProps.location.query
 		let {sort} = nextProps.params
+
+		console.log(this.props.params.sort, sort)
+		console.log(this.props.location.query.page, page)
+
+		if(sort == this.props.params.sort && page == this.props.location.query.page) {
+			console.info('asbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+			return
+		}
 
 		if(searchQuery && searchQuery != '') {
 			this.searchMovies(searchQuery)
@@ -52,8 +68,9 @@ class ShowBox extends React.Component {
 	}
 
 	fetchMovies(nextSort, nextPage) {
-		let { shows, page, sort } = this.state
-		if(nextSort !== sort) {
+		let { shows } = this.state
+
+		if(nextSort != this.props.params.sort) {
 			shows = []
 			this.setState({ shows })
 		}
@@ -97,7 +114,7 @@ class ShowBox extends React.Component {
 
   render() {
 		if(this.state.shows.length == 0) {
-				return <Loader />
+			return <Loader />
 		}
 
 		let cards = []

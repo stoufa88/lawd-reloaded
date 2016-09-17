@@ -17,6 +17,7 @@ export default class ShowDetails extends React.Component {
 			trailer_url: null,
 			credits: [],
 			torrents: [],
+			videos: [],
 			showMagnetForm: false
 		}
 
@@ -29,6 +30,7 @@ export default class ShowDetails extends React.Component {
 		this.fetchMovie(id)
 		this.fetchCredits(id)
 		this.fetchTorrents(id)
+		this.fetchVideos(id)
 	}
 
 	fetchMovie(id) {
@@ -46,9 +48,15 @@ export default class ShowDetails extends React.Component {
 	}
 
 	fetchTorrents(id) {
-		console.log(id)
 		apiService.fetchTorrentsForMovie(parseInt(id)).then((res) => {
 			this.setState({ torrents: res })
+		})
+	}
+
+	fetchVideos(id) {
+		apiService.getMovieVideos(id).then((res) => {
+			console.log(res.results)
+			this.setState({ videos: res.results })
 		})
 	}
 
@@ -85,6 +93,15 @@ export default class ShowDetails extends React.Component {
 			)
 		})
 
+		let videos = []
+		this.state.videos.forEach((video, i) => {
+			videos.push(
+				<div className="video" key={i}>
+					<iframe width="560" height="300" src={`https://www.youtube.com/embed/${video.key}`} frameBorder="0"></iframe>
+				</div>
+			)
+		})
+
     return (
 			<ReactCSSTransitionGroup
         transitionName="example"
@@ -106,10 +123,6 @@ export default class ShowDetails extends React.Component {
 								<strong><FormattedMessage id="movie.synopsys" /></strong><br/>
 								{movie.overview}
 							</p>
-							<p>
-								<i className="fa fa-play m-r-1"></i>
-								<FormattedMessage id="movie.watch_trailer" />
-							</p>
 
 							<div className="d-inline-block">
 								<p className="movie-popularity text-xs-center">{Math.floor(movie.popularity)} %</p>
@@ -128,7 +141,7 @@ export default class ShowDetails extends React.Component {
 								})()}
 							</div>
 						</div>
-						<div className="col-sm-4">
+						<div className="col-sm-4 magnets">
 							<h3 className="text-sm-center">Liens</h3>
 							<ul className="movie-details-magnet">
 								{magnets}
@@ -146,6 +159,13 @@ export default class ShowDetails extends React.Component {
 									return <i className="fa fa-plus" aria-hidden="true" onClick={this.toggleMagnetForm}></i>
 								}
 				      })()}
+						</div>
+					</div>
+
+					<div className="movie-details-videos m-t-3 p-l-1 p-r-1">
+						<h4><FormattedMessage id="movie.videos" /></h4>
+						<div className="movie-details-videos-content">
+							{videos}
 						</div>
 					</div>
 				</div>

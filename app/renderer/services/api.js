@@ -84,6 +84,21 @@ export default class ApiService {
 			});
 	}
 
+	getMovieVideos(id) {
+		var options = {
+			uri: `http://api.themoviedb.org/3/movie/${id}/videos?language=${LANG}&api_key=${API_KEY}`,
+			json: true
+		}
+
+		return rp(options)
+			.then(function (res) {
+				return res
+			})
+			.catch(function (err) {
+				console.error(err)
+			});
+	}
+
 	getGenres() {
 		var options = {
 			uri: `http://api.themoviedb.org/3/genre/movie/list?language=${LANG}&api_key=${API_KEY}`,
@@ -115,6 +130,7 @@ export default class ApiService {
 	getTorrentById(torrentId) {
 		let Torrent = Parse.Object.extend('Torrent')
 		let query = new Parse.Query(Torrent)
+		query.include('subtitles')
 
 		return query.get(torrentId).then((result) => {
 			return result
