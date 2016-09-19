@@ -29,10 +29,15 @@ class TopNav extends React.Component {
 			case 'now_playing':
 				this.setState({sortTitle: formatMessage({id: 'navigation.sort.now_playing'})})
 				break
+			case 'on_the_air':
+				this.setState({sortTitle: formatMessage({id: 'navigation.sort.on_the_air'})})
+				break
 			case 'top_rated':
 				this.setState({sortTitle: formatMessage({id: 'navigation.sort.top_rated'})})
 				break
 			default:
+				this.setState({sortTitle: formatMessage({id: 'navigation.sort.popular'})})
+				break
 		}
 	}
 
@@ -42,6 +47,53 @@ class TopNav extends React.Component {
 
   render() {
 		const {formatMessage} = this.props.intl
+		const {path} = this.props.route
+		
+		let sortLinks
+		let searchArea
+
+		switch (path) {
+			case 'movies':
+				sortLinks = (
+					<div className="dropdown-menu">
+						<Link className="dropdown-item" to="/movies/popular"><FormattedMessage id="navigation.sort.popular" /></Link>
+						<Link className="dropdown-item" to="/movies/now_playing"><FormattedMessage id="navigation.sort.now_playing" /></Link>
+						<Link className="dropdown-item" to="/movies/top_rated"><FormattedMessage id="navigation.sort.top_rated" /></Link>
+					</div>
+				)
+				searchArea = (
+					<div className="search input-group">
+				    <input className="form-control" type="text"
+									placeholder={formatMessage({id: 'navigation.search.movie_placeholder'})}
+									onChange={this.handleSearchTextChange}/>
+						<Link className="btn btn-secondary" to={`/search/movie?searchQuery=${this.state.searchQuery}`}>
+							<FormattedMessage id="navigation.search" />
+						</Link>
+					</div>
+				)
+				break;
+			case 'tvs':
+				sortLinks = (
+					<div className="dropdown-menu">
+						<Link className="dropdown-item" to="/tvs/popular"><FormattedMessage id="navigation.sort.popular" /></Link>
+						<Link className="dropdown-item" to="/tvs/on_the_air"><FormattedMessage id="navigation.sort.on_the_air" /></Link>
+						<Link className="dropdown-item" to="/tvs/top_rated"><FormattedMessage id="navigation.sort.top_rated" /></Link>
+					</div>
+				)
+				searchArea = (
+					<div className="search input-group">
+						<input className="form-control" type="text"
+									placeholder={formatMessage({id: 'navigation.search.tv_placeholder'})}
+									onChange={this.handleSearchTextChange}/>
+						<Link className="btn btn-secondary" to={`/search/tv?searchQuery=${this.state.searchQuery}`}>
+							<FormattedMessage id="navigation.search" />
+						</Link>
+					</div>
+				)
+				break;
+			default:
+
+		}
 
     return(
 			<nav className="navbar navbar-fixed-top navbar-dark bg-inverse">
@@ -54,24 +106,13 @@ class TopNav extends React.Component {
 								{this.state.sortTitle}
 							</button>
 
-						  <div className="dropdown-menu">
-								<Link className="dropdown-item" to="/movies/popular"><FormattedMessage id="navigation.sort.popular" /></Link>
-								<Link className="dropdown-item" to="/movies/now_playing"><FormattedMessage id="navigation.sort.now_playing" /></Link>
-								<Link className="dropdown-item" to="/movies/top_rated"><FormattedMessage id="navigation.sort.top_rated" /></Link>
-						  </div>
+							{sortLinks}
 						</div>
 			    </li>
 			  </ul>
 
 			  <div className="search-form pull-xs-right">
-					<div className="search input-group">
-				    <input className="form-control" type="text"
-									placeholder={formatMessage({id: 'navigation.search_placholder'})}
-									onChange={this.handleSearchTextChange}/>
-				    <Link className="btn btn-secondary" to={`/search/movie?searchQuery=${this.state.searchQuery}`}>
-							<FormattedMessage id="navigation.search" />
-						</Link>
-					</div>
+					{searchArea}
 			  </div>
 			</nav>
 		)

@@ -2,7 +2,8 @@ import React from 'react'
 import { Link } from 'react-router'
 import { FormattedMessage } from 'react-intl'
 import ApiService from '../../services/api'
-import Magnet from '../magnets//Magnet'
+import RequestButton from './RequestButton'
+import Magnet from '../magnets/Magnet'
 
 let apiService
 
@@ -86,7 +87,7 @@ export default class ShowCard extends React.Component {
 			<div className="card movie-item m-b-1">
 				<img className="movie-item-image" src={posterPath} />
 				<div className="movie-item-details">
-					<Link to={`movie/${this.props.id}`} className="text-uppercase">
+					<Link to={`${this.props.routeBase}/${this.props.id}`} className="text-uppercase">
 						<h6>{this.props.title}</h6>
 					</Link>
 
@@ -98,22 +99,8 @@ export default class ShowCard extends React.Component {
 						<div className="pull-xs-left">
 							{movieLanguages}
 						</div>
-						<div className="btn-group btn-group-sm pull-xs-right m-r-1">
-						  <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<FormattedMessage id="request" />
-							</button>
-						  <div className="dropdown-menu">
-								<button className="dropdown-item" onClick={this.handleRequestClick.bind(this, "English")}>
-									<FormattedMessage id="request.lang.english" />
-								</button>
-								<button className="dropdown-item" onClick={this.handleRequestClick.bind(this, "French")}>
-									<FormattedMessage id="request.lang.french" />
-								</button>
-								<button className="dropdown-item" onClick={this.handleRequestClick.bind(this, "Arabic")}>
-									<FormattedMessage id="request.lang.arabic" />
-								</button>
-						  </div>
-						</div>
+
+						<RequestButton id={this.props.id} title={this.props.title}/>
 					</div>
 				</div>
 			</div>

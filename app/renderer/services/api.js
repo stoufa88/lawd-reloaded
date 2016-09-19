@@ -5,7 +5,7 @@ let config = require('../../config.json')
 
 let instance = null
 const API_KEY = config.api_key
-const LANG = 'fr'
+let LANG = (navigator.language).indexOf('fr') > -1 ? 'fr' : 'en'
 
 export default class ApiService {
   constructor() {
@@ -37,6 +37,24 @@ export default class ApiService {
 	    });
 	}
 
+	getTvs(sort="popular", page=1) {
+		console.log('Sort = ', sort)
+		console.log('page = ', page)
+
+		var options = {
+	    uri: `http://api.themoviedb.org/3/tv/${sort}?page=${page}&language=${LANG}&api_key=${API_KEY}`,
+	    json: true
+		}
+
+		return rp(options)
+	    .then(function (res) {
+				return res
+	    })
+	    .catch(function (err) {
+	      console.error(err)
+	    });
+	}
+
 	searchMovies(query) {
 		console.log('Search query = ', query)
 
@@ -54,9 +72,26 @@ export default class ApiService {
 	    });
 	}
 
+	searchTvs(query) {
+		console.log('Search query = ', query)
+
+		var options = {
+			uri: `http://api.themoviedb.org/3/search/tv/?query=${query}&language=${LANG}&api_key=${API_KEY}`,
+			json: true
+		}
+
+		return rp(options)
+			.then(function (res) {
+				return res
+			})
+			.catch(function (err) {
+				console.error(err)
+			});
+	}
+
 	getMovieById(id) {
 		var options = {
-			uri: `http://api.themoviedb.org/3/movie/${id}?language=${LANG}&api_key=${API_KEY}`,
+			uri: `http://api.themoviedb.org/3/movie/${id}?language=${LANG}&append_to_response=credits,videos&api_key=${API_KEY}`,
 			json: true
 		}
 
@@ -69,9 +104,9 @@ export default class ApiService {
 			});
 	}
 
-	getMovieCredits(id) {
+	getTvById(id) {
 		var options = {
-			uri: `http://api.themoviedb.org/3/movie/${id}/credits?language=${LANG}&api_key=${API_KEY}`,
+			uri: `http://api.themoviedb.org/3/tv/${id}?language=${LANG}&append_to_response=credits,videos&api_key=${API_KEY}`,
 			json: true
 		}
 
@@ -84,9 +119,9 @@ export default class ApiService {
 			});
 	}
 
-	getMovieVideos(id) {
+	getTvSeason(tvId, seasonNumber) {
 		var options = {
-			uri: `http://api.themoviedb.org/3/movie/${id}/videos?language=${LANG}&api_key=${API_KEY}`,
+			uri: `http://api.themoviedb.org/3/tv/${tvId}/season/${seasonNumber}?language=${LANG}&api_key=${API_KEY}`,
 			json: true
 		}
 

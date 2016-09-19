@@ -1,22 +1,25 @@
 import React, {PropTypes} from 'react'
-import { Link } from 'react-router'
+import { withRouter } from 'react-router'
 
 class BackLink extends React.Component {
 	constructor() {
 		super()
+
+		this.goBack = this.goBack.bind(this)
+	}
+
+	goBack(e) {
+		e.preventDefault()
+		this.props.router.goBack()
 	}
 
   render() {
     return(
-			<Link to="/">
+			<button onClick={this.goBack}>
 				<i className="fa fa-times" aria-hidden="true"></i>
-			</Link>
+			</button>
 		)
   }
 }
 
-// BackLink.propTypes = {
-//   intl: intlShape.isRequired
-// }
-
-export default BackLink
+export default withRouter(BackLink)

@@ -8,18 +8,22 @@
 		"navigation.movies": "Films",
 		"navigation.tvs": "Séries TV",
 
-		"navigation.search_placholder": "Rechercher un film, une série",
 		"navigation.search": "Rechercher",
+		"navigation.search.movie_placeholder": "Rechercher un film",
+		"navigation.search.tv_placeholder": "Rechercher une série TV",
 
 		"navigation.sort": "Tri",
 		"navigation.sort.popular": "Populaire",
 		"navigation.sort.top_rated": "Meilleurs",
 		"navigation.sort.now_playing": "Au cinéma",
+		"navigation.sort.on_the_air": "En cours",
 		"navigation.sort.upcoming": "Prochainement",
 
-		"movie.synopsys": "Synopsys:",
-		"movie.videos": "Vidéos",
-		"movie.similar": "Similaires",
+		"show.synopsys": "Synopsys:",
+		"show.videos": "Vidéos",
+		"show.seasons": "Saisons",
+		"show.season": "Saison",
+		"show.episodes": "Episodes",
 
 		"request": "Je le veux",
 		"request.lang.arabic": "Arabe",

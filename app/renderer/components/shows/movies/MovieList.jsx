@@ -1,21 +1,20 @@
-
 import React from 'react'
 import { withRouter } from 'react-router'
 import update from 'react-addons-update'
-import ApiService from '../../services/api'
-import ShowCard from './ShowCard'
-import Loader from '../shared/Loader'
+import ApiService from '../../../services/api'
+import ShowCard from './../ShowCard'
+import Loader from '../../shared/Loader'
 
 let apiService
 
-class ShowBox extends React.Component {
+class MovieList extends React.Component {
   constructor(props) {
     super(props)
 
 		apiService = new ApiService()
 
 		this.state = {
-			shows: [],
+			movies: [],
 			genres: [],
 			scrollListener: null
 		}
@@ -23,6 +22,7 @@ class ShowBox extends React.Component {
 
 	componentDidMount() {
 		let self = this
+
 		this.fetchMovies()
 		this.fetchGenres()
 
@@ -54,8 +54,12 @@ class ShowBox extends React.Component {
 
 		console.log(this.props.params.sort, sort)
 		console.log(this.props.location.query.page, page)
+		console.log(this.props.location.pathname, nextProps.location.pathname)
 
-		if(sort == this.props.params.sort && page == this.props.location.query.page) {
+		if(sort == this.props.params.sort &&
+			 page == this.props.location.query.page &&
+			 searchQuery == this.props.location.query.searchQuery &&
+		 		nextProps.location.pathname == this.props.location.pathname) {
 			console.info('asbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 			return
 		}
@@ -68,28 +72,29 @@ class ShowBox extends React.Component {
 	}
 
 	fetchMovies(nextSort, nextPage) {
-		let { shows } = this.state
+		let { movies } = this.state
 
 		if(nextSort != this.props.params.sort) {
-			shows = []
-			this.setState({ shows })
+			movies = []
+			this.setState({ movies })
 		}
 
 		apiService.getMovies(nextSort, nextPage).then((res) => {
-			let newShows = update(shows, {$push: res.results})
-			this.setState({ shows: newShows })
+			let newMovies = update(movies, {$push: res.results})
+			this.setState({ movies: newMovies })
 		})
+
 	}
 
 	searchMovies(query) {
-		let { shows } = this.state
+		let { movies } = this.state
 
-		shows = []
-		this.setState({ shows })
+		movies = []
+		this.setState({ movies })
 
 		apiService.searchMovies(query).then((res) => {
-			let newShows = update(shows, {$push: res.results})
-			this.setState({ shows: newShows })
+			let newMovies = update(shows, {$push: res.results})
+			this.setState({ movies: newMovies })
 		})
 	}
 
@@ -102,10 +107,6 @@ class ShowBox extends React.Component {
 		this.props.router.push(location.pathname + '?page=' + page)
 	}
 
-	fetchTvs() {
-
-	}
-
 	fetchGenres() {
 		apiService.getGenres().then((res) => {
 			this.setState({ genres: res.genres })
@@ -113,13 +114,13 @@ class ShowBox extends React.Component {
 	}
 
   render() {
-		if(this.state.shows.length == 0) {
+		if(this.state.movies.length == 0) {
 			return <Loader />
 		}
 
 		let cards = []
 
-		this.state.shows.forEach((movie) => {
+		this.state.movies.forEach((movie) => {
 			let genres = apiService.getGenresByIds(this.state.genres, movie.genre_ids)
 
 			cards.push(<ShowCard
@@ -128,7 +129,8 @@ class ShowBox extends React.Component {
 				poster_path={movie.poster_path}
 				genres={genres}
 				overview={movie.overview}
-				key={movie.id} />)
+				key={movie.id}
+				routeBase="movie" />)
 		})
 
     return (
@@ -141,4 +143,4 @@ class ShowBox extends React.Component {
   }
 }
 
-export default withRouter(ShowBox)
+export default withRouter(MovieList)

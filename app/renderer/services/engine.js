@@ -18,7 +18,7 @@ export default class Engine {
 
 		console.log('creating a new webtorrent engine')
 
-    client = new WebTorrent()
+    client = new WebTorrent({maxConns: 150})
   }
 
   // Add torrent to engine, return movie file in callback

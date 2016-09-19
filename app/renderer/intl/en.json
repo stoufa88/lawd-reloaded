@@ -7,16 +7,21 @@
 
 		"navigation.movies": "Movies",
 		"navigation.tvs": "TV Series",
-		"navigation.search_placholder": "Search a movie, a TV Serie",
 		"navigation.search": "Search",
+		"navigation.search.movie_placeholder": "Search a movie",
+		"navigation.search.tv_placeholder": "Search a TV serie",
 
 		"navigation.sort.popular": "Popular",
 		"navigation.sort.top_rated": "Top rated",
 		"navigation.sort.now_playing": "Now Playing",
+		"navigation.sort.on_the_air": "On the air",
 		"navigation.sort.upcoming": "Upcoming",
 
-		"movie.synopsys": "Synopsys:",
-		"movie.videos": "Videos",
+		"show.synopsys": "Synopsys:",
+		"show.videos": "Videos",
+		"show.seasons": "Seasons",
+		"show.season": "Season",
+		"show.episodes": "Episodes",
 
 		"request": "I want it",
 		"request.lang.arabic": "Arabic",

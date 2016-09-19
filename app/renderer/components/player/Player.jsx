@@ -41,11 +41,13 @@ class Player extends React.Component {
 
 	serveTorrent(torrentId) {
 		apiService.getTorrentById(torrentId).then((torrent) => {
-			torrent.get('subtitles').forEach((subtitle) => {
-				subtitle.fetch().then((subtitle) => {
-					this.addRemoteTextTrack(subtitle)
+			if(torrent.get('subtitles')) {
+				torrent.get('subtitles').forEach((subtitle) => {
+					subtitle.fetch().then((subtitle) => {
+						this.addRemoteTextTrack(subtitle)
+					})
 				})
-			})
+			}
 
 			engine.addMagnet(torrent.get('magnetURL'), ((torrent) => {
 				engine.serve(torrent.infoHash)

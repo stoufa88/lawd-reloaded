@@ -3,6 +3,8 @@
 @import '~font-awesome/css/font-awesome.css';
 @import '~video.js/dist/video-js.css';
 @import './assets/stylesheets/wandering_cubes';
+@import './assets/stylesheets/_navigation';
+@import './assets/stylesheets/show_details';
 
 body {
 	-webkit-user-select: none;
@@ -24,64 +26,6 @@ body {
   background-color: rgb(40, 40, 40);
 }
 
-// Navigation ---------------------------------------------------------
-// -------------------------------------------------------------------
-
-.navbar-brand {
-	border-right: 2px solid #484848;
-	padding-right: 15px;
-}
-
-.search-form {
-	input, a {
-		border-radius: 0px;
-		border: 0;
-		background: rgba(0, 0, 0, 0.18);
-
-	}
-	input {
-		width: 300px !important;
-	}
-}
-
-.top-nav .navbar {
-  box-shadow: 1px 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.main-nav {
-	position: fixed;
-	height: calc(100vh - 54px);
-	width: 4rem;
-	text-align: center;
-	top: 54px;
-	background: darken($brand-inverse, 5%);
-	li {
-		padding-top: 1.5rem;
-		i {
-			display: block;
-		}
-	}
-	.versionNumber {
-		position: absolute;
-		bottom: 0;
-		color: #ddd;
-		left: 15px;
-	}
-}
-
-.back-link {
-	position: fixed;
-	top: 1rem;
-	right: 2rem;
-	z-index: 1000;
-	a {
-		line-height: 16px;
-	}
-	i {
-		font-size: 2rem;
-		color: #777777;
-	}
-}
 
 // Movie list ---------------------------------------------------------
 // -------------------------------------------------------------------
@@ -130,90 +74,11 @@ body {
 	left: 15px;
 	right: 0;
 	font-size: 0.8rem;
-	i{
-		color: $brand-inverse;
-	}
+	color: $brand-success;
 }
 
 .movie-item-image, .movie-item-details {
 }
-
-// Movie Details ---------------------------------------------------------
-// -------------------------------------------------------------------
-.example-appear {
-  opacity: 0.01;
-}
-
-.example-appear.example-appear-active {
-  opacity: 1;
-  transition: opacity .5s ease-in;
-}
-
-.movie-details {
-	color: #fff;
-	min-height: 100vh;
-}
-
-.movie-popularity {
-	border-radius: 50%;
-	border: 2px solid #fff;
-	width: 100px;
-	height: 100px;
-	line-height: 92px;
-  font-size: 1.7rem;
-  background: #00000c;
-	margin: 0 auto;
-}
-
-.movie-note {
-	font-size: 2rem;
-}
-
-.cast-image {
-	width: 70px;
-	height: 70px;
-	border-radius: 50%;
-	object-fit: cover;
-	border: 2px solid #fff;
-}
-
-.magnets {
-	max-height: 800px;
-	overflow-y: overlay;
-}
-
-ul.movie-details-magnet {
-	background: rgba(51, 51, 51, 0.37);
-	border-radius: 5px;
-	padding-left: 0;
-	li {
-		list-style-type: none;
-		padding: 0.5rem 1rem;
-		color: #fff;
-		border-bottom: 1px solid #333;
-	}
-	a  {
-		color: #afafaf;
-	}
-	p {
-		word-wrap: break-word;
-		font-size: 12px;
-		color: #fff;
-	}
-}
-
-.movie-details-videos-content{
-	height: 300px;
-	width: auto;
-	overflow: hidden;
-	overflow-x: auto;
-	white-space: nowrap;
-	.video {
-		display: inline-block;
-	}
-}
-
-
 
 // Player---- ---------------------------------------------------------
 // -------------------------------------------------------------------

@@ -14,8 +14,10 @@ import Logout from './components/users/Logout'
 import MainNav from './components/shared/MainNav'
 import TopNav from './components/shared/TopNav'
 import BackLink from './components/shared/BackLink'
-import ShowBox from './components/shows/ShowBox'
-import ShowDetails from './components/shows/ShowDetails'
+import MovieList from './components/shows/movies/MovieList'
+import MovieDetails from './components/shows/movies/MovieDetails'
+import TvList from './components/shows/tvs/TvList'
+import TvDetails from './components/shows/tvs/TvDetails'
 import Player from './components/player/Player'
 
 const App = React.createClass({
@@ -86,13 +88,24 @@ render((
   <IntlProvider locale={locale} messages={messages}>
     <Router history={hashHistory}>
       <Route path="/" component={App}>
-				<IndexRoute components={{main: ShowBox, mainNav: MainNav, topNav: TopNav}} />
-				<Route path="/movies/:sort" components={{main: ShowBox, mainNav: MainNav, topNav: TopNav}} />
-				<Route path="/search/movie" components={{main: ShowBox, mainNav: MainNav, topNav: TopNav}} />
-				<Route path="/tvs/:sort" components={{main: ShowBox,  mainNav: MainNav, topNav: TopNav}} />
-				<Route path="/movie/:id" components={{main: ShowDetails, backLink: BackLink}} />
-				<Route path="/player/:torrentId" components={{main: Player}} />
-				<Route path="login" component={Login} />
+				<IndexRoute components={{main: MovieList, mainNav: MainNav, topNav: TopNav}} />
+
+				<Route path="movies" components={{main: MovieList, mainNav: MainNav, topNav: TopNav}}>
+					<Route path="/movies/:sort" components={{main: MovieList, mainNav: MainNav, topNav: TopNav}} />
+				</Route>
+
+				<Route path="tvs" components={{main: TvList, mainNav: MainNav, topNav: TopNav}}>
+					<Route path="/tvs/:sort" components={{main: TvList,  mainNav: MainNav, topNav: TopNav}}/>
+				</Route>
+
+				<Route path="/movie/:id" components={{main: MovieDetails, backLink: BackLink}} showType="movie" />
+				<Route path="/tv/:id" components={{main: TvDetails, backLink: BackLink}}/>
+				
+				<Route path="/search/movie" components={{main: MovieList, mainNav: MainNav, topNav: TopNav}}/>
+				<Route path="/search/tv" components={{main: TvList, mainNav: MainNav, topNav: TopNav}}/>
+
+
+				<Route path="/player/:torrentId" components={{main: Player, backLink: BackLink}} />
       </Route>
     </Router>
   </IntlProvider>

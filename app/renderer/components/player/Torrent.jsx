@@ -47,7 +47,7 @@ class Torrent extends React.Component {
 				this.setState({uploaded: filesize(torrent.uploaded)})
 				this.setState({downloadSpeed: filesize(torrent.downloadSpeed)})
 				this.setState({uploadSpeed: filesize(torrent.uploadSpeed)})
-				this.setState({progress: filesize(torrent.progress)})
+				this.setState({progress: Math.floor(torrent.progress * 100) })
 			}, 1000)
 
 		this.setState({intervalId: intervalId})
@@ -69,19 +69,23 @@ class Torrent extends React.Component {
 
   render() {
     return (
-			<div className="torrent-bar m-t-2 m-b-2 m-x-auto">
+			<div className="torrent-bar m-t-2 m-b-2">
 				<h5 className="text-xs-center">{ this.state.torrentName }</h5>
 
 				<div className="row">
-					<div className="col-xs-4 offset-xs-2">
+					<div className="col-xs-6 text-sm-center">
 						<i className="fa fa-arrow-down" aria-hidden="true"></i>
-						<span className="m-l-1">Download: { this.state.downloaded } @ { this.state.downloadSpeed }</span>
+						<span className="p-l-1">Download: { this.state.downloaded } @ { this.state.downloadSpeed }</span>
 					</div>
 
-					<div className="col-xs-4">
+					<div className="col-xs-6 text-sm-center">
 						<i className="fa fa-arrow-up" aria-hidden="true"></i>
-						<span className="m-l-1">Upload: { this.state.uploaded } @ { this.state.uploadSpeed }</span>
+						<span className="p-l-1">Upload: { this.state.uploaded } @ { this.state.uploadSpeed }</span>
 					</div>
+				</div>
+
+				<div className="row m-t-2">
+					<progress className="progress" value={this.state.progress} max="100" aria-describedby="example-caption-1"></progress>
 				</div>
 
 			</div>
