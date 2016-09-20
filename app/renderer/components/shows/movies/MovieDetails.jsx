@@ -37,7 +37,7 @@ export default class MovieDetails extends React.Component {
 	}
 
 	fetchTorrents(id) {
-		apiService.fetchTorrentsForMovie(parseInt(id)).then((res) => {
+		apiService.fetchTorrentsForShow(parseInt(id)).then((res) => {
 			this.setState({ torrents: res })
 		})
 	}
@@ -81,7 +81,7 @@ export default class MovieDetails extends React.Component {
         transitionAppearTimeout={500}
 				transitionEnterTimeout={500}
         transitionLeaveTimeout={300}>
-				<div className="container-fluid show p-t-3 p-b-3" style={movieStyle}>
+				<div className="container-fluid show p-t-3 p-b-3 p-l-3" style={movieStyle}>
 					<ShowDetails
 						title={movie.title}
 						posterPath={posterPath}
@@ -99,6 +99,10 @@ export default class MovieDetails extends React.Component {
 							)
 						}
 					})()}
+
+					<ul className="movie-details-magnet">
+						{magnets}
+					</ul>
 
 				</div>
 			</ReactCSSTransitionGroup>

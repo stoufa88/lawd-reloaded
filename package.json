@@ -1,24 +1,25 @@
 {
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config webpack.config.production.js --progress --profile --colors",
-    "package": "cross-env NODE_ENV=production node package.js --asar --name='Tune my Tape'",
-    "package-all": "npm run package -- --all",
     "postinstall": "install-app-deps",
-    "clean:win": "rimraf dist/win* dist/Tune my Tape-win*",
-    "clean:mac": "rimraf dist/mac* dist/Tune my Tape-mac*",
     "compile": "rimraf app/out && npm run compile:browser && npm run compile:renderer",
     "compile:browser": "cross-env NODE_ENV=production babel ./src/browser -d app/out/browser",
     "compile:renderer": "cross-env NODE_ENV=production webpack --progress --display-error-details --config ./webpack.config.production",
-    "build:win": "npm run clean:win && build --windows",
-    "build:mac": "npm run clean:mac && build --osx",
-    "dist": "npm run compile && build",
     "hot-server": "node server.js",
+	  "pack": "build --dir",
+	  "dist": "build",
     "start-hot": "cross-env HOT=1 NODE_ENV=development electron ./app/browser/index.js",
     "dev": "concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\""
   },
   "bin": {
     "electron": "./node_modules/.bin/electron"
   },
+	"build": {
+	  "appId": "lawd.desktop",
+	  "category": "your.app.category.type",
+	  "win": {
+	    "iconUrl": "(windows-only) https link to icon"
+	  }
+	},
   "devDependencies": {
     "asar": "^0.11.0",
     "babel-core": "^6.5.2",
@@ -30,9 +31,9 @@
     "css-loader": "^0.23.1",
     "del": "^2.2.0",
     "electron-builder": "^5.4.2",
-    "electron-packager": "^7.0.3",
-    "electron-prebuilt": "^1.2.2",
-    "electron-rebuild": "^1.1.5",
+    "electron-packager": "^8.0.0",
+    "electron-prebuilt": "^1.4.0",
+    "electron-rebuild": "^1.2.1",
     "express": "^4.13.4",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",

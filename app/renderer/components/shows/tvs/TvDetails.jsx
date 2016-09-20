@@ -16,9 +16,7 @@ export default class TvDetails extends React.Component {
     super(props)
 
 		this.state = {
-			tv: null,
-			torrents: [],
-			showMagnetForm: false
+			tv: null
 		}
 
 		apiService = new ApiService()
@@ -28,19 +26,16 @@ export default class TvDetails extends React.Component {
 	componentDidMount() {
 		let { id } = this.props.params
 		this.fetchTv(id)
-		this.fetchTorrents(id)
 	}
 
 	fetchTv(id) {
 		apiService.getTvById(id).then((tv) => {
 			console.info('Got the tv from tmdb api', tv)
+			// remove season 0, we do not need it
+			if(tv.seasons[0].season_number == 0) {
+				tv.seasons.shift(0)
+			}
 			this.setState({ tv })
-		})
-	}
-
-	fetchTorrents(id) {
-		apiService.fetchTorrentsForMovie(parseInt(id)).then((res) => {
-			this.setState({ torrents: res })
 		})
 	}
 
@@ -70,7 +65,7 @@ export default class TvDetails extends React.Component {
         transitionAppearTimeout={500}
 				transitionEnterTimeout={500}
         transitionLeaveTimeout={300}>
-				<div className="container-fluid show p-t-3 p-b-3" style={tvStyle}>
+				<div className="container-fluid show p-t-3 p-b-3 p-l-3" style={tvStyle}>
 					<ShowDetails
 						title={tv.original_name}
 						posterPath={posterPath}

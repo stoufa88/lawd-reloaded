@@ -6,7 +6,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import classNames from 'classnames'
 import { IntlProvider, addLocaleData } from 'react-intl'
-import { hashHistory, Router, Route, Link, IndexRoute } from 'react-router'
+import { hashHistory, Router, Route, Link, IndexRedirect } from 'react-router'
 import './app.global.scss';
 
 import Login from './components/users/Login'
@@ -88,7 +88,8 @@ render((
   <IntlProvider locale={locale} messages={messages}>
     <Router history={hashHistory}>
       <Route path="/" component={App}>
-				<IndexRoute components={{main: MovieList, mainNav: MainNav, topNav: TopNav}} />
+
+				<IndexRedirect to="/movies/popular" />
 
 				<Route path="movies" components={{main: MovieList, mainNav: MainNav, topNav: TopNav}}>
 					<Route path="/movies/:sort" components={{main: MovieList, mainNav: MainNav, topNav: TopNav}} />
@@ -100,7 +101,7 @@ render((
 
 				<Route path="/movie/:id" components={{main: MovieDetails, backLink: BackLink}} showType="movie" />
 				<Route path="/tv/:id" components={{main: TvDetails, backLink: BackLink}}/>
-				
+
 				<Route path="/search/movie" components={{main: MovieList, mainNav: MainNav, topNav: TopNav}}/>
 				<Route path="/search/tv" components={{main: TvList, mainNav: MainNav, topNav: TopNav}}/>
 

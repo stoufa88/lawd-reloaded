@@ -69,13 +69,13 @@ class NewMagnetForm extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault()
 		let { magnetUrl, language, quality, subtitles } = this.state
-		let { movieId } = this.props
+		let { showId } = this.props
 		let torrentName = this.extractTorrentName(magnetUrl)
 
 		console.log(subtitles)
 
 		let torrent =  { magnetUrl, torrentName, language, quality }
-		apiService.addTorrent(movieId, torrent, subtitles)
+		apiService.addTorrent(showId, torrent, subtitles)
 	}
 
 	extractTorrentName(magnetUrl) {
@@ -143,7 +143,7 @@ class NewMagnetForm extends React.Component {
 }
 
 NewMagnetForm.propTypes = {
-	movieId: PropTypes.number.isRequired
+	showId: PropTypes.number.isRequired
 };
 
 export default NewMagnetForm

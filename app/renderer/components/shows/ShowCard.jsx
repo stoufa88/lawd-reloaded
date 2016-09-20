@@ -24,8 +24,8 @@ export default class ShowCard extends React.Component {
 		this.fetchTorrents(this.props.id)
 	}
 
-	fetchTorrents(movieId) {
-		apiService.fetchTorrentsForMovie(movieId).then((torrents) => {
+	fetchTorrents(showId) {
+		apiService.fetchTorrentsForShow(showId).then((torrents) => {
 			this.countLanguages(torrents)
 			this.setState({ torrents })
 		})

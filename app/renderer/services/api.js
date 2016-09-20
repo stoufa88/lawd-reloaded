@@ -172,10 +172,10 @@ export default class ApiService {
 		})
 	}
 
-	fetchTorrentsForMovie(movieId) {
+	fetchTorrentsForShow(showId) {
 		let Torrent = Parse.Object.extend('Torrent')
 		let query = new Parse.Query(Torrent)
-		query.equalTo('movieId', movieId)
+		query.equalTo('showId', showId)
 		query.include('subtitles')
 
 		return query.find().then((results) => {
@@ -183,13 +183,13 @@ export default class ApiService {
 		})
 	}
 
-	addTorrent(movieId, t, subs) {
+	addTorrent(showId, t, subs) {
 		console.info('creating a new torrent...')
 
 		let Torrent = Parse.Object.extend('Torrent')
 		let torrent = new Torrent()
 
-		torrent.set('movieId', movieId)
+		torrent.set('showId', showId)
 		torrent.set('magnetURL', t.magnetUrl)
 		torrent.set('name', t.torrentName)
 		torrent.set('lang', t.language)
@@ -226,12 +226,12 @@ export default class ApiService {
 		});
 	}
 
-	sendRequest(movieId, movieName, lang) {
+	sendRequest(showId, showName, lang) {
 		let Request = Parse.Object.extend('Request')
 		let request = new Request()
 
-		request.set('movieId', movieId)
-		request.set('movieName', movieName)
+		request.set('showId', showId)
+		request.set('showName', showName)
 		request.set('lang', lang)
 
 		request.save()

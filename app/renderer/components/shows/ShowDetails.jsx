@@ -12,7 +12,6 @@ class ShowDetails extends React.Component {
 			<div className="row">
 				<div className="col-sm-2">
 					<img className="show-item-image" src={this.props.posterPath} />
-					<p className="show-popularity text-xs-center m-t-2">{Math.floor(this.props.popularity)} %</p>
 					<p className="show-note m-t-2 tag tag-info"><i className="fa fa-star p-r-1"></i>{this.props.voteAverage}</p>
 				</div>
 				<div className="col-sm-8">
@@ -50,3 +49,5 @@ ShowDetails.propTypes = {
 }
 
 export default ShowDetails
+
+// <p className="show-popularity text-xs-center m-t-2">{Math.floor(this.props.popularity)} %</p>

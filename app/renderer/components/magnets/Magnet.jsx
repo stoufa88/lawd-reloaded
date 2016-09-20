@@ -17,8 +17,8 @@ class Magnet extends React.Component {
 		apiService = new ApiService()
   }
 
-	componentWillReceiveProps(nextProps) {
-		this.fetchSubtitles(nextProps.torrentId)
+	componentDidMount() {
+		this.fetchSubtitles(this.props.torrentId)
 	}
 
 	fetchSubtitles(torrentId) {
@@ -47,11 +47,10 @@ class Magnet extends React.Component {
     return (
 			<li>
 				<Link to={`/player/${this.props.torrentId}/`}>
-					<div className="d-inline-block">
-						{this.props.lang} - {this.props.quality}
-					</div>
-					<p>{this.props.name}</p>
-					{subtitles}
+					<i className="fa fa-play">
+						<small className="p-l-1">{this.props.name} | {this.props.lang}</small>
+					</i>
+					<small>{subtitles}</small>
 				</Link>
 			</li>
     );
@@ -68,3 +67,5 @@ Magnet.propTypes = {
 };
 
 export default Magnet
+
+// <small>{this.props.name}</small>

@@ -2,11 +2,10 @@
   "name": "lawd-reloaded",
   "version": "0.1.0",
   "description": "The movie torrent hunter",
-  "private": true,
   "author": "Mustapha Turki <stoufa.turki@gmail.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/stoufa88/lawd-reloaded"
   },
   "main": "./browser/index.js",
   "dependencies": {

@@ -69,5 +69,36 @@ ul.show-details-magnet {
 	overflow: hidden;
 	overflow-x: auto;
 	white-space: nowrap;
+}
 
+.episode-header {
+	position: relative;
+	display: inline-block;
+	width: 250px;
+	height: 141px;
+	border: 1px solid #2d2d2d;
+	img {
+		opacity: 0.4;
+		width: 250px;
+	}
+	span {
+		position: absolute;
+		top: 40%;
+		text-align: center;
+		font-weight: 600;
+		width: 100%;
+	}
+	&:hover {
+		img {
+			opacity: 0.5;
+		}
+	}
+}
+
+.episode-magnets li{
+	background: $brand-success;
+	margin-top: 5px;
+	list-style-type: none;
+	padding: 2px 5px;
+	border-radius: 5px;
 }
