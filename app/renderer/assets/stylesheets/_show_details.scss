@@ -38,28 +38,12 @@
 	border: 2px solid #fff;
 }
 
-.magnets {
-	max-height: 800px;
-	overflow-y: overlay;
-}
-
-ul.show-details-magnet {
-	background: rgba(51, 51, 51, 0.37);
-	border-radius: 5px;
-	padding-left: 0;
-	li {
-		list-style-type: none;
-		padding: 0.5rem 1rem;
-		color: #fff;
-		border-bottom: 1px solid #333;
-	}
-	a  {
-		color: #afafaf;
-	}
-	p {
-		word-wrap: break-word;
-		font-size: 12px;
-		color: #fff;
+.show-details-torrents-area {
+	padding: 2rem 5rem;
+	background: #000110;
+	border-top: 5px solid #fff;
+	label {
+		color: #ccc;
 	}
 }
 
@@ -71,34 +55,33 @@ ul.show-details-magnet {
 	white-space: nowrap;
 }
 
-.episode-header {
-	position: relative;
-	display: inline-block;
-	width: 250px;
-	height: 141px;
-	border: 1px solid #2d2d2d;
-	img {
-		opacity: 0.4;
-		width: 250px;
-	}
-	span {
-		position: absolute;
-		top: 40%;
-		text-align: center;
-		font-weight: 600;
-		width: 100%;
-	}
-	&:hover {
-		img {
-			opacity: 0.5;
-		}
+.episode-list {
+	flex-flow: row nowrap;
+	overflow-x: auto;
+	overflow-y: hidden;;
+}
+
+.episode {
+	background: #e4e4e4;
+	color: #000;
+	text-align: center;
+	.card-title {
+		font-size: 18px;
 	}
 }
 
-.episode-magnets li{
-	background: $brand-success;
-	margin-top: 5px;
-	list-style-type: none;
-	padding: 2px 5px;
-	border-radius: 5px;
+.torrent-item {
+	padding: 0;
+}
+
+.torrent-item a {
+	font-size: 12px;
+	color: #000;
+	display: block;
+	padding: 1rem 2rem;
+	background: #e4e4e4;
+	text-decoration: none;
+	&:hover {
+		background: darken(#e4e4e4, 5%);
+	}
 }

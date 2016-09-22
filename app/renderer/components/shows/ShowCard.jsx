@@ -81,6 +81,10 @@ export default class ShowCard extends React.Component {
 					{subtitles}
 				</div>
 			)
+		}else {
+			movieLanguages =(
+				<p><FormattedMessage id="show.torrents_empty" /></p>
+			)
 		}
 
     return (
@@ -100,10 +104,11 @@ export default class ShowCard extends React.Component {
 							{movieLanguages}
 						</div>
 
-						<RequestButton id={this.props.id} title={this.props.title}/>
 					</div>
 				</div>
 			</div>
     );
   }
 }
+
+// <RequestButton id={this.props.id} title={this.props.title}/>

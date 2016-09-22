@@ -37,20 +37,16 @@ class Magnet extends React.Component {
 		let subtitles
 		if(this.state.subtitleLanguages.length > 0) {
 			subtitles = (
-				<div>
-					<i className="fa fa-comment p-r-1" aria-hidden="true"></i>
-					<span>{this.state.subtitleLanguages.join(', ')}</span>
-				</div>
+				<span className="tag tag-default tag-pill pull-xs-right">
+					{this.state.subtitleLanguages.join(', ')}
+				</span>
 			)
 		}
 
     return (
-			<li>
+			<li className="list-group-item torrent-item">
 				<Link to={`/player/${this.props.torrentId}/`}>
-					<i className="fa fa-play">
-						<small className="p-l-1">{this.props.name} | {this.props.lang}</small>
-					</i>
-					<small>{subtitles}</small>
+					{this.props.name}
 				</Link>
 			</li>
     );

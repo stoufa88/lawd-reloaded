@@ -15,7 +15,12 @@ class NewMagnetForm extends React.Component {
 			magnetUrl: '',
 			language: 'English',
 			quality: 'Standard',
-			subtitles: []
+			subtitles: [
+				{
+					file: null,
+					lang: 'French'
+				}
+			]
 			// subtitleFile: '',
 			// subtitleLang: ''
 		}
@@ -25,8 +30,6 @@ class NewMagnetForm extends React.Component {
 		this.handleMagnetUrlChange = this.handleMagnetUrlChange.bind(this)
 		this.handleLanguageChange = this.handleLanguageChange.bind(this)
 		this.handleQualityChange = this.handleQualityChange.bind(this)
-		// this.handleSubFileChange = this.handleSubFileChange.bind(this)
-		// this.handleSubLanguageChange = this.handleSubLanguageChange.bind(this)
 		this.handleAddSubtitleClick = this.handleAddSubtitleClick.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -44,19 +47,17 @@ class NewMagnetForm extends React.Component {
 	}
 
 	handleSubFileChange(index, e) {
-		console.log(index)
-
 		let subtitles = update(this.state.subtitles, {[index]: {file: {$set: e.target.files[0]}}})
 		this.setState({subtitles})
 	}
 
 	handleSubLanguageChange(index, e) {
-		console.log(index)
 		let subtitles = update(this.state.subtitles, {[index]: {lang: {$set: e.target.value}}})
 		this.setState({subtitles})
 	}
 
 	handleAddSubtitleClick(e) {
+		e.preventDefault()
 		let newSub = {
 			file: null,
 			lang: 'French'
@@ -96,7 +97,7 @@ class NewMagnetForm extends React.Component {
 		})
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} >
 				<div className="form-group">
 					<label htmlFor="magnetUrl">Magnet link</label>
 					<input 	id="magnetUrl"
@@ -104,7 +105,8 @@ class NewMagnetForm extends React.Component {
 									type="text"
 									placeholder="paste magnet url here"
 									value={this.state.magnetUrl}
-									onChange={this.handleMagnetUrlChange} />
+									onChange={this.handleMagnetUrlChange}
+									required />
 				</div>
 
 				<div className="row">
@@ -130,13 +132,13 @@ class NewMagnetForm extends React.Component {
 				  </div>
 				</div>
 
-				<label htmlFor="subInput">Subtitles</label>
-
 				{subtitles}
 
-				<span onClick={this.handleAddSubtitleClick}>add subtitle</span>
+				<button onClick={this.handleAddSubtitleClick}>add subtitle</button>
 
-				<input type="submit" className="btn btn-inversed" value="Submit" />
+				<div className="m-t-1">
+					<input type="submit" className="btn btn-success w-100" value="Send" />
+				</div>
 			</form>
     );
   }

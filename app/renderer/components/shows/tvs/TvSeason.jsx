@@ -70,7 +70,9 @@ class TvSeason extends React.Component {
 				</div>
 
 				<h4 className="m-t-2"><FormattedMessage id="show.episodes" /></h4>
-				{episodes}
+				<div className="card-deck episode-list">
+					{episodes}
+				</div>
 			</div>
 		)
   }

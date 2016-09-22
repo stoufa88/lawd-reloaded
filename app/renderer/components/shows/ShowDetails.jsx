@@ -14,7 +14,7 @@ class ShowDetails extends React.Component {
 					<img className="show-item-image" src={this.props.posterPath} />
 					<p className="show-note m-t-2 tag tag-info"><i className="fa fa-star p-r-1"></i>{this.props.voteAverage}</p>
 				</div>
-				<div className="col-sm-8">
+				<div className="col-sm-8 offset-sm-1">
 					<h1>
 						{this.props.title} ({this.props.year})
 					</h1>

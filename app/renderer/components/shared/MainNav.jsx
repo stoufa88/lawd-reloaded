@@ -24,7 +24,7 @@ class MainNav extends React.Component {
 				  </li>
 					<li className="nav-item">
 						<Link className="nav-link" activeClassName="top-nav-active-link" to="/tvs">
-							<i className="fa fa-film" aria-hidden="true"></i>
+							<i className="fa fa-television" aria-hidden="true"></i>
 							<FormattedMessage id="navigation.tvs" />
 						</Link>
 					</li>

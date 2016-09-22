@@ -99,7 +99,7 @@ render((
 					<Route path="/tvs/:sort" components={{main: TvList,  mainNav: MainNav, topNav: TopNav}}/>
 				</Route>
 
-				<Route path="/movie/:id" components={{main: MovieDetails, backLink: BackLink}} showType="movie" />
+				<Route path="/movie/:id" components={{main: MovieDetails, backLink: BackLink}} />
 				<Route path="/tv/:id" components={{main: TvDetails, backLink: BackLink}}/>
 
 				<Route path="/search/movie" components={{main: MovieList, mainNav: MainNav, topNav: TopNav}}/>

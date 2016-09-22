@@ -23,7 +23,7 @@ export default class TvDetails extends React.Component {
 		this.toggleMagnetForm = this.toggleMagnetForm.bind(this)
   }
 
-	componentDidMount() {
+	componentWillMount() {
 		let { id } = this.props.params
 		this.fetchTv(id)
 	}

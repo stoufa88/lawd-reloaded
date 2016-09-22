@@ -20,7 +20,7 @@ class NewSubtitleForm extends React.Component {
     return (
       <div className="new-subtitle">
 				<div className="form-group">
-			    <input type="file" className="form-control-file" id="subInput" onChange={this.props.handleSubFileChange}/>
+			    <input type="file" className="form-control-file" id="subInput" onChange={this.props.handleSubFileChange} required/>
 		  	</div>
 
 				<div className="form-group">

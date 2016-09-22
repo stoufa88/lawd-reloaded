@@ -21,11 +21,13 @@ class TvList extends React.Component {
 		}
   }
 
-	componentDidMount() {
-		let self = this
-
+	componentWillMount() {
 		this.fetchGenres()
 		this.fetchShows()
+	}
+
+	componentDidMount() {
+		let self = this
 
 		let scrollListener = function() {
 			if($(window).scrollTop() + $(window).height() == $(document).height()) {

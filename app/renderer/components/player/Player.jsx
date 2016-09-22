@@ -12,20 +12,13 @@ class Player extends React.Component {
     super(props)
 
 		this.state = {
-			torrentId: "" // This is webtorrent id
+			torrent: null,
+			torrentId: null // This is webtorrent id
 		}
 
 		apiService = new ApiService()
 		engine = new Engine()
   }
-
-	shouldComponentUpdate(nextProps, nextState) {
-		if(nextState.torrentId !== this.state.torrentId) {
-			return true;
-		}else {
-			return false;
-		}
-	}
 
 	componentDidMount() {
 		player = videojs('video-player', { 'controls': true, 'autoplay': false, 'preload': 'auto' })
@@ -36,16 +29,17 @@ class Player extends React.Component {
 
 	componentWillUpdate(nextProps, nextState) {
 		// We now have torrentId in state, let's play a bit
-		this.playTorrent(nextState.torrentId)
+		if(nextState.torrentId) {
+			this.playTorrent(nextState.torrentId)
+		}
 	}
 
 	serveTorrent(torrentId) {
 		apiService.getTorrentById(torrentId).then((torrent) => {
+			this.setState({torrent})
 			if(torrent.get('subtitles')) {
 				torrent.get('subtitles').forEach((subtitle) => {
-					subtitle.fetch().then((subtitle) => {
-						this.addRemoteTextTrack(subtitle)
-					})
+					this.addRemoteTextTrack(subtitle)
 				})
 			}
 
@@ -90,7 +84,9 @@ class Player extends React.Component {
 					</video>
 				</div>
 
-				<Torrent torrentId={this.state.torrentId} />
+				<Torrent
+					webTorrentId={this.state.torrentId}
+					torrent={this.state.torrent} />
       </div>
     );
   }

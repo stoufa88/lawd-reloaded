@@ -18,7 +18,7 @@ export default class ShowVideos extends React.Component {
 		})
 
     return (
-			<div className="show-details-videos m-t-3">
+			<div className="show-details-videos m-t-2">
 				<h4><FormattedMessage id="show.videos" /></h4>
 				<div className="show-details-videos-content">
 					{videos}

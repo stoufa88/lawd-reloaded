@@ -57,40 +57,21 @@ class TvEpisode extends React.Component {
 		})
 
     return(
-			<div className="episode m-b-1 row">
-				<div className="episode-header">
-					{(() => {
-						if (this.props.stillPath) {
-							return (
-								<img src={stillPath} />
-							)
-						}
-					})()}
-
-					<span>
-						<h6>{name}</h6>
-						<small>({this.props.airDate})</small>
-					</span>
-				</div>
-
-				<div className="episode-form m-l-3">
-					{(() => {
-						if (this.state.showMagnetForm) {
-							return (
-								<div>
-									<i className="fa fa-minus" aria-hidden="true" onClick={this.toggleMagnetForm}></i>
-									<NewMagnetForm showId={this.props.id} />
-								</div>
-							)
-						}else {
-							return <i className="fa fa-plus" aria-hidden="true" onClick={this.toggleMagnetForm}></i>
-						}
-					})()}
-				</div>
-
-				<div className="m-l-3 episode-magnets">
-					{magnets}
-				</div>
+			<div className="card episode">
+				{(() => {
+					if (this.props.stillPath) {
+						return (
+							<img src={stillPath} className="card-img-top"/>
+						)
+					}
+				})()}
+			  <div className="card-block">
+			    <h4 className="card-title">{name}</h4>
+			    <p className="card-text">{this.props.airDate}</p>
+			  </div>
+			  <ul className="list-group list-group-flush">
+			    {magnets}
+			  </ul>
 			</div>
 		)
   }
@@ -106,3 +87,18 @@ TvEpisode.propTypes = {
 }
 
 export default TvEpisode
+
+// <div className="episode-form m-l-3">
+// 	{(() => {
+// 		if (this.state.showMagnetForm) {
+// 			return (
+// 				<div>
+// 					<i className="fa fa-minus" aria-hidden="true" onClick={this.toggleMagnetForm}></i>
+// 					<NewMagnetForm showId={this.props.id} />
+// 				</div>
+// 			)
+// 		}else {
+// 			return <i className="fa fa-plus" aria-hidden="true" onClick={this.toggleMagnetForm}></i>
+// 		}
+// 	})()}
+// </div>

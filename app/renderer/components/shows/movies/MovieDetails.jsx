@@ -23,7 +23,7 @@ export default class MovieDetails extends React.Component {
 		this.toggleMagnetForm = this.toggleMagnetForm.bind(this)
   }
 
-	componentDidMount() {
+	componentWillMount() {
 		let { id } = this.props.params
 		this.fetchMovie(id)
 		this.fetchTorrents(id)
@@ -81,7 +81,7 @@ export default class MovieDetails extends React.Component {
         transitionAppearTimeout={500}
 				transitionEnterTimeout={500}
         transitionLeaveTimeout={300}>
-				<div className="container-fluid show p-t-3 p-b-3 p-l-3" style={movieStyle}>
+				<div className="container-fluid show p-t-3 p-l-3 p-b-3" style={movieStyle}>
 					<ShowDetails
 						title={movie.title}
 						posterPath={posterPath}
@@ -99,11 +99,21 @@ export default class MovieDetails extends React.Component {
 							)
 						}
 					})()}
+				</div>
 
-					<ul className="movie-details-magnet">
-						{magnets}
-					</ul>
+				<div className="container-fluid show-details-torrents-area">
+					<h1 className="text-sm-center">Torrents area</h1>
+					<div className="row m-t-2">
+						<div className="col-sm-5">
+							<ul className="list-group">
+								{magnets}
+							</ul>
+						</div>
 
+						<div className="col-sm-5 offset-sm-2">
+							<NewMagnetForm showId={movie.id} />
+						</div>
+					</div>
 				</div>
 			</ReactCSSTransitionGroup>
     );

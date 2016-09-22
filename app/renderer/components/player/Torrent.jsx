@@ -2,6 +2,7 @@
 import React, {PropTypes} from 'react'
 import { Link } from 'react-router'
 import filesize from 'filesize'
+import Votes from './Votes'
 import Engine from '../../services/engine'
 
 let engine
@@ -28,12 +29,14 @@ class Torrent extends React.Component {
   }
 
 	componentWillReceiveProps(nextProps) {
-		this.listenForTorrent(nextProps.torrentId)
+		if(nextProps.webTorrentId) {
+			this.listenForTorrent(nextProps.webTorrentId)
+		}
 	}
 
 	componentWillUnmount() {
 		window.clearInterval(this.state.intervalId)
-		engine.destroyTorrent(this.props.torrentId)
+		engine.destroyTorrent(this.props.webTorrentId)
 		engine.destroyServer()
 	}
 
@@ -54,17 +57,17 @@ class Torrent extends React.Component {
 	}
 
 	resumeDownload() {
-		engine.resumeTorrent(this.props.torrentId)
+		engine.resumeTorrent(this.props.webTorrentId)
 		// this.listenForTorrent(this.props.torrentId)
 	}
 
 	pauseDownload() {
-		engine.pauseTorrent(this.props.torrentId)
+		engine.pauseTorrent(this.props.webTorrentId)
 		// window.clearInterval(this.state.intervalId)
 	}
 
 	destroyTorrent() {
-		engine.destroyTorrent(this.props.torrentId)
+		engine.destroyTorrent(this.props.webTorrentId)
 	}
 
   render() {
@@ -73,14 +76,18 @@ class Torrent extends React.Component {
 				<h5 className="text-xs-center">{ this.state.torrentName }</h5>
 
 				<div className="row">
-					<div className="col-xs-6 text-sm-center">
+					<div className="col-xs-4 text-sm-center">
 						<i className="fa fa-arrow-down" aria-hidden="true"></i>
 						<span className="p-l-1">Download: { this.state.downloaded } @ { this.state.downloadSpeed }</span>
 					</div>
 
-					<div className="col-xs-6 text-sm-center">
+					<div className="col-xs-4 text-sm-center">
 						<i className="fa fa-arrow-up" aria-hidden="true"></i>
 						<span className="p-l-1">Upload: { this.state.uploaded } @ { this.state.uploadSpeed }</span>
+					</div>
+
+					<div className="col-xs-2 text-sm-center">
+						<Votes torrent={this.props.torrent} />
 					</div>
 				</div>
 
@@ -94,7 +101,8 @@ class Torrent extends React.Component {
 }
 
 Torrent.propTypes = {
-	torrentId: PropTypes.string.isRequired // This comes from webtorrent
+	webTorrentId: PropTypes.string, // This comes from webtorrent
+	torrent: PropTypes.object
 };
 
 // <i className="fa fa-stop m-l-1" aria-hidden="true" onClick={this.destroyTorrent} ></i>

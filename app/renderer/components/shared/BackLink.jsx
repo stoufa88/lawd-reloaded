@@ -8,8 +8,7 @@ class BackLink extends React.Component {
 		this.goBack = this.goBack.bind(this)
 	}
 
-	goBack(e) {
-		e.preventDefault()
+	goBack() {
 		this.props.router.goBack()
 	}
 

@@ -6,6 +6,7 @@ import ShowCard from './../ShowCard'
 import Loader from '../../shared/Loader'
 
 let apiService
+let scrollListener
 
 class MovieList extends React.Component {
   constructor(props) {
@@ -15,29 +16,29 @@ class MovieList extends React.Component {
 
 		this.state = {
 			movies: [],
-			genres: [],
-			scrollListener: null
+			genres: []
 		}
   }
 
-	componentDidMount() {
-		let self = this
-
+	componentWillMount() {
 		this.fetchMovies()
 		this.fetchGenres()
+	}
 
-		let scrollListener = function() {
+	componentDidMount() {
+		let self = this
+		
+		scrollListener = function() {
 			if($(window).scrollTop() + $(window).height() == $(document).height()) {
 				self.handlePageChange()
 			}
 		}
 
 		$(window).scroll(scrollListener)
-		this.setState({scrollListener})
 	}
 
 	componentWillUnmount() {
-		$(window).off("scroll", this.state.scrollListener)
+		$(window).off("scroll", scrollListener)
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -51,10 +52,6 @@ class MovieList extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		let {page, searchQuery} = nextProps.location.query
 		let {sort} = nextProps.params
-
-		console.log(this.props.params.sort, sort)
-		console.log(this.props.location.query.page, page)
-		console.log(this.props.location.pathname, nextProps.location.pathname)
 
 		if(sort == this.props.params.sort &&
 			 page == this.props.location.query.page &&

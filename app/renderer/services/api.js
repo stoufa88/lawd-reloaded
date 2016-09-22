@@ -194,6 +194,8 @@ export default class ApiService {
 		torrent.set('name', t.torrentName)
 		torrent.set('lang', t.language)
 		torrent.set('quality', t.quality)
+		torrent.set('upVotes', 0)
+		torrent.set('downVotes', 0)
 
 		if(subs.length > 0) {
 			subs.forEach((subtitle) => {
@@ -235,6 +237,36 @@ export default class ApiService {
 		request.set('lang', lang)
 
 		request.save()
+	}
+
+	sendVoteUp(torrentId, reverse) {
+		let Torrent = Parse.Object.extend('Torrent')
+		let query = new Parse.Query(Torrent)
+		query.get(torrentId).then((torrent) => {
+			if(reverse) {
+				torrent.increment('upVotes', -1)
+				torrent.save()
+				return
+			}
+
+			torrent.increment('upVotes')
+			torrent.save()
+		})
+	}
+
+	sendVoteDown(torrentId, reverse) {
+		let Torrent = Parse.Object.extend('Torrent')
+		let query = new Parse.Query(Torrent)
+		query.get(torrentId).then((torrent) => {
+			if(reverse) {
+				torrent.increment('downVotes', -1)
+				torrent.save()
+				return
+			}
+
+			torrent.increment('downVotes')
+			torrent.save()
+		})
 	}
 }
 
