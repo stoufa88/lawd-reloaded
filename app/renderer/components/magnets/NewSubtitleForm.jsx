@@ -19,13 +19,14 @@ class NewSubtitleForm extends React.Component {
   render() {
     return (
       <div className="new-subtitle">
+				<p className="lead text-sm-center">Attach a Subtitle</p>
 				<div className="form-group">
 			    <input type="file" className="form-control-file" id="subInput" onChange={this.props.handleSubFileChange} required/>
 		  	</div>
 
 				<div className="form-group">
 					<label htmlFor="selectQuality">Subtitle language</label>
-					<select className="form-control form-control-sm" id="selectQuality" onChange={this.props.handleSubLanguageChange}>
+					<select className="form-control form-control-md" id="selectQuality" onChange={this.props.handleSubLanguageChange}>
 						<option>French</option>
 						<option>English</option>
 						<option>Arabic</option>

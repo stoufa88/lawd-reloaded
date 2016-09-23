@@ -52,8 +52,13 @@
 	top: 1rem;
 	right: 2rem;
 	z-index: 1000;
-	a {
-		line-height: 16px;
+	button {
+		border-radius: 50%;
+		border: none;
+		background: #fff;
+		&:focus {
+			outline: none;
+		}
 	}
 	i {
 		font-size: 2rem;

@@ -196,6 +196,7 @@ export default class ApiService {
 		torrent.set('quality', t.quality)
 		torrent.set('upVotes', 0)
 		torrent.set('downVotes', 0)
+		torrent.set('verified', false)
 
 		if(subs.length > 0) {
 			subs.forEach((subtitle) => {

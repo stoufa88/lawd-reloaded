@@ -1,6 +1,7 @@
 
 import React, {PropTypes} from 'react'
 import { Link } from 'react-router'
+import classNames from 'classnames'
 import ApiService from '../../services/api'
 
 let apiService
@@ -18,7 +19,7 @@ class Magnet extends React.Component {
   }
 
 	componentDidMount() {
-		this.fetchSubtitles(this.props.torrentId)
+		this.fetchSubtitles(this.props.torrent.id)
 	}
 
 	fetchSubtitles(torrentId) {
@@ -35,6 +36,7 @@ class Magnet extends React.Component {
 
   render() {
 		let subtitles
+
 		if(this.state.subtitleLanguages.length > 0) {
 			subtitles = (
 				<span className="tag tag-default tag-pill pull-xs-right">
@@ -45,21 +47,33 @@ class Magnet extends React.Component {
 
     return (
 			<li className="list-group-item torrent-item">
-				<Link to={`/player/${this.props.torrentId}/`}>
-					{this.props.name}
+				<Link to={`/player/${this.props.torrent.id}/`}>
+					{this.props.torrent.get("name")}
 				</Link>
+				{(() => {
+					if (this.props.torrent.get("verified")) {
+						return (
+							<i className="checked-torrent fa fa-check-circle" aria-hidden="true"></i>
+						)
+					}
+				})()}
+
+				<div className="torrent-votes">
+					<i className="fa fa-thumbs-o-up" aria-hidden="true">
+						{this.props.torrent.get("upVotes")}
+					</i>
+					<i className="fa fa-thumbs-o-down m-l-1" aria-hidden="true">
+						{this.props.torrent.get("downVotes")}
+					</i>
+				</div>
 			</li>
     );
   }
 }
 
 Magnet.propTypes = {
-	index: PropTypes.number.isRequired,
-	torrentId: PropTypes.string.isRequired,
-	magnetURL: PropTypes.string.isRequired,
-	lang: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired,
-	quality: PropTypes.string.isRequired
+	// Parse object
+	torrent: PropTypes.object.isRequired
 };
 
 export default Magnet

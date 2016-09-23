@@ -145,7 +145,7 @@ class NewMagnetForm extends React.Component {
       <form onSubmit={this.handleSubmit} >
 				<div id="magnet-url" className="form-group">
 					<label htmlFor="magnetUrl">Magnet link</label>
-					<input 	className="form-control form-control-sm"
+					<input 	className="form-control form-control-md"
 									type="text"
 									placeholder="paste magnet url here"
 									value={this.state.magnetUrl}
@@ -158,7 +158,7 @@ class NewMagnetForm extends React.Component {
 				  <div className="col-xs-6">
 						<div className="form-group">
 							<label htmlFor="selectLanguage">Torrent language</label>
-							<select className="form-control form-control-sm" id="selectLanguage" onChange={this.handleLanguageChange}>
+							<select className="form-control form-control-md" id="selectLanguage" onChange={this.handleLanguageChange}>
 								<option>English</option>
 								<option>French</option>
 								<option>Arabic</option>
@@ -168,7 +168,7 @@ class NewMagnetForm extends React.Component {
 				  <div className="col-xs-6">
 						<div className="form-group">
 							<label htmlFor="selectQuality">Torrent video quality</label>
-							<select className="form-control form-control-sm" id="selectQuality" onChange={this.handleQualityChange}>
+							<select className="form-control form-control-md" id="selectQuality" onChange={this.handleQualityChange}>
 								<option>Standard</option>
 								<option>720p</option>
 								<option>1080p</option>
@@ -182,7 +182,7 @@ class NewMagnetForm extends React.Component {
 					<div className="form-control-feedback invisible has-danger">Upload .srt only files</div>
 				</div>
 
-				<button onClick={this.handleAddSubtitleClick}>add subtitle</button>
+				<button className="btn" onClick={this.handleAddSubtitleClick}>add subtitle</button>
 
 				<div className="m-t-1">
 					<input type="submit" className="btn btn-success w-100" value="Send" />

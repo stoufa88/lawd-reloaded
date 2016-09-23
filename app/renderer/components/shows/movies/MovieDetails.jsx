@@ -58,12 +58,7 @@ export default class MovieDetails extends React.Component {
 		torrents.forEach((torrent, index) => {
 			magnets.push(
 				<Magnet key={torrent.id}
-								magnetURL={torrent.get('magnetURL')}
-								lang={torrent.get('lang')}
-								name={torrent.get('name')}
-								quality={torrent.get('quality')}
-								index={index}
-								torrentId={torrent.id} />
+								torrent={torrent} />
 			)
 		})
 
@@ -81,7 +76,7 @@ export default class MovieDetails extends React.Component {
         transitionAppearTimeout={500}
 				transitionEnterTimeout={500}
         transitionLeaveTimeout={300}>
-				<div className="container-fluid show p-t-3 p-l-3 p-b-3" style={movieStyle}>
+				<div className="container-fluid show-details-overview p-t-3 p-l-3 p-b-3" style={movieStyle}>
 					<ShowDetails
 						title={movie.title}
 						posterPath={posterPath}
@@ -101,16 +96,17 @@ export default class MovieDetails extends React.Component {
 					})()}
 				</div>
 
-				<div className="container-fluid show-details-torrents-area">
-					<h1 className="text-sm-center">Torrents area</h1>
-					<div className="row m-t-2">
-						<div className="col-sm-5">
+				<div className="container-fluid show-details-torrents">
+					<div className="row">
+						<div className="col-sm-6 torrents">
+							<h4>Available links</h4>
 							<ul className="list-group">
 								{magnets}
 							</ul>
 						</div>
 
-						<div className="col-sm-5 offset-sm-2">
+						<div className="col-sm-6 new-torrent">
+							<h4>Add new</h4>
 							<NewMagnetForm showId={movie.id} />
 						</div>
 					</div>

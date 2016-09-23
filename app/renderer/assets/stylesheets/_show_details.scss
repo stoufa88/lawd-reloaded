@@ -7,20 +7,9 @@
   transition: opacity .5s ease-in;
 }
 
-.show {
+.show-details-overview {
 	color: #fff;
 	min-height: 100vh;
-}
-
-.show-popularity {
-	border-radius: 50%;
-	border: 2px solid #fff;
-	width: 100px;
-	height: 100px;
-	line-height: 92px;
-  font-size: 1.7rem;
-  background: #5bc0de;
-	margin: 0 auto;
 }
 
 .show-note {
@@ -38,13 +27,15 @@
 	border: 2px solid #fff;
 }
 
-.show-details-torrents-area {
-	padding: 2rem 5rem;
-	background: #000110;
-	border-top: 5px solid #fff;
-	label {
-		color: #ccc;
-	}
+.show-popularity {
+	border-radius: 50%;
+	border: 2px solid #fff;
+	width: 100px;
+	height: 100px;
+	line-height: 92px;
+  font-size: 1.7rem;
+  background: #5bc0de;
+	margin: 0 auto;
 }
 
 .show-details-videos-content {
@@ -70,18 +61,57 @@
 	}
 }
 
-.torrent-item {
-	padding: 0;
+// Torrents
+
+.show-details-torrents {
+	background: #000110;
+	border-top: 5px solid #fff;
+	h4 {
+		color: #fff;
+		margin-bottom: 2rem;
+		font-weight: bold;
+		text-align: center;
+	}
+	label {
+		color: #ccc;
+	}
 }
 
-.torrent-item a {
-	font-size: 12px;
-	color: #000;
-	display: block;
-	padding: 1rem 2rem;
-	background: #e4e4e4;
-	text-decoration: none;
+.torrents, .new-torrent {
+	padding: 2rem 4rem;
+}
+
+.new-torrent {
+	border-left: 1px solid #191925;
+}
+
+.torrent-item {
+	padding: 0;
+	border: none;
+	margin-bottom: 2px;
+	background: rgb(10, 18, 19);
 	&:hover {
-		background: darken(#e4e4e4, 5%);
+		background: #000110;
+	}
+	a {
+		font-size: 12px;
+		color: #ccc;
+		display: block;
+		padding: 1rem 2rem;
+		text-decoration: none;
+	}
+
+	.checked-torrent {
+		position: absolute;
+    right: 10px;
+    top: 18px;
+		color: #fff;
+	}
+
+	.torrent-votes {
+		position: absolute;
+		bottom: 0;
+		left: 2rem;
+		font-size: 12px;
 	}
 }
