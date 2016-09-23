@@ -9,7 +9,13 @@ class BackLink extends React.Component {
 	}
 
 	goBack() {
-		this.props.router.goBack()
+		if(this.props.route.path == '/movie/:id') {
+			this.props.router.push('/movies')
+		}else if (this.props.route.path == '/tv/:id') {
+			this.props.router.push('/tvs')
+		}else {
+			this.props.router.goBack()
+		}
 	}
 
   render() {

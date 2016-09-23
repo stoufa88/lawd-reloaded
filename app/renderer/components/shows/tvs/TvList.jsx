@@ -12,14 +12,29 @@ class TvList extends React.Component {
   constructor(props) {
     super(props)
 
+		let self = this
+
 		apiService = new ApiService()
 
 		this.state = {
 			shows: [],
-			genres: [],
-			scrollListener: null
+			genres: []
+		}
+
+		this.scrollListener = function() {
+			if($(window).scrollTop() + $(window).height() == $(document).height() && $(window).scrollTop() > 0) {
+				self.handlePageChange()
+			}
 		}
   }
+
+	shouldComponentUpdate(nextProps, nextState) {
+		if(nextState.shows.length > this.state.shows.length || nextState.shows.length === 0) {
+			return true
+		}else {
+			return false
+		}
+	}
 
 	componentWillMount() {
 		this.fetchGenres()
@@ -27,20 +42,12 @@ class TvList extends React.Component {
 	}
 
 	componentDidMount() {
-		let self = this
-
-		let scrollListener = function() {
-			if($(window).scrollTop() + $(window).height() == $(document).height()) {
-				self.handlePageChange()
-			}
-		}
-
-		$(window).scroll(scrollListener)
-		this.setState({scrollListener})
+		$(window).scroll(this.scrollListener)
+		this.setState({scrollListener: this.scrollListener})
 	}
 
 	componentWillUnmount() {
-		$(window).off("scroll", this.state.scrollListener)
+		$(window).off("scroll", this.scrollListener)
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {

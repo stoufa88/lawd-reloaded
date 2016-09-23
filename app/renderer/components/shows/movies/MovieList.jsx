@@ -6,17 +6,24 @@ import ShowCard from './../ShowCard'
 import Loader from '../../shared/Loader'
 
 let apiService
-let scrollListener
 
 class MovieList extends React.Component {
   constructor(props) {
     super(props)
+
+		let self = this
 
 		apiService = new ApiService()
 
 		this.state = {
 			movies: [],
 			genres: []
+		}
+
+		this.scrollListener = function() {
+			if($(window).scrollTop() + $(window).height() == $(document).height() && $(window).scrollTop() > 0) {
+				self.handlePageChange()
+			}
 		}
   }
 
@@ -26,23 +33,16 @@ class MovieList extends React.Component {
 	}
 
 	componentDidMount() {
-		let self = this
-		
-		scrollListener = function() {
-			if($(window).scrollTop() + $(window).height() == $(document).height()) {
-				self.handlePageChange()
-			}
-		}
-
-		$(window).scroll(scrollListener)
+		$(window).scroll(this.scrollListener)
+		this.setState({scrollListener: this.scrollListener})
 	}
 
 	componentWillUnmount() {
-		$(window).off("scroll", scrollListener)
+		$(window).off("scroll", this.scrollListener)
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		if(nextState.genres.length > 0) {
+		if(nextState.movies.length > this.state.movies.length || nextState.movies.length === 0) {
 			return true
 		}else {
 			return false
@@ -101,7 +101,7 @@ class MovieList extends React.Component {
 		let page = parseInt(location.query.page) || 1
 		page++
 
-		this.props.router.push(location.pathname + '?page=' + page)
+		this.props.router.replace(location.pathname + '?page=' + page)
 	}
 
 	fetchGenres() {

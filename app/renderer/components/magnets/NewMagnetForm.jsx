@@ -12,17 +12,16 @@ class NewMagnetForm extends React.Component {
     super(props)
 
 		this.state = {
-			magnetUrl: '',
+			magnet: { url: '', valid: false },
 			language: 'English',
 			quality: 'Standard',
 			subtitles: [
 				{
 					file: null,
-					lang: 'French'
+					lang: 'French',
+					valid: false
 				}
 			]
-			// subtitleFile: '',
-			// subtitleLang: ''
 		}
 
 		apiService = new ApiService()
@@ -35,7 +34,22 @@ class NewMagnetForm extends React.Component {
   }
 
 	handleMagnetUrlChange(e) {
-		this.setState({magnetUrl: e.target.value})
+		let magnetUrl = e.target.value
+
+		let magnet = {
+			url: magnetUrl,
+			valid: magnetUrl.match(/magnet:\?xt=urn:btih:[a-z0-9]{20,50}/i) != null
+		}
+
+		if(!magnet.valid) {
+			$('#magnet-url').addClass('has-danger')
+			$('#magnet-url .form-control-feedback').removeClass('invisible')
+		}else {
+			$('#magnet-url').removeClass('has-danger')
+			$('#magnet-url .form-control-feedback').addClass('invisible')
+		}
+
+		this.setState({ magnet })
 	}
 
 	handleLanguageChange(e) {
@@ -47,7 +61,18 @@ class NewMagnetForm extends React.Component {
 	}
 
 	handleSubFileChange(index, e) {
-		let subtitles = update(this.state.subtitles, {[index]: {file: {$set: e.target.files[0]}}})
+		let file = e.target.files[0]
+		let valid = file.type === 'application/x-subrip'
+
+		let subtitles = update(this.state.subtitles, {[index]: {file: {$set: file}}})
+		subtitles = update(subtitles, {[index]: {valid: {$set: valid}}})
+
+		if(!valid) {
+			$('#subtitles .form-control-feedback').removeClass('invisible')
+		}else {
+			$('#subtitles .form-control-feedback').addClass('invisible')
+		}
+
 		this.setState({subtitles})
 	}
 
@@ -60,7 +85,8 @@ class NewMagnetForm extends React.Component {
 		e.preventDefault()
 		let newSub = {
 			file: null,
-			lang: 'French'
+			lang: 'French',
+			valid: false
 		}
 
 		let subtitles = update(this.state.subtitles, {$push: [newSub]})
@@ -69,11 +95,17 @@ class NewMagnetForm extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault()
-		let { magnetUrl, language, quality, subtitles } = this.state
-		let { showId } = this.props
-		let torrentName = this.extractTorrentName(magnetUrl)
 
-		console.log(subtitles)
+		let { magnet, language, quality, subtitles, canSubmit } = this.state
+
+		if(!this.canSubmit()) {
+			console.log('please ensure you have no errors')
+			return
+		}
+
+		let { showId } = this.props
+		let magnetUrl = magnet.url
+		let torrentName = this.extractTorrentName(magnetUrl)
 
 		let torrent =  { magnetUrl, torrentName, language, quality }
 		apiService.addTorrent(showId, torrent, subtitles)
@@ -83,6 +115,19 @@ class NewMagnetForm extends React.Component {
 		let indexDn = magnetUrl.indexOf('&dn')
 		let indexTr = magnetUrl.indexOf('&tr')
 		return magnetUrl.slice(indexDn + 4, indexTr)
+	}
+
+	canSubmit() {
+		console.log(this.state)
+		let validSubs = true
+
+		this.state.subtitles.forEach((s) => {
+			if(!s.valid) {
+				validSubs = false
+			}
+		})
+
+		return this.state.magnet.valid && validSubs
 	}
 
   render() {
@@ -98,15 +143,15 @@ class NewMagnetForm extends React.Component {
 
     return (
       <form onSubmit={this.handleSubmit} >
-				<div className="form-group">
+				<div id="magnet-url" className="form-group">
 					<label htmlFor="magnetUrl">Magnet link</label>
-					<input 	id="magnetUrl"
-									className="form-control form-control-sm"
+					<input 	className="form-control form-control-sm"
 									type="text"
 									placeholder="paste magnet url here"
 									value={this.state.magnetUrl}
 									onChange={this.handleMagnetUrlChange}
 									required />
+					<div className="form-control-feedback invisible">Invalid magnet</div>
 				</div>
 
 				<div className="row">
@@ -132,7 +177,10 @@ class NewMagnetForm extends React.Component {
 				  </div>
 				</div>
 
-				{subtitles}
+				<div id="subtitles" className="has-danger">
+					{subtitles}
+					<div className="form-control-feedback invisible has-danger">Upload .srt only files</div>
+				</div>
 
 				<button onClick={this.handleAddSubtitleClick}>add subtitle</button>
 
