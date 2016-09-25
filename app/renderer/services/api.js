@@ -91,7 +91,7 @@ export default class ApiService {
 	getTvById(id) {
 		let url = `http://api.themoviedb.org/3/tv/${id}?language=${LANG}&append_to_response=credits,videos&api_key=${API_KEY}`
 
-		return fetch(options)
+		return fetch(url)
 			.then(function (res) {
 				return res.json()
 			})
