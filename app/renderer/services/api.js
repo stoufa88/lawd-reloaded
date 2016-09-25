@@ -1,4 +1,3 @@
-import rp from 'request-promise'
 import Parse from 'parse/node'
 import fs from 'fs'
 let config = require('../../config.json')
@@ -23,14 +22,11 @@ export default class ApiService {
 		console.log('Sort = ', sort)
 		console.log('page = ', page)
 
-		var options = {
-	    uri: `http://api.themoviedb.org/3/movie/${sort}?page=${page}&language=${LANG}&api_key=${API_KEY}`,
-	    json: true
-		}
+		let url = `http://api.themoviedb.org/3/movie/${sort}?page=${page}&language=${LANG}&api_key=${API_KEY}`
 
-		return rp(options)
+		return fetch(url)
 	    .then(function (res) {
-				return res
+				return res.json()
 	    })
 	    .catch(function (err) {
 	      console.error(err)
@@ -41,14 +37,11 @@ export default class ApiService {
 		console.log('Sort = ', sort)
 		console.log('page = ', page)
 
-		var options = {
-	    uri: `http://api.themoviedb.org/3/tv/${sort}?page=${page}&language=${LANG}&api_key=${API_KEY}`,
-	    json: true
-		}
+		let url = `http://api.themoviedb.org/3/tv/${sort}?page=${page}&language=${LANG}&api_key=${API_KEY}`
 
-		return rp(options)
+		return fetch(url)
 	    .then(function (res) {
-				return res
+				return res.json()
 	    })
 	    .catch(function (err) {
 	      console.error(err)
@@ -58,14 +51,11 @@ export default class ApiService {
 	searchMovies(query) {
 		console.log('Search query = ', query)
 
-		var options = {
-	    uri: `http://api.themoviedb.org/3/search/movie/?query=${query}&language=${LANG}&api_key=${API_KEY}`,
-	    json: true
-		}
+		let url = `http://api.themoviedb.org/3/search/movie/?query=${query}&language=${LANG}&api_key=${API_KEY}`
 
-		return rp(options)
+		return fetch(url)
 	    .then(function (res) {
-				return res
+				return res.json()
 	    })
 	    .catch(function (err) {
 	      console.error(err)
@@ -75,14 +65,11 @@ export default class ApiService {
 	searchTvs(query) {
 		console.log('Search query = ', query)
 
-		var options = {
-			uri: `http://api.themoviedb.org/3/search/tv/?query=${query}&language=${LANG}&api_key=${API_KEY}`,
-			json: true
-		}
+		let url = `http://api.themoviedb.org/3/search/tv/?query=${query}&language=${LANG}&api_key=${API_KEY}`
 
-		return rp(options)
+		return fetch(url)
 			.then(function (res) {
-				return res
+				return res.json()
 			})
 			.catch(function (err) {
 				console.error(err)
@@ -90,14 +77,11 @@ export default class ApiService {
 	}
 
 	getMovieById(id) {
-		var options = {
-			uri: `http://api.themoviedb.org/3/movie/${id}?language=${LANG}&append_to_response=credits,videos&api_key=${API_KEY}`,
-			json: true
-		}
+		let url = `http://api.themoviedb.org/3/movie/${id}?language=${LANG}&append_to_response=credits,videos&api_key=${API_KEY}`
 
-		return rp(options)
+		return fetch(url)
 			.then(function (res) {
-				return res
+				return res.json()
 			})
 			.catch(function (err) {
 				console.error(err)
@@ -105,14 +89,11 @@ export default class ApiService {
 	}
 
 	getTvById(id) {
-		var options = {
-			uri: `http://api.themoviedb.org/3/tv/${id}?language=${LANG}&append_to_response=credits,videos&api_key=${API_KEY}`,
-			json: true
-		}
+		let url = `http://api.themoviedb.org/3/tv/${id}?language=${LANG}&append_to_response=credits,videos&api_key=${API_KEY}`
 
-		return rp(options)
+		return fetch(options)
 			.then(function (res) {
-				return res
+				return res.json()
 			})
 			.catch(function (err) {
 				console.error(err)
@@ -120,14 +101,11 @@ export default class ApiService {
 	}
 
 	getTvSeason(tvId, seasonNumber) {
-		var options = {
-			uri: `http://api.themoviedb.org/3/tv/${tvId}/season/${seasonNumber}?language=${LANG}&api_key=${API_KEY}`,
-			json: true
-		}
+		let url = `http://api.themoviedb.org/3/tv/${tvId}/season/${seasonNumber}?language=${LANG}&api_key=${API_KEY}`
 
-		return rp(options)
+		return fetch(url)
 			.then(function (res) {
-				return res
+				return res.json()
 			})
 			.catch(function (err) {
 				console.error(err)
@@ -135,14 +113,11 @@ export default class ApiService {
 	}
 
 	getGenres() {
-		var options = {
-			uri: `http://api.themoviedb.org/3/genre/movie/list?language=${LANG}&api_key=${API_KEY}`,
-			json: true
-		}
+		let url = `http://api.themoviedb.org/3/genre/movie/list?language=${LANG}&api_key=${API_KEY}`
 
-		return rp(options)
+		return fetch(url)
 			.then(function (res) {
-				return res
+				return res.json()
 			})
 			.catch(function (err) {
 				console.error(err)
