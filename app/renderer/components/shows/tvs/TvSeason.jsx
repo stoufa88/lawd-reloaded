@@ -59,11 +59,11 @@ class TvSeason extends React.Component {
 					<div className="col-sm-2">
 						<img src={posterPath} />
 					</div>
-					<div className="col-sm-9 offset-sm-1">
+					<div className="col-sm-6 offset-sm-1">
 						<div className="row">
 							<p className="lead">Date de diffusion: {season.air_date}</p>
 						</div>
-						<div className="row">
+						<div className="row season-overview">
 							<p>{season.overview}</p>
 						</div>
 					</div>

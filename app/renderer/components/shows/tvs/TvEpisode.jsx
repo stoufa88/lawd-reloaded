@@ -38,7 +38,7 @@ class TvEpisode extends React.Component {
   render() {
 		let stillPath
 		if(this.props.stillPath){
-			stillPath = 'http://image.tmdb.org/t/p/w154' + this.props.stillPath
+			stillPath = 'http://image.tmdb.org/t/p/w500' + this.props.stillPath
 		}
 
 		let name = this.props.name !== "" ? this.props.name : `Episode ${this.props.number}`
@@ -47,12 +47,7 @@ class TvEpisode extends React.Component {
 		this.state.torrents.forEach((torrent, index) => {
 			magnets.push(
 				<Magnet key={torrent.id}
-								magnetURL={torrent.get('magnetURL')}
-								lang={torrent.get('lang')}
-								name={torrent.get('name')}
-								quality={torrent.get('quality')}
-								index={index}
-								torrentId={torrent.id} />
+								torrent={torrent}/>
 			)
 		})
 
@@ -65,13 +60,31 @@ class TvEpisode extends React.Component {
 						)
 					}
 				})()}
-			  <div className="card-block">
+			  <div className="card-img-overlay">
 			    <h4 className="card-title">{name}</h4>
 			    <p className="card-text">{this.props.airDate}</p>
 			  </div>
-			  <ul className="list-group list-group-flush">
-			    {magnets}
-			  </ul>
+
+				<ul className="nav nav-tabs" role="tablist">
+				  <li className="nav-item">
+				    <a className="nav-link active" data-toggle="tab" href={`#links-${this.props.id}`} role="tab">Links</a>
+				  </li>
+				  <li className="nav-item">
+				    <a className="nav-link" data-toggle="tab" href={`#add-${this.props.id}`} role="tab">Add</a>
+				  </li>
+				</ul>
+				<div className="tab-content">
+				  <div className="tab-pane active" id={`links-${this.props.id}`} role="tabpanel">
+						<ul className="list-group list-group-flush">
+							{magnets}
+						</ul>
+					</div>
+				  <div className="tab-pane" id={`add-${this.props.id}`} role="tabpanel">
+						<div className="p-t-1 p-b-1 p-l-1 p-r-1">
+							<NewMagnetForm showId={this.props.id} />
+						</div>
+					</div>
+				</div>
 			</div>
 		)
   }

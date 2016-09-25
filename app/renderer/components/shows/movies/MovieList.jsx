@@ -90,7 +90,7 @@ class MovieList extends React.Component {
 		this.setState({ movies })
 
 		apiService.searchMovies(query).then((res) => {
-			let newMovies = update(shows, {$push: res.results})
+			let newMovies = update(movies, {$push: res.results})
 			this.setState({ movies: newMovies })
 		})
 	}

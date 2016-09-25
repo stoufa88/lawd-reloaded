@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import { Link } from 'react-router'
+import { Link, withRouter } from 'react-router'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 class TopNav extends React.Component {
@@ -12,6 +12,7 @@ class TopNav extends React.Component {
 		}
 
 		this.handleSearchTextChange = this.handleSearchTextChange.bind(this)
+		this.handleEnterOnSearch = this.handleEnterOnSearch.bind(this)
 	}
 
 	componentDidMount() {
@@ -45,14 +46,32 @@ class TopNav extends React.Component {
 		this.setState({searchQuery: e.target.value})
 	}
 
+	handleEnterOnSearch(e) {
+		if (e.key === 'Enter') {
+			const {path} = this.props.route
+
+			switch (path) {
+				case '/search/movie':
+				case 'movies':
+					this.props.router.push(`/search/movie?searchQuery=${this.state.searchQuery}`)
+					break
+				case '/search/tv':
+				case 'tv':
+					this.props.router.push(`/search/tv?searchQuery=${this.state.searchQuery}`)
+					break
+			}
+    }
+	}
+
   render() {
 		const {formatMessage} = this.props.intl
 		const {path} = this.props.route
-		
+
 		let sortLinks
 		let searchArea
 
 		switch (path) {
+			case '/search/movie':
 			case 'movies':
 				sortLinks = (
 					<div className="dropdown-menu">
@@ -65,13 +84,15 @@ class TopNav extends React.Component {
 					<div className="search input-group">
 				    <input className="form-control" type="text"
 									placeholder={formatMessage({id: 'navigation.search.movie_placeholder'})}
-									onChange={this.handleSearchTextChange}/>
+									onChange={this.handleSearchTextChange}
+									onKeyPress={this.handleEnterOnSearch} />
 						<Link className="btn btn-secondary" to={`/search/movie?searchQuery=${this.state.searchQuery}`}>
 							<FormattedMessage id="navigation.search" />
 						</Link>
 					</div>
 				)
 				break;
+			case '/search/movie':
 			case 'tvs':
 				sortLinks = (
 					<div className="dropdown-menu">
@@ -84,7 +105,8 @@ class TopNav extends React.Component {
 					<div className="search input-group">
 						<input className="form-control" type="text"
 									placeholder={formatMessage({id: 'navigation.search.tv_placeholder'})}
-									onChange={this.handleSearchTextChange}/>
+									onChange={this.handleSearchTextChange}
+									onKeyPress={this.handleEnterOnSearch} />
 						<Link className="btn btn-secondary" to={`/search/tv?searchQuery=${this.state.searchQuery}`}>
 							<FormattedMessage id="navigation.search" />
 						</Link>
@@ -124,16 +146,4 @@ TopNav.propTypes = {
 	sort: PropTypes.string
 }
 
-export default injectIntl(TopNav)
-
-// <li className="nav-item">
-// 	<div className="btn-group">
-// 		<button type="button" className="btn btn-link"><FormattedMessage id="navigation.tvs" /></button>
-// 		<button type="button" className="btn btn-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-// 			<span className="sr-only">Toggle Dropdown</span>
-// 		</button>
-// 		<div className="dropdown-menu">
-// 			<Link className="dropdown-item" to="/tv/popular"><FormattedMessage id="navigation.tvs" /></Link>
-// 		</div>
-// 	</div>
-// </li>
+export default withRouter(injectIntl(TopNav))

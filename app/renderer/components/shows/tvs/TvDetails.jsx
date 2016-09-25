@@ -65,7 +65,7 @@ export default class TvDetails extends React.Component {
         transitionAppearTimeout={500}
 				transitionEnterTimeout={500}
         transitionLeaveTimeout={300}>
-				<div className="container-fluid show p-t-3 p-b-3 p-l-3" style={tvStyle}>
+				<div className="container-fluid show-details-overview p-t-3 p-b-3 p-l-3" style={tvStyle}>
 					<ShowDetails
 						title={tv.original_name}
 						posterPath={posterPath}
