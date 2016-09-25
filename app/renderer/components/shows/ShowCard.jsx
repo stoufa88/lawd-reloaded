@@ -35,9 +35,13 @@ export default class ShowCard extends React.Component {
 		let torrentLanguages = []
 		let subtitleLanguages = []
 		torrents.forEach((torrent) => {
-			torrentLanguages.push(torrent.get('lang'))
+			if(torrentLanguages.indexOf(torrent.get('lang')) === -1) {
+				torrentLanguages.push(torrent.get('lang'))
+			}
 			torrent.get('subtitles').forEach((subtitle) => {
-				subtitleLanguages.push(subtitle.get('lang'))
+				if(subtitleLanguages.indexOf(subtitle.get('lang')) === -1) {
+					subtitleLanguages.push(subtitle.get('lang'))
+				}
 			})
 		})
 

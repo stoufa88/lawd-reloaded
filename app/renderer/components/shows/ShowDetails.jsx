@@ -19,10 +19,17 @@ class ShowDetails extends React.Component {
 						{this.props.title} ({this.props.year})
 					</h1>
 					<p>{this.props.genres.map((g) => g['name']).join(', ')}</p>
-					<p>
-						<strong><FormattedMessage id="show.synopsys" /></strong><br/>
-						{this.props.overview}
-					</p>
+					
+					{(() => {
+						if (this.props.overview) {
+							return (
+								<p>
+									<strong><FormattedMessage id="show.synopsys" /></strong><br/>
+									{this.props.overview}
+								</p>
+							)
+						}
+					})()}
 
 					<div className="text-xs-center m-t-1">
 						{(() => {
@@ -43,7 +50,7 @@ ShowDetails.propTypes = {
   title: PropTypes.string.isRequired,
 	posterPath: PropTypes.string.isRequired,
   year: PropTypes.string.isRequired,
-  overview: PropTypes.string.isRequired,
+  overview: PropTypes.string,
   genres: PropTypes.array.isRequired,
   credits: PropTypes.object.isRequired
 }

@@ -55,12 +55,16 @@ export default class MovieDetails extends React.Component {
 		}
 
 		let magnets = []
-		torrents.forEach((torrent, index) => {
-			magnets.push(
-				<Magnet key={torrent.id}
-								torrent={torrent} />
-			)
-		})
+		if(torrents.length > 0) {
+			torrents.forEach((torrent, index) => {
+				magnets.push(
+					<Magnet key={torrent.id}
+									torrent={torrent}/>
+				)
+			})
+		}else {
+			magnets = <p className="torrents-list-empty"><FormattedMessage id="show.torrents_empty" /></p>
+		}
 
 		let posterPath = 'http://image.tmdb.org/t/p/w154/' + movie.poster_path
 		let backdropPath = 'http://image.tmdb.org/t/p/w1920/' + movie.backdrop_path

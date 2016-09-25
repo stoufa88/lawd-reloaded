@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   module: {
-    noParse: /app\/node_modules\/json-schema\/lib\/validate\.js/,
+    noParse: ['ws'],
     loaders: [
       { test: /\.json$/, loader: 'json-loader' },
       { test: /\.(jpe|jpg|png|woff|woff2|eot|ttf|svg)(\?.*$|$)/, loader: 'url-loader?importLoaders=1&limit=150000' },
@@ -10,8 +10,9 @@ module.exports = {
         test: /\.jsx?$/,
         include: path.resolve(__dirname, 'app/renderer'),
         loader: 'babel',
+				exclude: /node_modules/,
         query: {
-          presets: ['react', 'es2015']
+          presets: [ 'es2015', 'react']
         }
       }
     ]
@@ -30,6 +31,7 @@ module.exports = {
 
   ],
   externals: [
+		['ws']
     // put your node 3rd party libraries which can't be built with webpack here
     // (mysql, mongodb, and so on..)
   ]

@@ -53,14 +53,16 @@
 
 .episode-list {
 	flex-flow: row nowrap;
+	max-height: 500px;
 	overflow-x: auto;
-	overflow-y: hidden;
+	overflow-y: auto;
 	padding-bottom: 1rem;
 }
 
 .episode {
-	.nav-tabs a{
-		color: #000;
+	align-self: flex-start;
+	.nav-tabs {
+		background: #000110;
 	}
 	.tab-pane {
 		 background: #000110;
@@ -138,4 +140,11 @@
 		font-size: 12px;
 		color: #ccc;
 	}
+}
+
+.torrents-list-empty {
+	text-align: center;
+	padding: 2rem 0;
+	margin-bottom: 0;
+	color: #ccc;
 }

@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react'
+import { FormattedMessage } from 'react-intl'
 import {Link} from 'react-router'
 import NewMagnetForm from '../../magnets/NewMagnetForm'
 import Magnet from '../../magnets/Magnet'
@@ -44,12 +45,17 @@ class TvEpisode extends React.Component {
 		let name = this.props.name !== "" ? this.props.name : `Episode ${this.props.number}`
 
 		let magnets = []
-		this.state.torrents.forEach((torrent, index) => {
-			magnets.push(
-				<Magnet key={torrent.id}
-								torrent={torrent}/>
-			)
-		})
+		if(this.state.torrents.length > 0) {
+			this.state.torrents.forEach((torrent, index) => {
+				magnets.push(
+					<Magnet key={torrent.id}
+									torrent={torrent}/>
+				)
+			})
+		}else {
+			magnets = <p className="torrents-list-empty"><FormattedMessage id="show.torrents_empty" /></p>
+		}
+
 
     return(
 			<div className="card episode">

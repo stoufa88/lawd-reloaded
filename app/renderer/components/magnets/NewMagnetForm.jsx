@@ -15,13 +15,7 @@ class NewMagnetForm extends React.Component {
 			magnet: { url: '', valid: false },
 			language: 'English',
 			quality: 'Standard',
-			subtitles: [
-				{
-					file: null,
-					lang: 'French',
-					valid: false
-				}
-			]
+			subtitles: []
 		}
 
 		apiService = new ApiService()

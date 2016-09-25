@@ -9,7 +9,7 @@ export default class Avatar extends React.Component {
 		let nameSplit = this.props.name.split(" ")
     let initials = nameSplit[0].charAt(0).toUpperCase() + nameSplit[1].charAt(0).toUpperCase()
 
-		var canvas = document.getElementById("cast-icon")
+		var canvas = document.getElementById(`cast-icon-${this.props.name}`)
 		var context = canvas.getContext("2d")
 
 		var centerX = canvas.width / 2
@@ -29,7 +29,7 @@ export default class Avatar extends React.Component {
 
   render() {
     return (
-			<canvas id="cast-icon" width="70" height="70"></canvas>
+			<canvas id={`cast-icon-${this.props.name}`} width="70" height="70"></canvas>
     );
   }
 }
