@@ -244,6 +244,16 @@ export default class ApiService {
 			torrent.save()
 		})
 	}
+
+	getLatestVersion() {
+		let Update = Parse.Object.extend('Update')
+		let query = new Parse.Query(Update)
+		query.descending('createdAt')
+		return query.first().then((version) => {
+			return version
+		})
+		// query.equalTo('versionCode', currentVersion)
+	}
 }
 
 // .then(function() {

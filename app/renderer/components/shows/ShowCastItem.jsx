@@ -9,6 +9,7 @@ export default class ShowCastItem extends React.Component {
   render() {
 		let { profile_path, name, character } = this.props.castEntry
 
+
 		let avatar
 		if(profile_path) {
 			let profilePath = 'http://image.tmdb.org/t/p/w154/' + profile_path
@@ -17,11 +18,12 @@ export default class ShowCastItem extends React.Component {
 			avatar = <Avatar name={name} />
 		}
 
-
     return (
 			<div className="d-inline-block m-r-1">
 				{avatar}
-				<p>{this.props.castEntry.name}</p>
+				<p><strong>{this.props.castEntry.name}</strong> <br/>
+					as {this.props.castEntry.character}
+				</p>
 			</div>
     );
   }
