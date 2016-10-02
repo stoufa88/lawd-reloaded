@@ -9,16 +9,12 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: path.resolve(__dirname, 'app/renderer'),
-        loader: 'babel',
-				exclude: /node_modules/,
-        query: {
-          presets: [ 'es2015', 'react']
-        }
+        loaders: ['babel-loader']
       }
     ]
   },
   output: {
-    path: path.join(__dirname, 'app/out'),
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
     libraryTarget: 'commonjs2'
   },
