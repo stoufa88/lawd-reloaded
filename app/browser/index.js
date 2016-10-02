@@ -76,3 +76,5 @@ ipcMain.on('download-path-request', (event, arg) => {
 
   event.returnValue = p;
 });
+
+require('./db.js')

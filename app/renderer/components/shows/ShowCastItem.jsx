@@ -13,15 +13,15 @@ export default class ShowCastItem extends React.Component {
 		let avatar
 		if(profile_path) {
 			let profilePath = 'http://image.tmdb.org/t/p/w154/' + profile_path
-			avatar = <img src={profilePath} className="cast-image"/>
+			avatar = <img src={profilePath} className="cast-item__image"/>
 		}else {
 			avatar = <Avatar name={name} />
 		}
 
     return (
-			<div className="d-inline-block m-r-1">
+			<div className="d-inline-block m-r-1 cast-item">
 				{avatar}
-				<p><strong>{this.props.castEntry.name}</strong> <br/>
+				<p className="cast-item__name"><strong>{this.props.castEntry.name}</strong> <br/>
 					as {this.props.castEntry.character}
 				</p>
 			</div>

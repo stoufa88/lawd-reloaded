@@ -21,10 +21,11 @@
 
 .main-nav {
 	position: fixed;
-	height: calc(100vh - 54px);
+	height: 100vh;
 	width: 4rem;
 	text-align: center;
-	top: 54px;
+	top: 0;
+	padding-top: 54px;
 	background: darken($brand-inverse, 5%);
 	li {
 		padding-top: 1.5rem;

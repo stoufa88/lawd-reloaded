@@ -1,11 +1,13 @@
 const WebTorrent = require('webtorrent')
 const {ipcRenderer} = require('electron')
 import srt2vtt from 'srt2vtt'
+import DatabaseService from './db'
 
 let _initCalled = false
+let downloadPath
 let client
 let server
-let downloadPath
+let databaseService
 
 export default class Engine {
   constructor () {
@@ -15,10 +17,8 @@ export default class Engine {
     _initCalled = true
 
 		downloadPath = ipcRenderer.sendSync('download-path-request', '')
-
-		console.log('creating a new webtorrent engine')
-
     client = new WebTorrent({maxConns: 150})
+		databaseService = new DatabaseService()
   }
 
   // Add torrent to engine, return movie file in callback
@@ -27,11 +27,17 @@ export default class Engine {
 			path: downloadPath
 		}
 
+
     client.add(magnetUri, opts, function (torrent) {
-			console.info('new torrent added to engine', torrent.infoHash)
+			console.info('new torrent added to engine', torrent)
 			console.info('default download path', downloadPath)
 
       cb(torrent)
+
+			// Add torrent to local database
+			databaseService.addTorrent(torrent, magnetUri).then(() => {
+				console.info('NEW TORRENT ADDED')
+			})
     })
   }
 

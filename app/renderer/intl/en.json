@@ -7,6 +7,8 @@
 
 		"navigation.movies": "Movies",
 		"navigation.tvs": "TV Series",
+		"navigation.torrents": "Torrents",
+		
 		"navigation.search": "Search",
 		"navigation.search.movie_placeholder": "Search a movie",
 		"navigation.search.tv_placeholder": "Search a TV serie",

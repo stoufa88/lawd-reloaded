@@ -17,6 +17,7 @@ import TopNav from './components/shared/TopNav'
 import BackLink from './components/shared/BackLink'
 import Notification from './components/shared/Notification'
 import MovieList from './components/shows/movies/MovieList'
+import TorrentList from './components/torrents/TorrentList'
 import MovieDetails from './components/shows/movies/MovieDetails'
 import TvList from './components/shows/tvs/TvList'
 import TvDetails from './components/shows/tvs/TvDetails'
@@ -134,6 +135,8 @@ render((
 				<Route path="tvs" components={{main: TvList, mainNav: MainNav, topNav: TopNav}}>
 					<Route path="/tvs/:sort" components={{main: TvList,  mainNav: MainNav, topNav: TopNav}} />
 				</Route>
+
+				<Route path="/torrents" components={{main: TorrentList, mainNav: MainNav}} />
 
 				<Route path="/movie/:id" components={{main: MovieDetails, backLink: BackLink}} />
 				<Route path="/tv/:id" components={{main: TvDetails, backLink: BackLink}} />

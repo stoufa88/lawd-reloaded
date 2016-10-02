@@ -28,6 +28,12 @@ class MainNav extends React.Component {
 							<FormattedMessage id="navigation.tvs" />
 						</Link>
 					</li>
+					<li className="nav-item">
+						<Link className="nav-link" activeClassName="top-nav-active-link" to="/torrents">
+							<i className="fa fa-magnet" aria-hidden="true"></i>
+							<FormattedMessage id="navigation.torrents" />
+						</Link>
+					</li>
 				</ul>
 				<p className="versionNumber">0.1.0</p>
 			</div>
