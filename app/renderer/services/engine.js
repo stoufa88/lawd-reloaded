@@ -21,7 +21,7 @@ export default class Engine {
 		databaseService = new DatabaseService()
   }
 
-  // Add torrent to engine, return movie file in callback
+  // Add torrent to engine, return torrent in callback
   addMagnet (magnetUri, cb) {
 		let opts = {
 			path: downloadPath
@@ -30,16 +30,27 @@ export default class Engine {
 
     client.add(magnetUri, opts, function (torrent) {
 			console.info('new torrent added to engine', torrent)
-			console.info('default download path', downloadPath)
+
+			this.selectAllFiles(torrent)
 
       cb(torrent)
 
 			// Add torrent to local database
-			databaseService.addTorrent(torrent, magnetUri).then(() => {
-				console.info('NEW TORRENT ADDED')
-			})
+			// databaseService.addTorrent(torrent, magnetUri).then(() => {
+			// 	console.info('NEW TORRENT ADDED')
+			// })
     })
   }
+
+	selectAllFiles(files) {
+		files.forEach((file) => {
+			this.selectTorrentFile(file)
+		})
+	}
+
+	selectTorrentFile(f) {
+		f.select()
+	}
 
 	getMedia (torrentId) {
 		let torrent = this.getTorrent(torrentId.toLowerCase())
@@ -48,8 +59,6 @@ export default class Engine {
 		let mediaIndex = 0
 		let subtitleIndexes = []
 		torrent.files.forEach(function (f, index) {
-			f.select()
-
 			if (/\.(mp4|mkv)$/i.test(f.name)) {
 				if(!movieFile || f.length > movieFile.length){
 					movieFile = f

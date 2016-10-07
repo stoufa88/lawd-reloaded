@@ -7,11 +7,15 @@
 	input, a {
 		border-radius: 0px;
 		border: 0;
-		background: rgba(0, 0, 0, 0.18);
 
 	}
 	input {
-		width: 300px !important;
+		width: 200px !important;
+		transition: width 0.3s;
+		border-radius: 8px;
+		&:focus {
+			width: 300px !important;
+		}
 	}
 }
 

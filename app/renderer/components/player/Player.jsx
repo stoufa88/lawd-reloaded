@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 import videojs from 'video.js'
 import ApiService from '../../services/api'
 import Engine from '../../services/engine'
-import Torrent from './Torrent'
+import Torrent from '../torrents/Torrent'
 
 let apiService, engine, player
 
