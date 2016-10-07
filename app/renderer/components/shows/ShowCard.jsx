@@ -55,7 +55,8 @@ export default class ShowCard extends React.Component {
 	}
 
   render() {
-		let posterPath = 'http://image.tmdb.org/t/p/w154/' + this.props.poster_path
+		let noCover = require('../../assets/images/nocover.gif')
+		let posterPath = this.props.poster_path ? 'http://image.tmdb.org/t/p/w154/' + this.props.poster_path : noCover
 
 		let languages
 		if(this.state.torrentLanguages.length > 0) {

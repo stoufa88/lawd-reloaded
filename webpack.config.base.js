@@ -5,7 +5,7 @@ module.exports = {
     noParse: ['ws'],
     loaders: [
       { test: /\.json$/, loader: 'json-loader' },
-      { test: /\.(jpe|jpg|png|woff|woff2|eot|ttf|svg)(\?.*$|$)/, loader: 'url-loader?importLoaders=1&limit=150000' },
+      { test: /\.(jpe|jpg|png|woff|woff2|eot|ttf|svg|gif)(\?.*$|$)/, loader: 'url-loader?importLoaders=1&limit=150000' },
       {
         test: /\.jsx?$/,
         include: path.resolve(__dirname, 'app/renderer'),

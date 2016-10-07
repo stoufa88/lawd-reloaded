@@ -31,7 +31,7 @@ let apiService
 const App = React.createClass({
   getInitialState() {
     return {
-			latestVersion: null
+			latestVersion: null,
 		}
   },
 
@@ -49,6 +49,11 @@ const App = React.createClass({
 				this.setState({latestVersion})
 			}
 		})
+
+		// Hide the toast after 5 seconds
+		setTimeout(() => {
+			this.setState({latestVersion: null})
+		}, 5000)
 	},
 
   render() {

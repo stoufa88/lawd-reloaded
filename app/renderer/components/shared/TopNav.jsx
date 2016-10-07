@@ -56,7 +56,7 @@ class TopNav extends React.Component {
 					this.props.router.push(`/search/movie?searchQuery=${this.state.searchQuery}`)
 					break
 				case '/search/tv':
-				case 'tv':
+				case 'tvs':
 					this.props.router.push(`/search/tv?searchQuery=${this.state.searchQuery}`)
 					break
 			}

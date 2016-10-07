@@ -24,7 +24,8 @@ export default class DatabaseService {
 		let doc = {
 			infoHash: torrent.infoHash,
 			name: torrent.name,
-			magnetUri: magnetUri
+			magnetUri: magnetUri,
+			status: 'downloading'
 		}
 
 		let p = Promise.resolve(ipcRenderer.sendSync(constants.ACTION_ADD_TORRENT, doc));
@@ -32,6 +33,10 @@ export default class DatabaseService {
 		return p.then(() => {
 			// SUCCESS
 		});
+	}
+
+	pauseTorrent(torrent) {
+		torrent.pause()
 	}
 
 }

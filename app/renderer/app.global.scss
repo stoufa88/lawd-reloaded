@@ -44,12 +44,16 @@ body {
 	margin-top: 54px;
 	padding-top: 1rem;
 	padding-left: 4rem;
+	.card-deck {
+		justify-content: center;
+	}
 }
 
 .movie-item {
 	display: inline-flex;
 	border: none;
-	flex-basis: 33.3% !important;
+	min-width: 500px;
+	max-width: 500px;
 }
 
 .movie-item-details {
