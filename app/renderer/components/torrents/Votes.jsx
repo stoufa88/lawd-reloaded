@@ -22,10 +22,10 @@ class Votes extends React.Component {
   }
 
 	componentWillReceiveProps(nextProps, nextState) {
-		if(nextProps.torrent) {
-			this.setState({upVotes: nextProps.torrent.get('upVotes')})
-			this.setState({downVotes: nextProps.torrent.get('downVotes')})
-		}
+		// if(nextProps.torrent) {
+		// 	this.setState({upVotes: nextProps.torrent.get('upVotes')})
+		// 	this.setState({downVotes: nextProps.torrent.get('downVotes')})
+		// }
 	}
 
 	handleUpVoteClick() {

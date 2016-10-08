@@ -1,4 +1,5 @@
 const { ipcRenderer } = require('electron')
+import _ from 'underscore'
 
 let constants = require ('../../constants.js')
 
@@ -22,8 +23,9 @@ export default class DatabaseService {
 		let p = Promise.resolve(ipcRenderer.sendSync(constants.ACTION_GET_TORRENTS, null));
 
 		return p.then((torrents) => {
-			return torrents;
-		});
+			// remove duplicate to avoid torrent ids collision
+			return _.uniq(torrents, 'infoHash')
+		})
 	}
 
 	addTorrent(torrent, magnetUri) {

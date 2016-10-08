@@ -15,22 +15,40 @@ class TorrentList extends React.Component {
 
 		this.databaseService = new DatabaseService()
 		this.engine = new Engine()
+		this.intervalId = null
   }
 
 	componentWillMount() {
 		this.databaseService.getTorrents().then((torrents) => {
-			this.setState({torrents})
+			this.addTorrentsToEngine(torrents)
 		})
 	}
 
 	componentDidMount() {
-		let intervalId =  setInterval( () => {
+		this.intervalId = setInterval( () => {
 			this.watchTorrents()
-		}, 3000)
+		}, 1000)
 	}
 
-	addTorrentToEngine(infoHash) {
-		// let torrents = update(this.state.torrents, {[index]: {torrent: {$set: torrent}}})
+	componentWillUnmount() {
+		window.clearInterval(this.intervalId)
+	}
+
+	addTorrentsToEngine(torrents) {
+		torrents.forEach((torrent, index) => {
+			this.addTorrentToEngine(torrent)
+		})
+	}
+
+	addTorrentToEngine(torrent) {
+		let self = this
+
+		self.engine.addMagnet(torrent.magnetUri, (webtorrent) => {
+			torrent.webtorrent = webtorrent
+			let torrents = update(self.state.torrents, {$push: [torrent]})
+			console.info(torrents)
+			self.setState({torrents})
+		})
 	}
 
 	startTorrenting(torrentId) {
@@ -50,20 +68,20 @@ class TorrentList extends React.Component {
 	watchTorrents() {
 		let torrents = []
 		this.state.torrents.forEach((torrent, index) => {
-			console.log(torrent)
+			if(!torrent.webtorrent) {
+				return
+			}
 
-			torrent.donwloaded = filesize(torrent.downloaded)
-			torrent.uploaded = filesize(torrent.uploaded)
-			torrent.downloadSpeed = filesize(torrent.downloadSpeed)
-			torrent.uploadSpeed = filesize(torrent.uploadSpeed)
-
-			torrent.progress = Math.floor(torrent.progress * 100)
-
+			torrent.donwloaded = filesize(torrent.webtorrent.downloaded)
+			torrent.uploaded = filesize(torrent.webtorrent.uploaded)
+			torrent.downloadSpeed = filesize(torrent.webtorrent.downloadSpeed)
+			torrent.uploadSpeed = filesize(torrent.webtorrent.uploadSpeed)
+			torrent.progress = Math.floor(torrent.webtorrent.progress * 100)
 
 			torrents.push(torrent)
 		})
 
-		// this.setState({torrents})
+		this.setState({torrents})
 	}
 
   render() {

@@ -23,6 +23,7 @@ export default class Engine {
 
   // Add torrent to engine, return torrent in callback
   addMagnet (magnetUri, cb) {
+		let self = this
 		let opts = {
 			path: downloadPath
 		}
@@ -31,7 +32,7 @@ export default class Engine {
     client.add(magnetUri, opts, function (torrent) {
 			console.info('new torrent added to engine', torrent)
 
-			this.selectAllFiles(torrent)
+			self.selectAllFiles(torrent.files)
 
       cb(torrent)
 
@@ -70,8 +71,6 @@ export default class Engine {
 				subtitleIndexes.push(index)
 			}
 		})
-
-		torrent.downloading = true
 
 		let mediaEncoding = movieFile.name.indexOf('mkv') > -1 ? 'mkv' : 'mp4'
 

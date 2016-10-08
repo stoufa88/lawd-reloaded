@@ -1,3 +1,14 @@
 .torrent-list {
 	padding-left: 4rem;
 }
+
+.torrent-bar {
+	color: #fff;
+	background: rgb(56, 56, 56);
+	padding-top: 1rem;
+	overflow: hidden;
+	.progress {
+		margin: 0;
+		height: 0.2rem;
+	}
+}
