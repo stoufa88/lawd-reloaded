@@ -102,14 +102,14 @@ export default class MovieDetails extends React.Component {
 
 				<div className="container-fluid show-details-torrents">
 					<div className="row">
-						<div className="col-sm-6 torrents">
+						<div className="col-sm-6 show-details-torrents-links">
 							<h4>Available links</h4>
 							<ul className="list-group">
 								{magnets}
 							</ul>
 						</div>
 
-						<div className="col-sm-6 new-torrent">
+						<div className="col-sm-6 show-details-torrents-new">
 							<h4>Add new</h4>
 							<NewMagnetForm showId={movie.id} />
 						</div>

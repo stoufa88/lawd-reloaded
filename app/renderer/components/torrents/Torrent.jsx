@@ -27,9 +27,18 @@ class Torrent extends React.Component {
 
 					<div className="torrent-bar-buttons">
 						<i className="fa fa-times" aria-hidden="true" onClick={this.props.handleTorrentRemove}></i>
-						<i className="fa fa-pause m-l-1" aria-hidden="true" onClick={this.props.handlePauseTorrenting}></i>
-						<i className="fa fa-stop m-l-1" aria-hidden="true" onClick={this.props.handleDestroyTorrent}></i>
-						<i className="fa fa-play m-l-1" aria-hidden="true" onClick={this.props.handleStartTorrenting}></i>
+
+						{!this.props.torrent.webtorrent.paused &&
+							<i className="fa fa-pause m-l-1" aria-hidden="true" onClick={this.props.handlePauseTorrenting}></i>
+						}
+
+						{this.props.torrent.webtorrent.paused &&
+							<i className="fa fa-play m-l-1" aria-hidden="true" onClick={this.props.handleStartTorrenting}></i>
+						}
+
+						{!this.props.torrent.webtorrent.destroyed &&
+							<i className="fa fa-stop m-l-1" aria-hidden="true" onClick={this.props.handleDestroyTorrent}></i>
+						}
 					</div>
 
 				</div>

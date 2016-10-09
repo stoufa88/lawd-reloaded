@@ -87,7 +87,7 @@ class TopNav extends React.Component {
 									onChange={this.handleSearchTextChange}
 									onKeyPress={this.handleEnterOnSearch} />
 						<Link className="btn btn-secondary" to={`/search/movie?searchQuery=${this.state.searchQuery}`}>
-							<FormattedMessage id="navigation.search" />
+							<i className="fa fa-search" aria-hidden="true"></i>
 						</Link>
 					</div>
 				)
@@ -108,7 +108,7 @@ class TopNav extends React.Component {
 									onChange={this.handleSearchTextChange}
 									onKeyPress={this.handleEnterOnSearch} />
 						<Link className="btn btn-secondary" to={`/search/tv?searchQuery=${this.state.searchQuery}`}>
-							<FormattedMessage id="navigation.search" />
+							<i className="fa fa-search" aria-hidden="true"></i>
 						</Link>
 					</div>
 				)
