@@ -3,9 +3,10 @@ import React, { PropTypes } from 'react'
 import videojs from 'video.js'
 import ApiService from '../../services/api'
 import Engine from '../../services/engine'
+import DatabaseService from '../../services/db'
 import Torrent from '../torrents/Torrent'
 
-let apiService, engine, player
+let player
 
 class Player extends React.Component {
   constructor(props) {
@@ -16,8 +17,9 @@ class Player extends React.Component {
 			torrentId: null // This is webtorrent id
 		}
 
-		apiService = new ApiService()
-		engine = new Engine()
+		this.apiService = new ApiService()
+		this.engine = new Engine()
+		this.databaseService = new DatabaseService()
   }
 
 	componentDidMount() {
@@ -35,7 +37,7 @@ class Player extends React.Component {
 	}
 
 	serveTorrent(torrentId) {
-		apiService.getTorrentById(torrentId).then((torrent) => {
+		this.apiService.getTorrentById(torrentId).then((torrent) => {
 			this.setState({torrent})
 			if(torrent.get('subtitles')) {
 				torrent.get('subtitles').forEach((subtitle) => {
@@ -43,16 +45,21 @@ class Player extends React.Component {
 				})
 			}
 
-			engine.addMagnet(torrent.get('magnetURL'), ((torrent) => {
-				engine.serve(torrent.infoHash)
-				this.setState({ torrentId: torrent.infoHash })
+			this.engine.addMagnet(torrent.get('magnetURL'), ((webtorrent) => {
+				this.engine.serve(webtorrent.infoHash)
+				this.setState({ torrentId: webtorrent.infoHash })
+
+				// Add torrent to local database
+				this.databaseService.addTorrent(webtorrent).then(() => {
+					console.info('NEW TORRENT ADDED')
+				})
 			}))
 		})
 	}
 
 	playTorrent(torrentId) {
-		let media = engine.getMedia(torrentId)
-		let torrent = engine.getTorrent(torrentId)
+		let media = this.engine.getMedia(torrentId)
+		let torrent = this.engine.getTorrent(torrentId)
 
 		// renderTo only works with mp4
 		if(media.mediaEncoding == 'mp4') {
@@ -84,9 +91,6 @@ class Player extends React.Component {
 					</video>
 				</div>
 
-				<Torrent
-					webTorrentId={this.state.torrentId}
-					torrent={this.state.torrent} />
       </div>
     );
   }

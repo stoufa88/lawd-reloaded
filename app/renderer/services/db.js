@@ -5,12 +5,6 @@ let constants = require ('../../constants.js')
 
 let _initCalled = false
 
-const torrent_statuses = {
-	isDownloading: 'downloading',
-	isSeeding: 'seeding',
-	isPaused: 'paused'
-}
-
 export default class DatabaseService {
   constructor () {
     if(_initCalled)
@@ -28,12 +22,15 @@ export default class DatabaseService {
 		})
 	}
 
-	addTorrent(torrent, magnetUri) {
+	addTorrent(torrent) {
+		console.log(torrent)
 		let doc = {
 			infoHash: torrent.infoHash,
-			name: torrent.name,
-			magnetUri: magnetUri,
-			status: torrent_statuses.isDownloading
+			name: torrent.dn,
+			magnetUri: torrent.magnetURI,
+			paused: torrent.paused,
+			done: torrent.done,
+			destroyed: torrent.destroyed
 		}
 
 		let p = Promise.resolve(ipcRenderer.sendSync(constants.ACTION_ADD_TORRENT, doc));
@@ -43,8 +40,20 @@ export default class DatabaseService {
 		});
 	}
 
-	pauseTorrent(torrent) {
-		torrent.pause()
+	updateTorrent(torrent) {
+		let p = Promise.resolve(ipcRenderer.sendSync(constants.ACTION_UPDATE_TORRENT, torrent));
+
+		return p.then(() => {
+			// SUCCESS
+		});
+	}
+
+	removeTorrent(_id) {
+		let p = Promise.resolve(ipcRenderer.sendSync(constants.ACTION_REMOVE_TORRENT, _id));
+
+		return p.then(() => {
+			// SUCCESS
+		});
 	}
 
 }

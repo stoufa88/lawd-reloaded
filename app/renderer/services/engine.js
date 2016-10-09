@@ -22,24 +22,18 @@ export default class Engine {
   }
 
   // Add torrent to engine, return torrent in callback
-  addMagnet (magnetUri, cb) {
+  addMagnet (magnetURI, cb) {
 		let self = this
 		let opts = {
 			path: downloadPath
 		}
 
-
-    client.add(magnetUri, opts, function (torrent) {
+    client.add(magnetURI, opts, function (torrent) {
 			console.info('new torrent added to engine', torrent)
 
-			self.selectAllFiles(torrent.files)
+			// self.selectAllFiles(torrent.files)
 
       cb(torrent)
-
-			// Add torrent to local database
-			// databaseService.addTorrent(torrent, magnetUri).then(() => {
-			// 	console.info('NEW TORRENT ADDED')
-			// })
     })
   }
 
@@ -126,6 +120,8 @@ export default class Engine {
 		if(!torrent) {
 			return;
 		}
+
+		console.info('Destroying torrent with id', torrentId)
 
 		torrent.destroy()
 	}

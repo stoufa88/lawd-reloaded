@@ -20,7 +20,9 @@ class TorrentList extends React.Component {
 
 	componentWillMount() {
 		this.databaseService.getTorrents().then((torrents) => {
+			// This is just for testing purposes
 			this.addTorrentsToEngine(torrents)
+			// this.setState({torrents})
 		})
 	}
 
@@ -43,44 +45,47 @@ class TorrentList extends React.Component {
 	addTorrentToEngine(torrent) {
 		let self = this
 
-		self.engine.addMagnet(torrent.magnetUri, (webtorrent) => {
-			torrent.webtorrent = webtorrent
-			let torrents = update(self.state.torrents, {$push: [torrent]})
-			console.info(torrents)
+		self.engine.addMagnet(torrent.magnetURI, (tor) => {
+			let torrents = update(self.state.torrents, {$push: [tor]})
 			self.setState({torrents})
 		})
-	}
-
-	startTorrenting(torrentId) {
-		console.info('Torrenting is starting for', torrentId)
-		this.engine.resumeTorrent(torrentId)
-	}
-
-	stopTorrenting(torrentId) {
-		console.info('Torrenting is stopping for', torrentId)
-		this.engine.pauseTorrent(torrentId)
-	}
-
-	destroyTorrent(torrentId) {
-		this.engine.destroyTorrent(torrentId)
 	}
 
 	watchTorrents() {
 		let torrents = []
 		this.state.torrents.forEach((torrent, index) => {
-			if(!torrent.webtorrent) {
-				return
-			}
-
-			torrent.donwloaded = filesize(torrent.webtorrent.downloaded)
-			torrent.uploaded = filesize(torrent.webtorrent.uploaded)
-			torrent.downloadSpeed = filesize(torrent.webtorrent.downloadSpeed)
-			torrent.uploadSpeed = filesize(torrent.webtorrent.uploadSpeed)
-			torrent.progress = Math.floor(torrent.webtorrent.progress * 100)
+			torrent.donwloaded = filesize(torrent.downloaded)
+			torrent.uploaded = filesize(torrent.uploaded)
+			torrent.downloadSpeed = filesize(torrent.downloadSpeed)
+			torrent.uploadSpeed = filesize(torrent.uploadSpeed)
+			torrent.progress = Math.floor(torrent.progress * 100)
 
 			torrents.push(torrent)
 		})
 
+		this.setState({torrents})
+	}
+
+	startTorrenting(torrentId) {
+		this.engine.resumeTorrent(torrentId)
+	}
+
+	pauseTorrenting(torrentId) {
+		this.engine.pauseTorrent(torrentId)
+	}
+
+	destroyTorrent(torrent) {
+		this.engine.destroyTorrent(torrent.infoHash)
+		this.databaseService.updateTorrent()
+	}
+
+	removeTorrent(_id, index) {
+		this.databaseService.removeTorrent(_id).then(() => {
+			console.info('TORRENT_REMOVED', _id)
+		})
+
+		let torrents = this.state.torrents
+		torrents.splice(index, 1)
 		this.setState({torrents})
 	}
 
@@ -91,14 +96,17 @@ class TorrentList extends React.Component {
 				<Torrent
 					key={i}
 					torrent={torrent}
-					startTorrenting={this.startTorrenting.bind(this, torrent.infoHash)}
-					startTorrenting={this.stopTorrenting.bind(this, torrent.infoHash)}
-					startTorrenting={this.destroyTorrent.bind(this, torrent.infoHash)} />
+					handleStartTorrenting={this.startTorrenting.bind(this, torrent.infoHash)}
+					handlePauseTorrenting={this.pauseTorrenting.bind(this, torrent.infoHash)}
+					handleDestroyTorrent={this.destroyTorrent.bind(this, torrent.infoHash)}
+					handleTorrentRemove={this.removeTorrent.bind(this, torrent._id, i)} />
 			)})
 
     return (
-      <div className="m-t-1 container torrent-list">
-				{torrents}
+      <div className="m-t-1 container torrents">
+				<div className="torrents-torrent-list">
+					{torrents}
+				</div>
       </div>
     );
   }

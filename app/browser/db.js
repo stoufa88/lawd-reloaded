@@ -24,3 +24,18 @@ ipcMain.on(constants.ACTION_ADD_TORRENT, function(event, doc) {
     event.returnValue = newDoc;
   });
 });
+
+// Insert a new torrent to datastore
+ipcMain.on(constants.ACTION_UPDATE_TORRENT, function(event, doc) {
+	// db.torrents.update({ _id: doc_id }, {}, function (err, numRemoved) {
+  // 	event.returnValue = numRemoved;
+	// });
+	console.log('update called')
+});
+
+// Insert a new torrent to datastore
+ipcMain.on(constants.ACTION_REMOVE_TORRENT, function(event, id) {
+	db.torrents.remove({ _id: id }, {}, function (err, numRemoved) {
+  	event.returnValue = numRemoved;
+	});
+});
