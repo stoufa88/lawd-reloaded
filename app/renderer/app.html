@@ -8,7 +8,7 @@
         if (!process.env.HOT) {
           const link = document.createElement('link');
           link.rel = 'stylesheet';
-          link.href = '../out/style.css';
+          link.href = '../app/out/style.css';
           document.write(link.outerHTML);
         }
       }());
@@ -21,7 +21,7 @@
     <script>
       (function() {
         const script = document.createElement('script');
-        script.src = (process.env.HOT) ? 'http://localhost:3000/dist/bundle.js' : '../out/bundle.js';
+        script.src = (process.env.HOT) ? 'http://localhost:3000/dist/bundle.js' : '../app/out/bundle.js';
         document.write(script.outerHTML);
       }());
     </script>

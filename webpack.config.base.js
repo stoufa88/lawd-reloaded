@@ -14,7 +14,7 @@ module.exports = {
     ]
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'app/out'),
     filename: 'bundle.js',
     libraryTarget: 'commonjs2'
   },

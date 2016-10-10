@@ -1,8 +1,9 @@
 {
   "scripts": {
     "postinstall": "install-app-deps",
+		"build": "cross-env NODE_ENV=production webpack --config webpack.config.production.js --progress --profile --colors",
     "compile": "rimraf app/out && npm run compile:browser && npm run compile:renderer",
-    "compile:browser": "cross-env NODE_ENV=production babel ./src/browser -d app/out/browser",
+    "compile:browser": "cross-env NODE_ENV=production babel ./app/browser -d app/out/browser",
     "compile:renderer": "cross-env NODE_ENV=production webpack --progress --display-error-details --config ./webpack.config.production",
     "hot-server": "node server.js",
     "pack": "build --dir",
