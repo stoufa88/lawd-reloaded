@@ -38,12 +38,12 @@ body {
 	z-index: 1000;
 }
 
-// Movie list ---------------------------------------------------------
+// Show list ---------------------------------------------------------
 // -------------------------------------------------------------------
-.movie-list {
+.show-list {
 	margin-top: 54px;
 	padding-top: 1rem;
-	padding-left: 4rem;
+	padding-left: 5rem;
 	.card-deck {
 		justify-content: center;
 	}
@@ -52,6 +52,8 @@ body {
 .movie-item {
 	display: inline-flex;
 	border: none;
+	min-width: 400px;
+	max-width: 400px;
 }
 
 .movie-item-details {

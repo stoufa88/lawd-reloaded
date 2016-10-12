@@ -72,14 +72,18 @@ class TorrentList extends React.Component {
 	}
 
 	startTorrenting(torrent, index) {
-		this.engine.resumeTorrent(torrent.infoHash)
-		torrent.webtorrent.paused = false
-		let torrents = update(this.state.torrents, { [index]: {torrent: {$set: torrent}} })
+		// resume torrent is async since we don't know if it is destroyed or paused
+		this.engine.resumeTorrent(torrent.infoHash, torrent.magnetUri, (webtorrent) => {
+			if(webtorrent) {
+				torrent.webtorrent = webtorrent
+				let torrents = update(this.state.torrents, { [index]: {torrent: {$set: torrent}} })
+			}
+		})
 	}
 
 	pauseTorrenting(torrent, index) {
-		this.engine.pauseTorrent(torrent.infoHash)
-		torrent.webtorrent.paused = true
+		let webtorrent = this.engine.pauseTorrent(torrent.infoHash)
+		torrent.webtorrent = webtorrent
 		let torrents = update(this.state.torrents, { [index]: {torrent: {$set: torrent}} })
 	}
 

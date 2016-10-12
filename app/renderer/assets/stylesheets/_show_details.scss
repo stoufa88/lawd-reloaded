@@ -122,23 +122,22 @@
 	padding: 0;
 	border: none;
 	margin-bottom: 2px;
-	background: rgb(10, 18, 19);
+	background: #009688;
 	&:hover {
-		background: darken(rgb(10, 18, 19), 5%);
+		background: lighten(#009688, 5%);
 	}
 	a {
 		font-size: 12px;
-		color: #ccc;
 		display: block;
-		padding: 0.2rem 0.2rem 1.3rem 2rem;
+		padding: 0.5rem 2rem;
 		text-decoration: none;
 	}
 
 	.checked-torrent {
 		position: absolute;
     right: 10px;
-    top: 18px;
-		color: $brand-success;
+    top: 0.5rem;
+		color: lighten(#009688, 25%);
 	}
 
 	.torrent-votes {

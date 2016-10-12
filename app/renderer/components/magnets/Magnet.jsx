@@ -57,15 +57,6 @@ class Magnet extends React.Component {
 						)
 					}
 				})()}
-
-				<div className="torrent-votes">
-					<i className="fa fa-thumbs-o-up" aria-hidden="true">
-						{this.props.torrent.get("upVotes")}
-					</i>
-					<i className="fa fa-thumbs-o-down m-l-1" aria-hidden="true">
-						{this.props.torrent.get("downVotes")}
-					</i>
-				</div>
 			</li>
     );
   }
@@ -79,3 +70,12 @@ Magnet.propTypes = {
 export default Magnet
 
 // <small>{this.props.name}</small>
+
+// <div className="torrent-votes">
+// 	<i className="fa fa-thumbs-o-up" aria-hidden="true">
+// 		{this.props.torrent.get("upVotes")}
+// 	</i>
+// 	<i className="fa fa-thumbs-o-down m-l-1" aria-hidden="true">
+// 		{this.props.torrent.get("downVotes")}
+// 	</i>
+// </div>

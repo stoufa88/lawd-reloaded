@@ -145,7 +145,7 @@ class TvList extends React.Component {
 		})
 
     return (
-      <div className="container movie-list">
+      <div className="container-fluid show-list">
 			  <div className="card-deck">
 					{cards}
 				</div>

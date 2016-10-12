@@ -93,15 +93,20 @@ export default class Engine {
     return client.torrents
   }
 
-	resumeTorrent (torrentId) {
+	resumeTorrent (torrentId, magnetURI, cb) {
 		let torrent = this.getTorrent(torrentId)
-		if(!torrent) {
-			return
-		}
 
 		console.info('Resuming torrent with id', torrentId)
 
-		torrent.resume()
+		if(!torrent) {
+			this.addMagnet(magnetURI, (torrent) => {
+				cb(torrent)
+			})
+		}else {
+			torrent.resume()
+			cb(torrent)
+		}
+
 	}
 
 	pauseTorrent(torrentId) {
@@ -113,6 +118,8 @@ export default class Engine {
 		console.info('Pausing torrent with id', torrentId)
 
 		torrent.pause()
+
+		return this.getTorrent(torrentId)
 	}
 
 	destroyTorrent (torrentId) {
