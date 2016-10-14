@@ -5,6 +5,7 @@ import ApiService from '../../services/api'
 import Engine from '../../services/engine'
 import DatabaseService from '../../services/db'
 import Torrent from '../torrents/Torrent'
+import filesize from 'filesize'
 
 let player
 
@@ -14,7 +15,7 @@ class Player extends React.Component {
 
 		this.state = {
 			torrent: null,
-			torrentId: null // This is webtorrent id
+			webTorrentId: null // This is webtorrent id
 		}
 
 		this.apiService = new ApiService()
@@ -27,18 +28,25 @@ class Player extends React.Component {
 		console.log("Getting torrent id from props...", this.props.params.torrentId)
 
 		this.serveTorrent(this.props.params.torrentId);
+
+		this.intervalId = setInterval( () => {
+			this.watchTorrent()
+		}, 1000)
+	}
+
+	componentWillUnmount() {
+		window.clearInterval(this.intervalId)
 	}
 
 	componentWillUpdate(nextProps, nextState) {
 		// We now have torrentId in state, let's play a bit
-		if(nextState.torrentId) {
-			this.playTorrent(nextState.torrentId)
+		if(nextState.webTorrentId && this.state.webTorrentId != nextState.webTorrentId) {
+			this.playTorrent(nextState.webTorrentId)
 		}
 	}
 
 	serveTorrent(torrentId) {
 		this.apiService.getTorrentById(torrentId).then((torrent) => {
-			this.setState({torrent})
 			if(torrent.get('subtitles')) {
 				torrent.get('subtitles').forEach((subtitle) => {
 					this.addRemoteTextTrack(subtitle)
@@ -46,8 +54,13 @@ class Player extends React.Component {
 			}
 
 			this.engine.addMagnet(torrent.get('magnetURL'), ((webtorrent) => {
+				torrent.webtorrent = webtorrent
+				torrent.name = webtorrent.dn
+
 				this.engine.serve(webtorrent.infoHash)
-				this.setState({ torrentId: webtorrent.infoHash })
+
+				this.setState({ webTorrentId: webtorrent.infoHash })
+				this.setState({torrent})
 
 				// Add torrent to local database
 				this.databaseService.addTorrent(webtorrent).then(() => {
@@ -83,13 +96,33 @@ class Player extends React.Component {
 		})
 	}
 
+	watchTorrent() {
+		let { torrent } = this.state
+
+		if(!torrent || !torrent.webtorrent) {
+			return
+		}
+
+		torrent.donwloaded = filesize(torrent.webtorrent.downloaded)
+		torrent.uploaded = filesize(torrent.webtorrent.uploaded)
+		torrent.downloadSpeed = filesize(torrent.webtorrent.downloadSpeed)
+		torrent.uploadSpeed = filesize(torrent.webtorrent.uploadSpeed)
+		torrent.progress = Math.floor(torrent.webtorrent.progress * 100)
+
+		this.setState({torrent})
+	}
+
   render() {
+		let {torrent} = this.state
+
     return (
       <div className="m-t-1 container-fluid">
 				<div id="player">
 					<video id="video-player" className="video-js vjs-default-skin vjs-big-play-centered m-x-auto">
 					</video>
 				</div>
+
+				{torrent && <Torrent torrent={torrent} />}
 
       </div>
     );

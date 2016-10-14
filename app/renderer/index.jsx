@@ -57,11 +57,19 @@ const App = React.createClass({
 	},
 
   render() {
-		const { main, mainNav, topNav, backLink } = this.props
+		const { main, mainNav, topNav, backLink, logo } = this.props
 		const { latestVersion } = this.state
 
     return (
 			<div>
+				{(() => {
+					if (logo) {
+						return(
+							<a className="navbar-brand" href="#">Lawd</a>
+						)
+					}
+				})()}
+
 				{(() => {
 					if (latestVersion) {
 						return (
@@ -133,12 +141,12 @@ render((
 
 				<IndexRedirect to="/movies/popular" />
 
-				<Route path="movies" components={{main: MovieList, mainNav: MainNav, topNav: TopNav}}>
-					<Route path="/movies/:sort" components={{main: MovieList, mainNav: MainNav, topNav: TopNav}} />
+				<Route path="movies" components={{main: MovieList, mainNav: MainNav, topNav: TopNav, logo: true}}>
+					<Route path="/movies/:sort" components={{main: MovieList, mainNav: MainNav, topNav: TopNav, logo: true}} />
 				</Route>
 
-				<Route path="tvs" components={{main: TvList, mainNav: MainNav, topNav: TopNav}}>
-					<Route path="/tvs/:sort" components={{main: TvList,  mainNav: MainNav, topNav: TopNav}} />
+				<Route path="tvs" components={{main: TvList, mainNav: MainNav, topNav: TopNav, logo: true}}>
+					<Route path="/tvs/:sort" components={{main: TvList,  mainNav: MainNav, topNav: TopNav, logo: true}} />
 				</Route>
 
 				<Route path="/torrents" components={{main: TorrentList, mainNav: MainNav}} />

@@ -1,6 +1,8 @@
 .navbar-brand {
-	border-right: 2px solid #484848;
-	padding-right: 15px;
+	position: fixed;
+	top: 6px;
+	left: 8px;
+	z-index: 100000;
 }
 
 .search-form {
@@ -20,6 +22,7 @@
 
 .top-nav .navbar {
   box-shadow: 1px 1px 1px 2px rgba(0, 0, 0, 0.1);
+	padding-left: 150px;
 }
 
 .main-nav {

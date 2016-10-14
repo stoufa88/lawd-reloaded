@@ -8,6 +8,9 @@ class Torrent extends React.Component {
   }
 
   render() {
+		let { handleTorrentRemove, handleDestroyTorrent, handleStartTorrenting } = this.props
+		let showButtons = handleTorrentRemove || handleDestroyTorrent || handleStartTorrenting
+
     return (
 			<div className="torrent-bar m-t-2 m-b-2">
 				<h5 className="torrent-bar-title">{ this.props.torrent.name }</h5>
@@ -25,21 +28,21 @@ class Torrent extends React.Component {
 						</span>
 					</div>
 
-					<div className="torrent-bar-buttons">
-						<i className="fa fa-times" aria-hidden="true" onClick={this.props.handleTorrentRemove}></i>
+					{showButtons && <div className="torrent-bar-buttons">
+						{handleTorrentRemove && <i className="fa fa-times" aria-hidden="true" onClick={handleTorrentRemove}></i>}
 
 						{/*(!this.props.torrent.webtorrent.paused && !this.props.torrent.webtorrent.destroyed) &&
 							<i className="fa fa-pause m-l-1" aria-hidden="true" onClick={this.props.handlePauseTorrenting}></i>
 						*/}
 
-						{(this.props.torrent.webtorrent.paused || this.props.torrent.webtorrent.destroyed) &&
-							<i className="fa fa-play m-l-1" aria-hidden="true" onClick={this.props.handleStartTorrenting}></i>
+						{(this.props.torrent.webtorrent.paused || this.props.torrent.webtorrent.destroyed) && handleStartTorrenting &&
+							<i className="fa fa-play m-l-1" aria-hidden="true" onClick={handleStartTorrenting}></i>
 						}
 
-						{!this.props.torrent.webtorrent.destroyed &&
-							<i className="fa fa-stop m-l-1" aria-hidden="true" onClick={this.props.handleDestroyTorrent}></i>
+						{!this.props.torrent.webtorrent.destroyed && handleDestroyTorrent &&
+							<i className="fa fa-stop m-l-1" aria-hidden="true" onClick={handleDestroyTorrent}></i>
 						}
-					</div>
+					</div>}
 
 				</div>
 

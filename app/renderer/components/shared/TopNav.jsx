@@ -119,9 +119,11 @@ class TopNav extends React.Component {
 
     return(
 			<nav className="navbar navbar-fixed-top navbar-dark bg-inverse">
-				<a className="navbar-brand" href="#">Lawd</a>
-
-			  <ul className="nav navbar-nav">
+				<div className="search-form pull-xs-right">
+					{searchArea}
+				</div>
+				
+			  <ul className="nav navbar-nav pull-xs-right">
 					<li className="nav-item">
 						<div className="btn-group">
 							<button type="button" className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -132,10 +134,6 @@ class TopNav extends React.Component {
 						</div>
 			    </li>
 			  </ul>
-
-			  <div className="search-form pull-xs-right">
-					{searchArea}
-			  </div>
 			</nav>
 		)
   }
