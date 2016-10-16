@@ -17,3 +17,9 @@ The app will be soon available for download in multi platforms, thanks to Electr
 ```bash
 $ npm run dev
 ```
+
+## Build
+```bash
+$ npm run build
+$ npm run dist
+```

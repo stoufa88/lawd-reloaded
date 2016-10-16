@@ -69,6 +69,8 @@
 
 .episode {
 	align-self: flex-start;
+	max-width: 400px;
+	border: 0;
 	.nav-tabs {
 		background: #000110;
 	}
@@ -79,10 +81,12 @@
 		 }
 	}
 	.card-img-overlay {
-		bottom: 247px;
+		bottom: 100%;
 	}
 	img {
 		width: 400px;
+		max-height: 224px;
+		object-fit: cover;
 	}
 	.card-title {
 		font-size: 18px;

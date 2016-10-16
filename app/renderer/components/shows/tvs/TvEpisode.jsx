@@ -39,10 +39,8 @@ class TvEpisode extends React.Component {
 	}
 
   render() {
-		let stillPath
-		if(this.props.stillPath){
-			stillPath = 'http://image.tmdb.org/t/p/w500' + this.props.stillPath
-		}
+		let noCover = require('../../../assets/images/nocover.gif')
+		let stillPath = this.props.stillPath ? 'http://image.tmdb.org/t/p/w500/' + this.props.stillPath : noCover
 
 		let name = this.props.name !== "" ? this.props.name : `Episode ${this.props.number}`
 
@@ -61,13 +59,8 @@ class TvEpisode extends React.Component {
 
     return(
 			<div className="card episode">
-				{(() => {
-					if (this.props.stillPath) {
-						return (
-							<img src={stillPath} className="card-img-top"/>
-						)
-					}
-				})()}
+				<img src={stillPath} className="card-img-top"/>
+
 			  <div className="card-img-overlay">
 			    <h4 className="card-title">{name}</h4>
 			    <p className="card-text">{this.props.airDate}</p>

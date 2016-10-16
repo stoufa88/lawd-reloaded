@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import { FormattedMessage } from 'react-intl'
+import classNames from 'classnames'
 import ApiService from '../../../services/api'
 import TvEpisode from './TvEpisode'
 
@@ -53,8 +54,13 @@ class TvSeason extends React.Component {
 			)
 		})
 
+		let tabClasses = classNames({
+			"tab-pane p-t-1": true,
+			"active": this.props.active
+		})
+
     return(
-			<div className="tab-pane p-t-1" id={`season-${season.id}`} role="tabpanel">
+			<div className={tabClasses} id={`season-${season.id}`} role="tabpanel">
 				<div className="row">
 					<div className="col-sm-2">
 						<img src={posterPath} />
@@ -80,7 +86,8 @@ class TvSeason extends React.Component {
 
 TvSeason.propTypes = {
   tvId: PropTypes.number.isRequired,
-	number: PropTypes.number.isRequired
+	number: PropTypes.number.isRequired,
+	active: PropTypes.bool
 }
 
 export default TvSeason

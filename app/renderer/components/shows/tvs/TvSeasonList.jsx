@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import { FormattedMessage } from 'react-intl'
+import classNames from 'classnames'
 import TvSeason from './TvSeason'
 
 class TvSeasonList extends React.Component {
@@ -19,10 +20,15 @@ class TvSeasonList extends React.Component {
 		let seasonsHeader = []
 		let seasonsContent = []
 
-		this.props.seasons.forEach((season) => {
+		this.props.seasons.forEach((season, i) => {
+			let tabClasses = classNames({
+				"nav-link": true,
+				"active": i == 0
+			})
+
 			seasonsHeader.push(
 				<li className="nav-item" key={season.id}>
-					<a className="nav-link" href={`#season-${season.id}`} data-toggle="tab">
+					<a className={tabClasses} href={`#season-${season.id}`} data-toggle="tab">
 						<FormattedMessage id="show.season" /> {season.season_number}
 					</a>
 				</li>
@@ -32,7 +38,8 @@ class TvSeasonList extends React.Component {
 				<TvSeason
 					key={season.id}
 					tvId={this.props.tvId}
-					number={season.season_number} />
+					number={season.season_number}
+					active={i == 0}/>
 				)
 		})
 

@@ -9,7 +9,8 @@ const path = require('path')
 var constants = require ('../constants.js')
 
 let db = {};
-db.torrents = new Datastore({ filename: path.join(app.getPath('appData'), 'torrents.db'), autoload: true })
+console.info(app.getPath('appData'))
+db.torrents = new Datastore({ filename: path.join(app.getPath('appData'), 'lawd-reloaded', 'torrents.db'), autoload: true })
 
 // Expose all the torrents store to the renderer process, return as nedb docs
 ipcMain.on(constants.ACTION_GET_TORRENTS, function(event, arg) {
