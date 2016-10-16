@@ -149,7 +149,7 @@ render((
 					<Route path="/tvs/:sort" components={{main: TvList,  mainNav: MainNav, topNav: TopNav, logo: true}} />
 				</Route>
 
-				<Route path="/torrents" components={{main: TorrentList, mainNav: MainNav}} />
+				<Route path="/torrents" components={{main: TorrentList, mainNav: MainNav, logo: true}} />
 
 				<Route path="/movie/:id" components={{main: MovieDetails, backLink: BackLink}} />
 				<Route path="/tv/:id" components={{main: TvDetails, backLink: BackLink}} />

@@ -15,16 +15,31 @@ class Player extends React.Component {
 
 		this.state = {
 			torrent: null,
-			webTorrentId: null // This is webtorrent id
+			webTorrentId: null, // This is webtorrent id
+			hasOpenedFeedback: false
 		}
 
 		this.apiService = new ApiService()
 		this.engine = new Engine()
 		this.databaseService = new DatabaseService()
+
+		this.handleUpVoteClick = this.handleUpVoteClick.bind(this)
+		this.handleDownVoteClick = this.handleDownVoteClick.bind(this)
   }
 
 	componentDidMount() {
-		player = videojs('video-player', { 'controls': true, 'autoplay': false, 'preload': 'auto' })
+		let self = this
+		player = videojs('video-player', { 'controls': true, 'autoplay': false, 'preload': 'auto' }, function() {
+			self.modal = self.buildFeedbackDialog()
+
+			this.on('timeupdate', () => {
+				if(Math.floor(this.currentTime()) == 10 * 60 && !self.state.hasOpenedFeedback){
+					self.setState({ hasOpenedFeedback: true })
+					self.modal.open()
+				}
+			})
+		})
+
 		console.log("Getting torrent id from props...", this.props.params.torrentId)
 
 		this.serveTorrent(this.props.params.torrentId);
@@ -112,6 +127,38 @@ class Player extends React.Component {
 		this.setState({torrent})
 	}
 
+	buildFeedbackDialog() {
+		let el = videojs.createEl('ModalDialog', {
+			 innerHTML: $('#feedback-dialog').html()
+		})
+
+		let modal = player.addChild('ModalDialog', {
+			'el': el
+		})
+
+		modal.hide()
+
+		$('#btn-upvote').one('click', () => {
+			this.handleUpVoteClick()
+		})
+
+		$('#btn-downvote').one('click', () => {
+			this.handleDownVoteClick()
+		})
+
+		return modal
+	}
+
+	handleDownVoteClick() {
+		this.apiService.sendVoteDown(this.state.torrent.id)
+		this.modal.close()
+	}
+
+	handleUpVoteClick() {
+		this.apiService.sendVoteUp(this.state.torrent.id)
+		this.modal.close()
+	}
+
   render() {
 		let {torrent} = this.state
 
@@ -120,6 +167,16 @@ class Player extends React.Component {
 				<div id="player">
 					<video id="video-player" className="video-js vjs-default-skin vjs-big-play-centered m-x-auto">
 					</video>
+				</div>
+
+				<div id="feedback-dialog">
+					<div className="feedback-dialog-content">
+						<h4>How is the quality of this torrent?</h4>
+						<div className="feedback-footer">
+							<button id="btn-downvote" type="button" className="btn btn-secondary" data-dismiss="modal">Bad</button>
+							<button id="btn-upvote" type="button" className="btn btn-secondary">Good</button>
+						</div>
+					</div>
 				</div>
 
 				{torrent && <Torrent torrent={torrent} />}
