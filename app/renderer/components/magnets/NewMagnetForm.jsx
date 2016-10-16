@@ -102,7 +102,7 @@ class NewMagnetForm extends React.Component {
 		let torrentName = this.extractTorrentName(magnetUrl)
 
 		let torrent =  { magnetUrl, torrentName, language, quality }
-		apiService.addTorrent(showId, torrent, subtitles)
+		this.props.addTorrent(showId, torrent, subtitles)
 	}
 
 	extractTorrentName(magnetUrl) {
@@ -112,7 +112,6 @@ class NewMagnetForm extends React.Component {
 	}
 
 	canSubmit() {
-		console.log(this.state)
 		let validSubs = true
 
 		this.state.subtitles.forEach((s) => {
@@ -187,7 +186,8 @@ class NewMagnetForm extends React.Component {
 }
 
 NewMagnetForm.propTypes = {
-	showId: PropTypes.number.isRequired
+	showId: PropTypes.number.isRequired,
+	addTorrent: PropTypes.func.isRequired
 };
 
 export default NewMagnetForm

@@ -50,6 +50,14 @@ class Magnet extends React.Component {
 				<Link to={`/player/${this.props.torrent.id}/`}>
 					{this.props.torrent.get("name")}
 				</Link>
+				<div className="torrent-votes">
+					<i className="fa fa-thumbs-o-up" aria-hidden="true">
+						{this.props.torrent.get("upVotes")}
+					</i>
+					<i className="fa fa-thumbs-o-down m-l-1" aria-hidden="true">
+						{this.props.torrent.get("downVotes")}
+					</i>
+				</div>
 				{(() => {
 					if (this.props.torrent.get("verified")) {
 						return (

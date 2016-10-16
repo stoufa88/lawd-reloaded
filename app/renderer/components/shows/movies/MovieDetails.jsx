@@ -1,13 +1,12 @@
 import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { FormattedMessage } from 'react-intl'
+import update from 'react-addons-update'
 import ApiService from '../../../services/api'
 import Magnet from '../../magnets/Magnet'
 import NewMagnetForm from '../../magnets/NewMagnetForm'
 import ShowDetails from '../ShowDetails'
 import ShowVideos from '../ShowVideos'
-
-let apiService
 
 export default class MovieDetails extends React.Component {
   constructor(props) {
@@ -15,12 +14,11 @@ export default class MovieDetails extends React.Component {
 
 		this.state = {
 			movie: null,
-			torrents: [],
-			showMagnetForm: false
+			torrents: []
 		}
 
-		apiService = new ApiService()
-		this.toggleMagnetForm = this.toggleMagnetForm.bind(this)
+		this.handleAddTorrent = this.handleAddTorrent.bind(this)
+		this.apiService = new ApiService()
   }
 
 	componentWillMount() {
@@ -30,21 +28,23 @@ export default class MovieDetails extends React.Component {
 	}
 
 	fetchMovie(id) {
-		apiService.getMovieById(id).then((movie) => {
+		this.apiService.getMovieById(id).then((movie) => {
 			console.info('Got the movie from tmdb api', movie)
 			this.setState({ movie })
 		})
 	}
 
 	fetchTorrents(id) {
-		apiService.fetchTorrentsForShow(parseInt(id)).then((res) => {
+		this.apiService.fetchTorrentsForShow(parseInt(id)).then((res) => {
 			this.setState({ torrents: res })
 		})
 	}
 
-	toggleMagnetForm() {
-		let { showMagnetForm } = this.state
-		this.setState({showMagnetForm: !showMagnetForm})
+	handleAddTorrent(showId, torrent, subtitles) {
+		this.apiService.addTorrent(showId, torrent, subtitles, (torrent) => {
+			let torrents = update(this.state.torrents, {$unshift: [torrent]})
+			this.setState({torrents})
+		})
 	}
 
   render() {
@@ -111,7 +111,7 @@ export default class MovieDetails extends React.Component {
 
 						<div className="col-sm-6 show-details-torrents-new">
 							<h4>Add new</h4>
-							<NewMagnetForm showId={movie.id} />
+							<NewMagnetForm showId={movie.id} addTorrent={this.handleAddTorrent}/>
 						</div>
 					</div>
 				</div>
@@ -119,23 +119,3 @@ export default class MovieDetails extends React.Component {
     );
   }
 }
-
-// <div className="col-sm-4 magnets">
-// 	<h3 className="text-sm-center">Liens</h3>
-// 	<ul className="movie-details-magnet">
-// 		{magnets}
-// 	</ul>
-//
-// 	{(() => {
-// 		if (this.state.showMagnetForm) {
-// 			return (
-// 				<div>
-// 					<i className="fa fa-minus" aria-hidden="true" onClick={this.toggleMagnetForm}></i>
-// 					<NewMagnetForm movieId={movie.id} />
-// 				</div>
-// 			)
-// 		}else {
-// 			return <i className="fa fa-plus" aria-hidden="true" onClick={this.toggleMagnetForm}></i>
-// 		}
-// 	})()}
-// </div>

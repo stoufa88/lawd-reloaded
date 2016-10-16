@@ -1,24 +1,21 @@
 import React, {PropTypes} from 'react'
 import { FormattedMessage } from 'react-intl'
+import update from 'react-addons-update'
 import {Link} from 'react-router'
 import NewMagnetForm from '../../magnets/NewMagnetForm'
 import Magnet from '../../magnets/Magnet'
 import ApiService from '../../../services/api'
-
-let apiService
 
 class TvEpisode extends React.Component {
 	constructor() {
 		super()
 
 		this.state = {
-			showMagnetForm: false,
 			torrents: []
 		}
 
-		apiService = new ApiService()
-
-		this.toggleMagnetForm = this.toggleMagnetForm.bind(this)
+		this.handleAddTorrent = this.handleAddTorrent.bind(this)
+		this.apiService = new ApiService()
 	}
 
 	componentDidMount() {
@@ -26,14 +23,19 @@ class TvEpisode extends React.Component {
 	}
 
 	fetchTorrents(id) {
-		apiService.fetchTorrentsForShow(parseInt(id)).then((res) => {
+		this.apiService.fetchTorrentsForShow(parseInt(id)).then((res) => {
 			this.setState({ torrents: res })
 		})
 	}
 
-	toggleMagnetForm() {
-		let { showMagnetForm } = this.state
-		this.setState({showMagnetForm: !showMagnetForm})
+	handleAddTorrent(showId, torrent, subtitles) {
+		this.apiService.addTorrent(showId, torrent, subtitles, (torrent) => {
+			console.info("chbih", torrent)
+			let torrents = update(this.state.torrents, {$unshift: [torrent]})
+			console.info(torrents)
+
+			this.setState({torrents})
+		})
 	}
 
   render() {
@@ -87,7 +89,7 @@ class TvEpisode extends React.Component {
 					</div>
 				  <div className="tab-pane" id={`add-${this.props.id}`} role="tabpanel">
 						<div className="p-t-1 p-b-1 p-l-1 p-r-1">
-							<NewMagnetForm showId={this.props.id} />
+							<NewMagnetForm showId={this.props.id} addTorrent={this.handleAddTorrent}/>
 						</div>
 					</div>
 				</div>

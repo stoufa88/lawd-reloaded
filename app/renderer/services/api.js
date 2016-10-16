@@ -158,7 +158,7 @@ export default class ApiService {
 		})
 	}
 
-	addTorrent(showId, t, subs) {
+	addTorrent(showId, t, subs, cb) {
 		console.info('creating a new torrent...')
 
 		let Torrent = Parse.Object.extend('Torrent')
@@ -175,13 +175,18 @@ export default class ApiService {
 
 		if(subs.length > 0) {
 			subs.forEach((subtitle) => {
-				this.addSubtitle(torrent, subtitle)
+				this.addSubtitle(torrent, subtitle, cb)
+			})
+		}else {
+			torrent.save().then(() => {
+				cb(torrent)
 			})
 		}
 	}
 
-	addSubtitle(torrent, sub) {
+	addSubtitle(torrent, sub, cb) {
 		console.info('creating a new subtitle...')
+
 		let Subtitle = Parse.Object.extend('Subtitle')
 		let subtitle = new Subtitle()
 
@@ -199,7 +204,9 @@ export default class ApiService {
 
 			subtitle.save().then(() => {
 				torrent.add('subtitles', subtitle)
-				torrent.save()
+				torrent.save().then(() => {
+					cb(torrent)
+				})
 			})
 		});
 	}
