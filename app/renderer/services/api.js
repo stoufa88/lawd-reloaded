@@ -249,6 +249,18 @@ export default class ApiService {
 		})
 		// query.equalTo('versionCode', currentVersion)
 	}
+
+	sendAnalytics(data) {
+		let Analytics = Parse.Object.extend('Analytics')
+		let analytics = new Analytics()
+
+		analytics.set('lang', data.lang)
+		analytics.set('platform', data.platform)
+		analytics.set('timezoneOffset', data.timezoneOffset)
+		analytics.set('version', data.version)
+
+		analytics.save()
+	}
 }
 
 // .then(function() {

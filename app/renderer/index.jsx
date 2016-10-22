@@ -37,23 +37,40 @@ const App = React.createClass({
 
 	componentDidMount() {
 		window.onbeforeunload = () => {
-			sessionStorage.setItem('showUpdateNotification', false)
+			//sessionStorage.setItem('showUpdateNotification', false)
+			sessionStorage.setItem('sendAnalytics', false)
     }
 
 		apiService = new ApiService()
 		apiService.getLatestVersion().then((latestVersion) => {
 			console.log(version)
 			console.log(latestVersion.get('versionCode'))
+
 			if(version != latestVersion.get('versionCode')
 			 	&& sessionStorage.getItem('showUpdateNotification') != 'false') {
 				this.setState({latestVersion})
 			}
 		})
 
+		if(sessionStorage.getItem('sendAnalytics') != 'false' && !process.env.HOT) {
+			this.sendAnalytics()
+		}
+
 		// Hide the toast after 5 seconds
 		setTimeout(() => {
 			this.setState({latestVersion: null})
 		}, 5000)
+	},
+
+	sendAnalytics() {
+		let data = {
+			version,
+			platform: navigator.platform,
+			timezoneOffset: new Date().getTimezoneOffset(),
+			lang: navigator.language
+		}
+
+		apiService.sendAnalytics(data)
 	},
 
   render() {
@@ -73,9 +90,7 @@ const App = React.createClass({
 				{(() => {
 					if (latestVersion) {
 						return (
-							<Notification
-								message={`Version ${latestVersion.get('versionCode')} is available for download on getlawd.com`}
-								title={'New version available.'} />
+							<Notification type="UPDATE" />
 						)
 					}
 				})()}

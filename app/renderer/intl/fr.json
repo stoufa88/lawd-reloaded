@@ -30,6 +30,8 @@
 		"request": "Je le veux",
 		"request.lang.arabic": "Arabe",
 		"request.lang.english": "Anglais",
-		"request.lang.french": "Français"
+		"request.lang.french": "Français",
+
+		"update.message": "Téléchargez la nouvelle version sur http://getlawd.com"
   }
 }

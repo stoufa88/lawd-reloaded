@@ -8,7 +8,7 @@
 		"navigation.movies": "Movies",
 		"navigation.tvs": "TV Series",
 		"navigation.torrents": "Torrents",
-		
+
 		"navigation.search": "Search",
 		"navigation.search.movie_placeholder": "Search a movie",
 		"navigation.search.tv_placeholder": "Search a TV serie",
@@ -29,6 +29,8 @@
 		"request": "I want it",
 		"request.lang.arabic": "Arabic",
 		"request.lang.english": "English",
-		"request.lang.french": "French"
+		"request.lang.french": "French",
+
+		"update.message": "Download the newest version on http://getlawd.com"
   }
 }
