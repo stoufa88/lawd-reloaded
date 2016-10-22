@@ -41,18 +41,21 @@ class TvSeason extends React.Component {
 		let posterPath = 'http://image.tmdb.org/t/p/w154/' + season.poster_path
 
 		let episodes = []
-		season.episodes.forEach((episode, index) => {
-			episodes.push(
-				<TvEpisode
-					key={episode.id}
-					id={episode.id}
-					plot={episode.plot}
-					stillPath={episode.still_path}
-					name={episode.name}
-					airDate={episode.air_date}
-					number={index+1} />
-			)
-		})
+
+		if(this.props.active) {
+			season.episodes.forEach((episode, index) => {
+				episodes.push(
+					<TvEpisode
+						key={episode.id}
+						id={episode.id}
+						plot={episode.plot}
+						stillPath={episode.still_path}
+						name={episode.name}
+						airDate={episode.air_date}
+						number={index+1} />
+				)
+			})
+		}
 
 		let tabClasses = classNames({
 			"tab-pane p-t-1": true,

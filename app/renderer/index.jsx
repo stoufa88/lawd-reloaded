@@ -28,6 +28,8 @@ const version = pjson.version
 
 let apiService
 
+let logoImage = require('./assets/images/logo.png')
+
 const App = React.createClass({
   getInitialState() {
     return {
@@ -37,7 +39,7 @@ const App = React.createClass({
 
 	componentDidMount() {
 		window.onbeforeunload = () => {
-			//sessionStorage.setItem('showUpdateNotification', false)
+			sessionStorage.setItem('showUpdateNotification', false)
 			sessionStorage.setItem('sendAnalytics', false)
     }
 
@@ -82,7 +84,9 @@ const App = React.createClass({
 				{(() => {
 					if (logo) {
 						return(
-							<a className="navbar-brand" href="#">Lawd</a>
+							<a className="navbar-brand" href="#">
+								<img src={logoImage} width="50" />
+							</a>
 						)
 					}
 				})()}

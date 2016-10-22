@@ -6,6 +6,10 @@ import TvSeason from './TvSeason'
 class TvSeasonList extends React.Component {
 	constructor() {
 		super()
+
+		this.state = {
+			currentSeason: 0
+		}
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -16,6 +20,11 @@ class TvSeasonList extends React.Component {
 		}
 	}
 
+	handleTabClick(index) {
+		console.info(index)
+		this.setState({currentSeason: index})
+	}
+
   render() {
 		let seasonsHeader = []
 		let seasonsContent = []
@@ -23,12 +32,12 @@ class TvSeasonList extends React.Component {
 		this.props.seasons.forEach((season, i) => {
 			let tabClasses = classNames({
 				"nav-link": true,
-				"active": i == 0
+				"active": i == this.state.currentSeason
 			})
 
 			seasonsHeader.push(
 				<li className="nav-item" key={season.id}>
-					<a className={tabClasses} href={`#season-${season.id}`} data-toggle="tab">
+					<a className={tabClasses} href={`#season-${season.id}`} data-toggle="tab" onClick={this.handleTabClick.bind(this, i)}>
 						<FormattedMessage id="show.season" /> {season.season_number}
 					</a>
 				</li>
@@ -39,7 +48,7 @@ class TvSeasonList extends React.Component {
 					key={season.id}
 					tvId={this.props.tvId}
 					number={season.season_number}
-					active={i == 0}/>
+					active={i == this.state.currentSeason}/>
 				)
 		})
 

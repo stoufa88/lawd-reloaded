@@ -31,8 +31,5 @@
     "underscore": "^1.8.3",
     "video.js": "^5.11.6",
     "webtorrent": "^0.96.5"
-  },
-  "peerDependencies": {
-    "request": "2.65.0"
   }
 }

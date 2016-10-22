@@ -1,6 +1,6 @@
-
 import React, { PropTypes } from 'react'
 import videojs from 'video.js'
+import { FormattedMessage } from 'react-intl'
 import ApiService from '../../services/api'
 import Engine from '../../services/engine'
 import DatabaseService from '../../services/db'
@@ -171,7 +171,7 @@ class Player extends React.Component {
 
 				<div id="feedback-dialog">
 					<div className="feedback-dialog-content">
-						<h4>How is the quality of this torrent?</h4>
+						<h4><FormattedMessage id="show.feedback" /></h4>
 						<div className="feedback-footer">
 							<button id="btn-downvote" type="button" className="btn btn-secondary" data-dismiss="modal">Bad</button>
 							<button id="btn-upvote" type="button" className="btn btn-secondary">Good</button>

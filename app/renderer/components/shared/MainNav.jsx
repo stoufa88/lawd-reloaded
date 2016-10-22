@@ -2,6 +2,9 @@ import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 import { Link } from 'react-router'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+import pjson from '../../../package.json'
+
+const version = pjson.version
 
 class MainNav extends React.Component {
 	constructor() {
@@ -35,7 +38,7 @@ class MainNav extends React.Component {
 						</Link>
 					</li>
 				</ul>
-				<p className="versionNumber">0.1.0</p>
+				<p className="versionNumber">{`v${version}`}</p>
 			</div>
 		)
   }

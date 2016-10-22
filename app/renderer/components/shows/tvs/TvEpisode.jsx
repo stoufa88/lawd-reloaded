@@ -24,13 +24,13 @@ class TvEpisode extends React.Component {
 
 	fetchTorrents(id) {
 		this.apiService.fetchTorrentsForShow(parseInt(id)).then((res) => {
+			console.info(parseInt(id), res)
 			this.setState({ torrents: res })
 		})
 	}
 
 	handleAddTorrent(showId, torrent, subtitles) {
 		this.apiService.addTorrent(showId, torrent, subtitles, (torrent) => {
-			console.info("chbih", torrent)
 			let torrents = update(this.state.torrents, {$unshift: [torrent]})
 			console.info(torrents)
 
@@ -55,7 +55,6 @@ class TvEpisode extends React.Component {
 		}else {
 			magnets = <p className="torrents-list-empty"><FormattedMessage id="show.torrents_empty" /></p>
 		}
-
 
     return(
 			<div className="card episode">

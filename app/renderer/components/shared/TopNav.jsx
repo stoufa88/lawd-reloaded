@@ -122,7 +122,7 @@ class TopNav extends React.Component {
 				<div className="search-form pull-xs-right">
 					{searchArea}
 				</div>
-				
+
 			  <ul className="nav navbar-nav pull-xs-right">
 					<li className="nav-item">
 						<div className="btn-group">

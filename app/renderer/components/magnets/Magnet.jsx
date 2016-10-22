@@ -48,7 +48,7 @@ class Magnet extends React.Component {
     return (
 			<li className="list-group-item torrent-item">
 				<Link to={`/player/${this.props.torrent.id}/`}>
-					{this.props.torrent.get("name")}
+					{decodeURIComponent(this.props.torrent.get("name"))}
 				</Link>
 				<div className="torrent-votes">
 					<i className="fa fa-thumbs-o-up" aria-hidden="true">

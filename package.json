@@ -4,7 +4,9 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.production.js --progress --profile --colors",
     "hot-server": "node server.js",
     "pack": "build --dir",
-    "dist": "build",
+    "dist-windows": "build -w --x64",
+    "dist-linux": "build -l --ia32 x64",
+    "dist-mac": "build -m",
     "start-hot": "cross-env HOT=1 NODE_ENV=development electron ./app/browser/index.js",
     "dev": "concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\""
   },
@@ -13,10 +15,11 @@
   },
   "build": {
     "appId": "lawd.desktop",
-    "category": "your.app.category.type",
-    "win": {
-      "iconUrl": "(windows-only) https link to icon"
-    }
+    "category": "entertainment",
+		"win": {
+			"target": "nsis",
+			"publish": ["github"]
+		}
   },
   "devDependencies": {
     "asar": "^0.11.0",
@@ -34,7 +37,6 @@
     "css-loader": "^0.23.1",
     "del": "^2.2.0",
     "electron-builder": "^5.4.2",
-    "electron-packager": "^8.0.0",
     "electron-prebuilt": "^1.4.0",
     "electron-rebuild": "^1.2.1",
     "express": "^4.13.4",
