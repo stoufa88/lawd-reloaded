@@ -3,6 +3,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { FormattedMessage } from 'react-intl'
 import update from 'react-addons-update'
 import ApiService from '../../../services/api'
+import YTSProvider from '../../../services/providers/yts'
 import Magnet from '../../magnets/Magnet'
 import NewMagnetForm from '../../magnets/NewMagnetForm'
 import ShowDetails from '../ShowDetails'
@@ -19,6 +20,7 @@ export default class MovieDetails extends React.Component {
 
 		this.handleAddTorrent = this.handleAddTorrent.bind(this)
 		this.apiService = new ApiService()
+		this.ytsProvider = new YTSProvider()
   }
 
 	componentWillMount() {
@@ -31,19 +33,42 @@ export default class MovieDetails extends React.Component {
 		this.apiService.getMovieById(id).then((movie) => {
 			console.info('Got the movie from tmdb api', movie)
 			this.setState({ movie })
+
+			this.fetchExternalTorrents(movie.imdb_id, movie.original_title)
 		})
 	}
 
 	fetchTorrents(id) {
 		this.apiService.fetchTorrentsForShow(parseInt(id)).then((res) => {
-			this.setState({ torrents: res })
+			if(res && res.length > 0) {
+				this.setState({ torrents: res })
+			}
+		})
+	}
+
+	fetchExternalTorrents(imdbCode, movieName) {
+		this.ytsProvider.getMovieTorrents(imdbCode).then((res) => {
+			if(res.data.movies && res.data.movies.length === 1) {
+				let tors = res.data.movies[0].torrents
+
+				tors = tors.map((t, index) => {
+					return {
+						quality: t.quality,
+						magnetURL: this.ytsProvider.getMagnet(t.hash),
+						name: `${movieName}-${t.quality} [YTS.AG]`
+					}
+				})
+
+				let torrents = update(this.state.torrents, {$unshift: [...tors]})
+				this.setState({ torrents })
+			}
 		})
 	}
 
 	handleAddTorrent(showId, torrent, subtitles) {
 		this.apiService.addTorrent(showId, torrent, subtitles, (torrent) => {
 			let torrents = update(this.state.torrents, {$unshift: [torrent]})
-			this.setState({torrents})
+			this.setState({ torrents })
 		})
 	}
 
@@ -57,9 +82,13 @@ export default class MovieDetails extends React.Component {
 		let magnets = []
 		if(torrents.length > 0) {
 			torrents.forEach((torrent, index) => {
+				if(torrent.id) {
+					torrent = torrent.toJSON()
+				}
+
 				magnets.push(
-					<Magnet key={torrent.id}
-									torrent={torrent}/>
+					<Magnet key={index}
+									torrent={torrent} />
 				)
 			})
 		}else {

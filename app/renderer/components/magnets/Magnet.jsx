@@ -47,19 +47,28 @@ class Magnet extends React.Component {
 
     return (
 			<li className="list-group-item torrent-item">
-				<Link to={`/player/${this.props.torrent.id}/`}>
-					{decodeURIComponent(this.props.torrent.get("name"))}
-				</Link>
+				{this.props.torrent.objectId &&
+					<Link to={`/player/internal/${this.props.torrent.objectId}/`}>
+						{decodeURIComponent(this.props.torrent.name)}
+					</Link>
+				}
+
+				{!this.props.torrent.objectId &&
+					<Link to={{ pathname: '/player/external', query: { magnetURL: this.props.torrent.magnetURL } }}>
+						{this.props.torrent.name}
+					</Link>
+				}
+
 				<div className="torrent-votes">
 					<i className="fa fa-thumbs-o-up" aria-hidden="true">
-						{this.props.torrent.get("upVotes")}
+						{this.props.torrent.upVotes}
 					</i>
 					<i className="fa fa-thumbs-o-down m-l-1" aria-hidden="true">
-						{this.props.torrent.get("downVotes")}
+						{this.props.torrent.downVotes}
 					</i>
 				</div>
 				{(() => {
-					if (this.props.torrent.get("verified")) {
+					if (this.props.torrent.verified) {
 						return (
 							<i className="checked-torrent fa fa-check-circle" aria-hidden="true"></i>
 						)

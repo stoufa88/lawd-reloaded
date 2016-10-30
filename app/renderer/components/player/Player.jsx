@@ -40,9 +40,12 @@ class Player extends React.Component {
 			})
 		})
 
-		console.log("Getting torrent id from props...", this.props.params.torrentId)
-
-		this.serveTorrent(this.props.params.torrentId);
+		if(this.props.params.torrentId) {
+			console.info(this.props.params.torrentId)
+			this.serveTorrent(this.props.params.torrentId);
+		}else {
+			this.serveExternalTorrent(this.props.location.query.magnetURL);
+		}
 
 		this.intervalId = setInterval( () => {
 			this.watchTorrent()
@@ -83,6 +86,20 @@ class Player extends React.Component {
 				})
 			}))
 		})
+	}
+
+	serveExternalTorrent(magnetURL) {
+		let torrent = {}
+		this.engine.addMagnet(magnetURL, ((webtorrent) => {
+			torrent.webtorrent = webtorrent
+			torrent.name = webtorrent.dn
+			console.info(torrent)
+
+			this.engine.serve(webtorrent.infoHash)
+
+			this.setState({ webTorrentId: webtorrent.infoHash })
+			this.setState({torrent})
+		}))
 	}
 
 	playTorrent(torrentId) {

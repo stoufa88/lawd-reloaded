@@ -176,7 +176,8 @@ render((
 				<Route path="/search/movie" components={{main: MovieList, mainNav: MainNav, topNav: TopNav}} />
 				<Route path="/search/tv" components={{main: TvList, mainNav: MainNav, topNav: TopNav}} />
 
-				<Route path="/player/:torrentId" components={{main: Player, backLink: BackLink}} />
+				<Route path="/player/internal/:torrentId" components={{main: Player, backLink: BackLink}} />
+				<Route path="/player/external" components={{main: Player, backLink: BackLink}} />
       </Route>
     </Router>
   </IntlProvider>

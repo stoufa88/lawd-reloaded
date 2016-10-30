@@ -14,10 +14,11 @@
     "electron": "./node_modules/.bin/electron"
   },
   "build": {
-    "appId": "lawd.desktop",
+    "appId": "com.getlawd.desktop",
     "category": "entertainment",
 		"win": {
 			"target": "nsis",
+			"remoteReleases": "https://github.com/stoufa88/lawd-reloaded",
 			"publish": ["github"]
 		}
   },
